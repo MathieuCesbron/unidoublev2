@@ -1,0 +1,45 @@
+.step-title {
+  margin-top: 1.5em;
+}
+
+.create-link {
+  color: rgb(120, 141, 232);
+  text-decoration: none;
+}
+
+.create-link:focus,
+.create-link:hover {
+  color: #582cac;
+}
+
+.diffie-private-key-wrapper {
+  border: black solid;
+  border-radius: 5px;
+  padding: 0.3em 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.diffie-private-key {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
+}
+
+.step-btn {
+  margin-top: 0.5em;
+  padding: 0.5em 1.5em;
+  font-size: 1.8rem;
+  border-radius: 20px;
+  background-color: rgb(120, 141, 232);
+  color: white;
+  border: none;
+}
+
+.step-btn:focus,
+.step-btn:hover {
+  cursor: pointer;
+  background-color: black;
+}

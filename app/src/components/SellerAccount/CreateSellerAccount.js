@@ -34,7 +34,9 @@ const CreateSellerAccount = () => {
   const sellerDiffiePubKey = sellerDiffieKeyPair
     .getPublic()
     .encode("hex", false);
-  const sellerDiffiePrivKey = sellerDiffieKeyPair.getPrivate().toString("hex");
+  const sellerDiffiePrivateKey = sellerDiffieKeyPair
+    .getPrivate()
+    .toString("hex");
 
   const shdw_hash = "7o69nEJC5rkJYoT2eceCqECJA8nv5BzrbeDaRVX7Zsgi";
 
@@ -80,7 +82,12 @@ const CreateSellerAccount = () => {
       case 1:
         return <CreateSellerAccountStep1 setStep={setStep} />;
       case 2:
-        return <CreateSellerAccountStep2 setStep={setStep} />;
+        return (
+          <CreateSellerAccountStep2
+            setStep={setStep}
+            sellerDiffiePrivateKey={sellerDiffiePrivateKey}
+          />
+        );
       case 3:
         return <CreateSellerAccountStep3 setStep={setStep} />;
       default:
@@ -133,29 +140,6 @@ const CreateSellerAccount = () => {
     </div>
     //   <div className="create-wrapper">
     //     <div className="create">
-    //       {/* <p>
-    //         <a
-    //           className="create-link"
-    //           href="https://www.shadow.cloud/"
-    //           target="_blank"
-    //         >
-    //           Shadow Cloud
-    //         </a>
-    //         &nbsp;has been chosen by Unidouble to provide a decentralized storage
-    //         linked to the Solana blockchain. It is used to store images of items
-    //         listed for example.
-    //       </p>
-    //       <p>
-    //         <a
-    //           className="create-link"
-    //           href="https://phantom.app/blog/swapping-tokens"
-    //           target="_blank"
-    //         >
-    //           You can use the Phantom wallet to swap SOL for some SHDW tokens.
-    //         </a>
-    //       </p> */}
-    //       {/* The seller account creation is in 3 steps and take less than 1 minute to
-    //       do ! */}
     //       {/* <p>
     //         This is your private key, save this somewhere safe, we won't show this
     //         to you ever again. It will be needed to decode the sales you make.

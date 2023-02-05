@@ -3,16 +3,6 @@
   margin: 0;
 }
 
-.create-link {
-  color: rgb(120, 141, 232);
-  text-decoration: none;
-}
-
-.create-link:focus,
-.create-link:hover {
-  color: #582cac;
-}
-
 .create-list {
   padding: 0;
 }
@@ -22,14 +12,15 @@
 }
 
 .total-cost {
-  margin-top: 2em;
+  font-size: 1.6rem;
+  margin: 1em 0 0.5em 0;
 }
 
 .cost {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 2em;
+  margin-bottom: 2em;
 }
 
 .token-logo {
