@@ -1,0 +1,22 @@
+[features]
+seeds = false
+skip-lint = false
+[programs.localnet]
+unidouble = "9kb8yC2fAvyn6ZnQj8xLLQGuS9X2aK8kda4yVgamvrUA"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "localnet"
+wallet = "/Users/mcesbron/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+devnet = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 devnet/**/*.ts"
+
+# It is the same USDC mint account as mainnet-beta with the mint autorithy
+# being the creator public key: HzYyRXzKNdTc5rnY9kasVAxvs2j2zDLQRbEk1VnX6KAk.
+[[test.validator.account]]
+address = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+filename = "tests/seeds/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v.json"

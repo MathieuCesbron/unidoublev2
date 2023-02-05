@@ -1,0 +1,775 @@
+{
+  "version": "0.1.0",
+  "name": "unidouble",
+  "instructions": [
+    {
+      "name": "initStore",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "store",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "country",
+          "type": "u16"
+        },
+        {
+          "name": "bump",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "initSellerAccount",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "store",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "sellerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "diffiePublicKey",
+          "type": "string"
+        },
+        {
+          "name": "shdwHash",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "deleteSellerAccount",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "sellerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "store",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "listItem",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "store",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "sellerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "item",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "category",
+          "type": "u8"
+        },
+        {
+          "name": "price",
+          "type": "u32"
+        },
+        {
+          "name": "amount",
+          "type": "u16"
+        },
+        {
+          "name": "shdwFiles",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "updateItem",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "sellerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "item",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "store",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "category",
+          "type": "u8"
+        },
+        {
+          "name": "price",
+          "type": "u32"
+        },
+        {
+          "name": "amount",
+          "type": "u16"
+        },
+        {
+          "name": "shdwFiles",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "buyItem",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "sellerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "seller",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "item",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "storeCreator",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "store",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userUsdc",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "storeUsdc",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "order",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "uuid",
+          "type": "u64"
+        },
+        {
+          "name": "amount",
+          "type": "u16"
+        },
+        {
+          "name": "shdwHashesDelivery",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "cancelOrder",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "sellerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "item",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "store",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userUsdc",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "creatorUsdc",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "storeUsdc",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "order",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "approveOrder",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "item",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "order",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "shippedOrder",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "sellerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "store",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "item",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "sellerUsdc",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "creatorUsdc",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "storeUsdc",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "order",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "reviewItem",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "item",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "sellerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "store",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "order",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userUsdc",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "storeUsdc",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "rating",
+          "type": "u8"
+        },
+        {
+          "name": "shdwHashReview",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "deleteItem",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "sellerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "item",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "store",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Store",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "info",
+            "type": {
+              "array": [
+                "u16",
+                32
+              ]
+            }
+          },
+          {
+            "name": "creator",
+            "type": "publicKey"
+          },
+          {
+            "name": "country",
+            "type": "u16"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "sellerCount",
+            "type": "u32"
+          },
+          {
+            "name": "salesCount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SellerAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "number",
+            "type": "u32"
+          },
+          {
+            "name": "country",
+            "type": "string"
+          },
+          {
+            "name": "shdwHash",
+            "type": "string"
+          },
+          {
+            "name": "sellerPublicKey",
+            "type": "publicKey"
+          },
+          {
+            "name": "storePublicKey",
+            "type": "publicKey"
+          },
+          {
+            "name": "diffiePublicKey",
+            "type": "string"
+          },
+          {
+            "name": "salesVolume",
+            "type": "u32"
+          },
+          {
+            "name": "salesCount",
+            "type": "u32"
+          },
+          {
+            "name": "itemCount",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Item",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "number",
+            "type": "u16"
+          },
+          {
+            "name": "category",
+            "type": "u8"
+          },
+          {
+            "name": "price",
+            "type": "u32"
+          },
+          {
+            "name": "amount",
+            "type": "u16"
+          },
+          {
+            "name": "shdwFiles",
+            "type": "string"
+          },
+          {
+            "name": "sellerPublicKey",
+            "type": "publicKey"
+          },
+          {
+            "name": "sellerAccountPublicKey",
+            "type": "publicKey"
+          },
+          {
+            "name": "buyerCount",
+            "type": "u32"
+          },
+          {
+            "name": "ratingCount",
+            "type": "u16"
+          },
+          {
+            "name": "rating",
+            "type": "f32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Order",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "uuid",
+            "type": "u64"
+          },
+          {
+            "name": "buyerPublicKey",
+            "type": "publicKey"
+          },
+          {
+            "name": "itemAccountPublicKey",
+            "type": "publicKey"
+          },
+          {
+            "name": "priceBought",
+            "type": "u32"
+          },
+          {
+            "name": "amountBought",
+            "type": "u16"
+          },
+          {
+            "name": "shdwHashDelivery",
+            "type": "string"
+          },
+          {
+            "name": "isApproved",
+            "type": "bool"
+          },
+          {
+            "name": "isReviewer",
+            "type": "bool"
+          },
+          {
+            "name": "isRated",
+            "type": "bool"
+          },
+          {
+            "name": "shdwHashReview",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidCountry",
+      "msg": "The country should be 30 chars or less"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidDiffiePubKey",
+      "msg": "The diffie public key should be exactly 64 chars"
+    },
+    {
+      "code": 6002,
+      "name": "ShouldRemoveItemsBeforeDeletingSellerAccount",
+      "msg": "Remove items before deleting the seller account"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidSellerAccount",
+      "msg": "The seller account is invalid"
+    },
+    {
+      "code": 6004,
+      "name": "TooMuchSellerAccounts",
+      "msg": "A store can not have more than 1 000 000 seller accounts"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidSellerAccountCountry",
+      "msg": "The seller account country should be the same as the store country"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidStore",
+      "msg": "The store is invalid"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidCategory",
+      "msg": "The category should be between 0 and 31"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidPrice",
+      "msg": "The price should be between 100 and 100 000 000 USDC cents"
+    },
+    {
+      "code": 6009,
+      "name": "InvalidAmount",
+      "msg": "The amount should be between 1 and 50 000"
+    },
+    {
+      "code": 6010,
+      "name": "InvalidCategoryFull",
+      "msg": "The category is already full with 50 000 items"
+    },
+    {
+      "code": 6011,
+      "name": "SellerAccountItemsFull",
+      "msg": "The seller account is already full with 1000 items"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidShdwHash",
+      "msg": "The shadow hash should be exactly 44 chars"
+    },
+    {
+      "code": 6013,
+      "name": "InvalidShdwFilesLen",
+      "msg": "The shadow files should be less or equal to 40 chars"
+    },
+    {
+      "code": 6014,
+      "name": "InvalidShdwFilesCount",
+      "msg": "The shadow files should have 5 or less files"
+    },
+    {
+      "code": 6015,
+      "name": "InvalidSeller",
+      "msg": "The seller is invalid"
+    },
+    {
+      "code": 6016,
+      "name": "InvalidAssociatedTokenAddress",
+      "msg": "The associated token address is invalid"
+    },
+    {
+      "code": 6017,
+      "name": "InvalidTokenProgram",
+      "msg": "The token program is invalid"
+    },
+    {
+      "code": 6018,
+      "name": "InvalidBuyerIndex",
+      "msg": "The buyer index is invalid"
+    },
+    {
+      "code": 6019,
+      "name": "InvalidProgramToken",
+      "msg": "The program token is invalid"
+    },
+    {
+      "code": 6020,
+      "name": "OrderMustNotBeApproved",
+      "msg": "The order must not be approved"
+    },
+    {
+      "code": 6021,
+      "name": "OrderMustBeApproved",
+      "msg": "The order must be approved"
+    },
+    {
+      "code": 6022,
+      "name": "InvalidIndex",
+      "msg": "The index is invalid"
+    },
+    {
+      "code": 6023,
+      "name": "InvalidRating",
+      "msg": "The rating is invalid"
+    },
+    {
+      "code": 6024,
+      "name": "InvalidOrder",
+      "msg": "The order is invalid"
+    },
+    {
+      "code": 6025,
+      "name": "OrderAlreadyRated",
+      "msg": "The order is already rated"
+    }
+  ],
+  "metadata": {
+    "address": "9kb8yC2fAvyn6ZnQj8xLLQGuS9X2aK8kda4yVgamvrUA"
+  }
+}

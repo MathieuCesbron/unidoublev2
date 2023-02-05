@@ -1,0 +1,7 @@
+[build]
+  base = "app/"
+
+  # relative to the base dir, so will build to app/build
+  publish = "build/"
+
+  command = "CI= npm run build"

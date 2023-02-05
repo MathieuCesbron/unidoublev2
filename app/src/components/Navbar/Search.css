@@ -1,0 +1,30 @@
+.search {
+  display: flex;
+}
+
+.search-input {
+  width: 65%;
+  border: black solid 2px;
+  padding-left: 0.8em;
+  font-size: 1rem;
+}
+
+.search-icon {
+  width: 10%;
+  min-width: 50px;
+  max-width: 100px;
+  border: black solid 2px;
+  border-left: 0;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background-color: rgb(194, 223, 242);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-icon:focus,
+.search-icon:hover {
+  cursor: pointer;
+  background-color: rgb(176, 216, 242);
+}

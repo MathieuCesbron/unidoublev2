@@ -1,0 +1,33 @@
+.seller-account {
+  display: grid;
+  width: 80%;
+  margin: 2em auto 0 auto;
+  gap: 1em;
+}
+
+.seller-btn {
+  padding: 0.5em 1em;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  border: black solid 2px;
+}
+
+.seller-btn:focus,
+.seller-btn:hover {
+  cursor: pointer;
+  background-color: gray;
+}
+
+.btn-text {
+  margin: auto;
+  max-width: 60%;
+}
+
+@media (min-width: 800px) {
+  .seller-account {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 1000px;
+  }
+}
