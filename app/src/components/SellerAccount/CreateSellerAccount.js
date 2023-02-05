@@ -11,15 +11,20 @@ import * as anchor from "@project-serum/anchor";
 import shadowLogo from "../../images/shadow-logo.png";
 import plusLogo from "../../images/plus-logo.png";
 import { ShdwDrive } from "@shadow-drive/sdk";
-import "./CreateSellerAccount.css";
 import { useAnchorWallet, useConnection } from "@solana/wallet-adapter-react";
 import useStore from "../../store";
+import CreateSellerAccountSummary from "./CreateSellerAccountSummary";
+import CreateSellerAccountStep1 from "./CreateSellerAccountStep1";
+import CreateSellerAccountStep2 from "./CreateSellerAccountStep2";
+import CreateSellerAccountStep3 from "./CreateSellerAccountStep3";
+import "./CreateSellerAccount.css";
 
 const CreateSellerAccount = () => {
   // const { publicKey } = useWallet();
   const wallet = useAnchorWallet();
 
   const [loading, setLoading] = useState(true);
+  const [step, setStep] = useState(0);
 
   const { connection } = useConnection();
 
@@ -66,68 +71,58 @@ const CreateSellerAccount = () => {
     // }
   }
 
+  const StepToPage = () => {
+    switch (step) {
+      case 0:
+        return <CreateSellerAccountSummary setStep={setStep} />;
+      case 1:
+        return <CreateSellerAccountStep1 setStep={setStep} />;
+      case 2:
+        return <CreateSellerAccountStep2 setStep={setStep} />;
+      case 3:
+        return <CreateSellerAccountStep3 setStep={setStep} />;
+      default:
+        return <div>Should never happen</div>;
+    }
+  };
+
   return (
     <div className="create-wrapper">
       <div className="create">
-        <h1 className="create-title">Become a Unidouble seller</h1>
-        <p>
-          It costs less than $1 to start listing items, you can delete the
-          account when you want. The seller account creation is in 3 steps and
-          take less than 1 minute to do !
-        </p>
-        <ol className="create-list">
-          <li>Create the decentralized storage account</li>
-          <li>Save your private key somewhere safe</li>
-          <li>Create seller account on Solana</li>
-        </ol>
-        <h3 className="total-cost">Total cost: </h3>
-        <p className="cost">
-          <img
-            className="token-logo"
-            src={solanaLogo}
-            alt="solana token logo"
-          />
-          0.00187 SOL
-          <img className="plus-logo" src={plusLogo} alt="plus logo" />
-          <img
-            className="token-logo"
-            src={shadowLogo}
-            alt="shadow token logo"
-          />
-          1 SHDW Token
-        </p>
-        <button className="btn-create" onClick={createSellerAccountHandler}>
-          Create seller account
-        </button>
-        {/* <p>
-          <a
-            className="create-link"
-            href="https://www.shadow.cloud/"
-            target="_blank"
-          >
-            Shadow Cloud
-          </a>
-          &nbsp;has been chosen by Unidouble to provide a decentralized storage
-          linked to the Solana blockchain. It is used to store images of items
-          listed for example.
-        </p>
-        <p>
-          <a
-            className="create-link"
-            href="https://phantom.app/blog/swapping-tokens"
-            target="_blank"
-          >
-            You can use the Phantom wallet to swap SOL for some SHDW tokens.
-          </a>
-        </p> */}
-        {/* The seller account creation is in 3 steps and take less than 1 minute to
-        do ! */}
-        {/* <p>
-          This is your private key, save this somewhere safe, we won't show this
-          to you ever again. It will be needed to decode the sales you make.
-        </p> */}
+        <StepToPage />
       </div>
     </div>
+    //   <div className="create-wrapper">
+    //     <div className="create">
+    //       {/* <p>
+    //         <a
+    //           className="create-link"
+    //           href="https://www.shadow.cloud/"
+    //           target="_blank"
+    //         >
+    //           Shadow Cloud
+    //         </a>
+    //         &nbsp;has been chosen by Unidouble to provide a decentralized storage
+    //         linked to the Solana blockchain. It is used to store images of items
+    //         listed for example.
+    //       </p>
+    //       <p>
+    //         <a
+    //           className="create-link"
+    //           href="https://phantom.app/blog/swapping-tokens"
+    //           target="_blank"
+    //         >
+    //           You can use the Phantom wallet to swap SOL for some SHDW tokens.
+    //         </a>
+    //       </p> */}
+    //       {/* The seller account creation is in 3 steps and take less than 1 minute to
+    //       do ! */}
+    //       {/* <p>
+    //         This is your private key, save this somewhere safe, we won't show this
+    //         to you ever again. It will be needed to decode the sales you make.
+    //       </p> */}
+    //     </div>
+    //   </div>
   );
 };
 

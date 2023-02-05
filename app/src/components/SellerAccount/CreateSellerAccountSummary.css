@@ -1,0 +1,69 @@
+.create-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.create {
+  max-width: 500px;
+  padding: 0 1em;
+}
+
+.create-title {
+  font-size: 3rem;
+}
+
+.create-link {
+  color: rgb(120, 141, 232);
+  text-decoration: none;
+}
+
+.create-link:focus,
+.create-link:hover {
+  color: #582cac;
+}
+
+.create-list {
+  padding: 0;
+}
+
+.create-list li {
+  list-style-position: inside;
+}
+
+.total-cost {
+  margin-top: 2em;
+}
+
+.cost {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2em;
+}
+
+.token-logo {
+  width: 35px;
+  margin-right: 0.5em;
+}
+
+.plus-logo {
+  width: 35px;
+  margin: 0 1.5em;
+}
+
+.btn-create {
+  padding: 0.5em 1.5em;
+  font-size: 2rem;
+  border-radius: 20px;
+  background-color: rgb(120, 141, 232);
+  color: white;
+  border: none;
+}
+
+.btn-create:focus,
+.btn-create:hover {
+  cursor: pointer;
+  background-color: black;
+}
