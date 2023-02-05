@@ -24,6 +24,18 @@
   color: #582cac;
 }
 
+.create-list {
+  padding: 0;
+}
+
+.create-list li {
+  list-style-position: inside;
+}
+
+.total-cost {
+  margin-top: 2em;
+}
+
 .cost {
   display: flex;
   justify-content: center;

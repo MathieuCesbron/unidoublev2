@@ -36,12 +36,10 @@ const CreateSellerAccount = () => {
   async function createSellerAccountHandler() {
     try {
       const drive = await new ShdwDrive(privateConnection, wallet).init();
-      const newSpace = await drive.createStorageAccount(
-        "pleaseworks",
-        "1MB",
-        "v2",
-      );
-      console.log(newSpace);
+      // 1 SHDW token is 4GB.
+      const { shdw_bucket, transaction_signature } =
+        await drive.createStorageAccount("unidouble", "4GB", "v2");
+      console.log(shdw_bucket, transaction_signature);
     } catch (error) {
       console.log(error);
     }
@@ -74,9 +72,34 @@ const CreateSellerAccount = () => {
         <h1 className="create-title">Become a Unidouble seller</h1>
         <p>
           It costs less than $1 to start listing items, you can delete the
-          account when you want.
+          account when you want. The seller account creation is in 3 steps and
+          take less than 1 minute to do !
         </p>
-        <p>
+        <ol className="create-list">
+          <li>Create the decentralized storage account</li>
+          <li>Save your private key somewhere safe</li>
+          <li>Create seller account on Solana</li>
+        </ol>
+        <h3 className="total-cost">Total cost: </h3>
+        <p className="cost">
+          <img
+            className="token-logo"
+            src={solanaLogo}
+            alt="solana token logo"
+          />
+          0.00187 SOL
+          <img className="plus-logo" src={plusLogo} alt="plus logo" />
+          <img
+            className="token-logo"
+            src={shadowLogo}
+            alt="shadow token logo"
+          />
+          1 SHDW Token
+        </p>
+        <button className="btn-create" onClick={createSellerAccountHandler}>
+          Create seller account
+        </button>
+        {/* <p>
           <a
             className="create-link"
             href="https://www.shadow.cloud/"
@@ -96,30 +119,13 @@ const CreateSellerAccount = () => {
           >
             You can use the Phantom wallet to swap SOL for some SHDW tokens.
           </a>
-        </p>
-        <h3>Total cost: </h3>
-        <p className="cost">
-          <img
-            className="token-logo"
-            src={solanaLogo}
-            alt="solana token logo"
-          />
-          0.00187 SOL
-          <img className="plus-logo" src={plusLogo} alt="plus logo" />
-          <img
-            className="token-logo"
-            src={shadowLogo}
-            alt="shadow token logo"
-          />
-          1 SHDW Token
-        </p>
-        <button className="btn-create" onClick={createSellerAccountHandler}>
-          Create seller account
-        </button>
-        <p>
+        </p> */}
+        {/* The seller account creation is in 3 steps and take less than 1 minute to
+        do ! */}
+        {/* <p>
           This is your private key, save this somewhere safe, we won't show this
           to you ever again. It will be needed to decode the sales you make.
-        </p>
+        </p> */}
       </div>
     </div>
   );
