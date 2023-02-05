@@ -17,6 +17,8 @@ import CreateSellerAccountSummary from "./CreateSellerAccountSummary";
 import CreateSellerAccountStep1 from "./CreateSellerAccountStep1";
 import CreateSellerAccountStep2 from "./CreateSellerAccountStep2";
 import CreateSellerAccountStep3 from "./CreateSellerAccountStep3";
+import "react-step-progress-bar/styles.css";
+import { ProgressBar, Step } from "react-step-progress-bar";
 import "./CreateSellerAccount.css";
 
 const CreateSellerAccount = () => {
@@ -89,6 +91,43 @@ const CreateSellerAccount = () => {
   return (
     <div className="create-wrapper">
       <div className="create">
+        {step != 0 && (
+          <ProgressBar percent={(step - 1) * 50}>
+            <Step>
+              {({ accomplished, index }) => (
+                <div
+                  className={`indexedStep ${
+                    accomplished ? "accomplished" : null
+                  }`}
+                >
+                  {index + 1}
+                </div>
+              )}
+            </Step>
+            <Step>
+              {({ accomplished, index }) => (
+                <div
+                  className={`indexedStep ${
+                    accomplished ? "accomplished" : null
+                  }`}
+                >
+                  {index + 1}
+                </div>
+              )}
+            </Step>
+            <Step>
+              {({ accomplished, index }) => (
+                <div
+                  className={`indexedStep ${
+                    accomplished ? "accomplished" : null
+                  }`}
+                >
+                  {index + 1}
+                </div>
+              )}
+            </Step>
+          </ProgressBar>
+        )}
         <StepToPage />
       </div>
     </div>

@@ -4,7 +4,7 @@ import shadowLogo from "../../images/shadow-logo.png";
 
 import "./CreateSellerAccountSummary.css";
 
-const CreateSellerAccountSummary = ({ setStep }) => {
+const CreateSellerAccountSummary = ({ setStep, setProgressBarPercent }) => {
   return (
     <>
       <h1 className="create-title">Become a Unidouble seller</h1>

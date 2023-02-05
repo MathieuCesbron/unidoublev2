@@ -1,0 +1,28 @@
+.create-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.create {
+  max-width: 500px;
+  column-width: 500px;
+  padding: 3em;
+}
+
+.indexedStep {
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1.5rem;
+  background-color: rgba(211, 211, 211, 0.8);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.indexedStep.accomplished {
+  background-color: rgba(0, 116, 217, 1);
+}
