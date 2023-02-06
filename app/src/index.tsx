@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom/client";
 import { WalletContext } from "./components/Navbar/WalletContext";
 import { BrowserRouter } from "react-router-dom";
+import "react-tooltip/dist/react-tooltip.css";
 
 import App from "./App";
 

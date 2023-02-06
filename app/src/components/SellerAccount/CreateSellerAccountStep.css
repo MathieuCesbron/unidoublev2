@@ -12,20 +12,25 @@
   color: #582cac;
 }
 
+.step-private-key {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .diffie-private-key-wrapper {
+  max-width: 70vw;
   border: black solid;
   border-radius: 5px;
   padding: 0.3em 1em;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  cursor: pointer;
 }
 
 .diffie-private-key {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 90%;
+  font-weight: bold;
 }
 
 .step-btn {
@@ -38,8 +43,20 @@
   border: none;
 }
 
-.step-btn:focus,
-.step-btn:hover {
+.step-btn:focus:enabled,
+.step-btn:hover:enabled {
   cursor: pointer;
   background-color: black;
+}
+
+.step-btn:disabled {
+  background-color: lightgrey;
+}
+
+.check {
+  margin: 1em;
+}
+
+.isSure:hover {
+  cursor: pointer;
 }
