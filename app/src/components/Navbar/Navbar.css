@@ -43,11 +43,16 @@
   margin-right: 0.5em;
 }
 
-.a-left:hover,
-.a-right:hover {
+.a-left:hover:enabled,
+.a-right:hover:enabled {
   cursor: pointer;
   border: white solid 2px;
   border-radius: 4px;
+}
+
+.a-left:disabled,
+.a-right:disabled {
+  display: none;
 }
 
 @media (max-width: 1000px) {
