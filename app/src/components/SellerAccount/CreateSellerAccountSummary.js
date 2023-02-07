@@ -3,8 +3,19 @@ import plusLogo from "../../images/plus-logo.png";
 import shadowLogo from "../../images/shadow-logo.png";
 
 import "./CreateSellerAccountSummary.css";
+import { network } from "../../utils/solana/program";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 
-const CreateSellerAccountSummary = ({ setStep, setProgressBarPercent }) => {
+const CreateSellerAccountSummary = ({ setStep }) => {
+  const startSellerAccountCreationHandler = () => {
+    // We bypass shadow storage account creation if we are not on mainnet.
+    if (network === WalletAdapterNetwork.Mainnet) {
+      setStep(1);
+    } else {
+      setStep(2);
+    }
+  };
+
   return (
     <>
       <h1 className="create-title">Become a Unidouble seller</h1>
@@ -26,8 +37,11 @@ const CreateSellerAccountSummary = ({ setStep, setProgressBarPercent }) => {
         <img className="token-logo" src={shadowLogo} alt="shadow token logo" />1
         SHDW Token
       </p>
-      <button className="btn-create" onClick={() => setStep(1)}>
-        Create seller account
+      <button
+        className="btn-create"
+        onClick={startSellerAccountCreationHandler}
+      >
+        Start account creation
       </button>
     </>
   );

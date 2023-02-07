@@ -1,9 +1,35 @@
 import solanaLogo from "../../images/solana-logo.png";
 import plusLogo from "../../images/plus-logo.png";
 import shadowLogo from "../../images/shadow-logo.png";
+import { ShdwDrive } from "@shadow-drive/sdk";
+import { privateConnection } from "../../utils/solana/program";
+import { useAnchorWallet } from "@solana/wallet-adapter-react";
+import useStore from "../../store";
+import { useState } from "react";
 import "./CreateSellerAccountStep.css";
 
 const CreateSellerAccountStep1 = ({ setStep }) => {
+  const wallet = useAnchorWallet();
+
+  const [error, setError] = useState("");
+  const setShdwBucket = useStore((state) => state.setShdwBucket);
+
+  const createStorageAccount = async () => {
+    try {
+      setError("");
+      const drive = await new ShdwDrive(privateConnection, wallet).init();
+      // 1 SHDW token is 4GB.
+      const { shdw_bucket, transaction_signature } =
+        await drive.createStorageAccount("unidouble_seller", "4GB", "v2");
+      setShdwBucket(shdw_bucket);
+      console.log("tx create storage account: ", transaction_signature);
+      setStep(2);
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    }
+  };
+
   return (
     <div>
       <div>
@@ -33,14 +59,18 @@ const CreateSellerAccountStep1 = ({ setStep }) => {
       <h3 className="total-cost">Cost: </h3>
       <p className="cost">
         <img className="token-logo" src={solanaLogo} alt="solana token logo" />
-        0.00187 SOL
+        0.00360 SOL
         <img className="plus-logo" src={plusLogo} alt="plus logo" />
         <img className="token-logo" src={shadowLogo} alt="shadow token logo" />1
         SHDW Token
       </p>
-      <button className="step-btn" onClick={() => setStep(2)}>
+      <button className="step-btn" onClick={createStorageAccount}>
         Approve transaction on wallet
       </button>
+      <p className="step-error">
+        {error &&
+          "Error while creating the storage account, are you sure you have enough funds ?"}
+      </p>
     </div>
   );
 };

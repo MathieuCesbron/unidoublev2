@@ -1,79 +1,24 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { curve } from "../../utils/crypto/crypto";
-import {
-  program,
-  storePubKey,
-  connection,
-  privateConnection,
-} from "../../utils/solana/program";
-import solanaLogo from "../../images/solana-logo.png";
-import * as anchor from "@project-serum/anchor";
-import shadowLogo from "../../images/shadow-logo.png";
-import plusLogo from "../../images/plus-logo.png";
-import { ShdwDrive } from "@shadow-drive/sdk";
-import { useAnchorWallet, useConnection } from "@solana/wallet-adapter-react";
-import useStore from "../../store";
 import CreateSellerAccountSummary from "./CreateSellerAccountSummary";
 import CreateSellerAccountStep1 from "./CreateSellerAccountStep1";
 import CreateSellerAccountStep2 from "./CreateSellerAccountStep2";
 import CreateSellerAccountStep3 from "./CreateSellerAccountStep3";
-import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
 import "./CreateSellerAccount.css";
 
 const CreateSellerAccount = () => {
-  // const { publicKey } = useWallet();
-  const wallet = useAnchorWallet();
-
-  const [loading, setLoading] = useState(true);
   const [step, setStep] = useState(0);
 
-  const { connection } = useConnection();
-
-  const sellerDiffieKeyPair = curve.genKeyPair();
-  const sellerDiffiePubKey = sellerDiffieKeyPair
-    .getPublic()
-    .encode("hex", false);
-  const sellerDiffiePrivateKey = sellerDiffieKeyPair
-    .getPrivate()
-    .toString("hex");
-
-  const shdw_hash = "7o69nEJC5rkJYoT2eceCqECJA8nv5BzrbeDaRVX7Zsgi";
-
-  const setIsSeller = useStore((state) => state.setIsSeller);
-
-  async function createSellerAccountHandler() {
-    try {
-      const drive = await new ShdwDrive(privateConnection, wallet).init();
-      // 1 SHDW token is 4GB.
-      const { shdw_bucket, transaction_signature } =
-        await drive.createStorageAccount("unidouble", "4GB", "v2");
-      console.log(shdw_bucket, transaction_signature);
-    } catch (error) {
-      console.log(error);
-    }
-
-    // const [sellerAccount] = anchor.web3.PublicKey.findProgramAddressSync(
-    //   [publicKey.toBuffer()],
-    //   program.programId,
-    // );
-
-    // try {
-    //   const txInitSellerAccount = await program.methods
-    //     .initSellerAccount(sellerDiffiePubKey, shdw_hash)
-    //     .accounts({
-    //       user: publicKey,
-    //       store: storePubKey,
-    //       sellerAccount: sellerAccount,
-    //       systemProgram: anchor.web3.SystemProgram.programId,
-    //     })
-    //     .rpc();
-    //   setIsSeller(true);
-    //   console.log("tx init seller account: ", txInitSellerAccount);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  }
+  const sellerDiffieKeyPair = useMemo(() => curve.genKeyPair(), []);
+  const sellerDiffiePubKey = useMemo(
+    () => sellerDiffieKeyPair.getPublic().encode("hex"),
+    [],
+  );
+  const sellerDiffiePrivateKey = useMemo(
+    () => sellerDiffieKeyPair.getPrivate().toString("hex"),
+    [],
+  );
 
   const StepToPage = () => {
     switch (step) {
@@ -89,7 +34,9 @@ const CreateSellerAccount = () => {
           />
         );
       case 3:
-        return <CreateSellerAccountStep3 setStep={setStep} />;
+        return (
+          <CreateSellerAccountStep3 sellerDiffiePubKey={sellerDiffiePubKey} />
+        );
       default:
         return <div>Should never happen</div>;
     }

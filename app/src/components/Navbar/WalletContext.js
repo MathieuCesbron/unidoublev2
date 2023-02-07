@@ -1,4 +1,3 @@
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
   ConnectionProvider,
   WalletProvider,
@@ -14,12 +13,12 @@ import {
   SlopeWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 import { clusterApiUrl } from "@solana/web3.js";
+import { network } from "../../utils/solana/program";
 import { useMemo } from "react";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
 
 export const WalletContext = ({ children }) => {
-  const network = WalletAdapterNetwork.Mainnet;
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
   const wallets = useMemo(
     () => [

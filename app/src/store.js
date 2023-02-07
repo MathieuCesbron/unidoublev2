@@ -1,4 +1,6 @@
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { create } from "zustand";
+import { network, shdwBucketDevnet } from "./utils/solana/program";
 
 const useStore = create((set) => ({
   category: { value: -1, label: "All" },
@@ -6,6 +8,9 @@ const useStore = create((set) => ({
 
   isSeller: undefined,
   setIsSeller: (isSeller) => set((state) => ({ isSeller })),
+
+  shdwBucket: network === WalletAdapterNetwork.Devnet ? shdwBucketDevnet : "",
+  setShdwBucket: (shdwBucket) => set((state) => ({ shdwBucket })),
 }));
 
 export default useStore;

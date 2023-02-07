@@ -4,7 +4,6 @@ import "./CreateSellerAccountStep.css";
 
 const CreateSellerAccountStep2 = ({ setStep, sellerDiffiePrivateKey }) => {
   const [isSure, setIsSure] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   return (
     <div className="step-private-key">
