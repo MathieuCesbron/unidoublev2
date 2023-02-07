@@ -1,0 +1,38 @@
+.delete-wrapper {
+  margin: 3em auto 0 auto;
+  text-align: center;
+  width: 80%;
+  max-width: 600px;
+}
+
+.back-arrow:hover {
+  cursor: pointer;
+}
+
+.delete-title {
+  font-size: 2rem;
+}
+
+.isSure:hover,
+.checkbox:hover {
+  cursor: pointer;
+}
+
+.delete-btn {
+  margin-top: 0.5em;
+  padding: 0.5em 1.5em;
+  font-size: 1.8rem;
+  border-radius: 20px;
+  font-size: 1.8rem;
+  color: white;
+  background-color: rgb(187, 187, 187);
+}
+
+.delete-btn:enabled {
+  background-color: rgb(207, 15, 15);
+}
+
+.delete-btn:hover:enabled {
+  cursor: pointer;
+  background-color: black;
+}

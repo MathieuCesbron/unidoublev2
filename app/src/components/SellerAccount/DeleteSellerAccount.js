@@ -7,8 +7,10 @@ import {
   getSellerAccount,
 } from "../../utils/solana/sellerAccount";
 import { useNavigate } from "react-router-dom";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
+import "./DeleteSellerAccount.css";
 
-const DeleteSellerAccount = () => {
+const DeleteSellerAccount = ({ setMode }) => {
   const [isSure, setIsSure] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -52,11 +54,16 @@ const DeleteSellerAccount = () => {
   }
 
   return (
-    <div>
-      <h2>Delete seller account</h2>
+    <div className="delete-wrapper">
+      <IoArrowBackCircleOutline
+        className="back-arrow"
+        size={"5em"}
+        onClick={() => setMode("account")}
+      />
+      <h2 className="delete-title">Delete seller account</h2>
       <p>
         You can only delete your seller account when you have removed all your
-        items. 0.00187 SOL will be credited back to your account.
+        items. 0.00231 SOL will be credited back to your account.
       </p>
       <input
         className="checkbox"
@@ -65,9 +72,12 @@ const DeleteSellerAccount = () => {
         checked={isSure}
         onChange={() => setIsSure((prevIsSure) => !prevIsSure)}
       />
-      <label htmlFor="isSure">I want to delete my seller account</label>
+      <label className="isSure" htmlFor="isSure">
+        I want to delete my seller account
+      </label>
       <p>{error}</p>
       <button
+        className="delete-btn"
         disabled={!isSure || loading || !sellerAccount}
         onClick={deleteSellerAccountHandler}
       >
