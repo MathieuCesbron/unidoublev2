@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { curve } from "../../utils/crypto/crypto";
 import CreateSellerAccountSummary from "./CreateSellerAccountSummary";
 import CreateSellerAccountStep1 from "./CreateSellerAccountStep1";
@@ -6,8 +6,10 @@ import CreateSellerAccountStep2 from "./CreateSellerAccountStep2";
 import CreateSellerAccountStep3 from "./CreateSellerAccountStep3";
 import { ProgressBar, Step } from "react-step-progress-bar";
 import "./CreateSellerAccount.css";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const CreateSellerAccount = () => {
+  const { publicKey } = useWallet();
   const [step, setStep] = useState(0);
 
   const sellerDiffieKeyPair = useMemo(() => curve.genKeyPair(), []);
@@ -19,6 +21,10 @@ const CreateSellerAccount = () => {
     () => sellerDiffieKeyPair.getPrivate().toString("hex"),
     [],
   );
+
+  useEffect(() => {
+    setStep(0);
+  }, [publicKey]);
 
   const StepToPage = () => {
     switch (step) {
