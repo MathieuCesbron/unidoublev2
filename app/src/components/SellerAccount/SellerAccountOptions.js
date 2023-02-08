@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CreateSellerAccount from "./CreateSellerAccount";
+import CreateSellerAccount from "./Create/CreateSellerAccount";
 import SellerAccount from "./SellerAccount";
 import { getSellerAccount } from "../../utils/solana/sellerAccount";
 import { useWallet } from "@solana/wallet-adapter-react";

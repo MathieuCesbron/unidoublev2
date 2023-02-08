@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import { curve } from "../../utils/crypto/crypto";
+import { curve } from "../../../utils/crypto/crypto";
 import CreateSellerAccountSummary from "./CreateSellerAccountSummary";
 import CreateSellerAccountStep1 from "./CreateSellerAccountStep1";
 import CreateSellerAccountStep2 from "./CreateSellerAccountStep2";

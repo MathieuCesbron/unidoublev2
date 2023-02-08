@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { program, storePubKey } from "../../utils/solana/program";
+import { program, storePubKey } from "../../../utils/solana/program";
 import * as anchor from "@project-serum/anchor";
-import solanaLogo from "../../images/solana-logo.png";
-import useStore from "../../store";
+import solanaLogo from "../../../images/solana-logo.png";
+import useStore from "../../../store";
 
 const CreateSellerAccountStep3 = ({ sellerDiffiePubKey }) => {
   const { publicKey } = useWallet();
