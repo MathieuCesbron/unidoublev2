@@ -1,0 +1,44 @@
+.list-wrapper {
+  width: 80%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.list-top {
+  display: flex;
+  align-items: center;
+}
+
+.back-arrow {
+  cursor: pointer;
+}
+
+.list-title {
+  margin-left: 0.5em;
+  font-size: 2rem;
+}
+
+.list-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-form-field {
+}
+
+.list-btn {
+  margin-top: 0.5em;
+  padding: 0.5em 1.5em;
+  font-size: 1rem;
+  border-radius: 10px;
+  background-color: rgb(120, 141, 232);
+  color: white;
+  border: none;
+  border: black solid;
+}
+
+.list-btn:focus,
+.list-btn:hover {
+  cursor: pointer;
+  background-color: black;
+}

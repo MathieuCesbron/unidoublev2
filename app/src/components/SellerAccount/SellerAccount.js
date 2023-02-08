@@ -4,6 +4,7 @@ import { IoTicketOutline } from "react-icons/io5";
 import { CiBoxes } from "react-icons/ci";
 import { TiDeleteOutline } from "react-icons/ti";
 import DeleteSellerAccount from "./Delete/DeleteSellerAccount";
+import ListItem from "./List/ListItem";
 import "./SellerAccount.css";
 
 const SellerAccount = () => {
@@ -14,7 +15,7 @@ const SellerAccount = () => {
   };
 
   const newItemHandler = () => {
-    console.log("new item");
+    setMode("newItem");
   };
 
   const salesHandler = () => {
@@ -27,6 +28,8 @@ const SellerAccount = () => {
 
   const SellerAccountMode = () => {
     switch (mode) {
+      case "newItem":
+        return <ListItem setMode={setMode} />;
       case "account":
         return (
           <div className="seller-account">
