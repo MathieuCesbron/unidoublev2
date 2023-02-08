@@ -36,3 +36,7 @@
   cursor: pointer;
   background-color: black;
 }
+
+.delete-error {
+  color: red;
+}

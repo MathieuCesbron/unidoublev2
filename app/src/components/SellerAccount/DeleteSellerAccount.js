@@ -25,7 +25,9 @@ const DeleteSellerAccount = ({ setMode }) => {
       const sa = await getSellerAccount(publicKey);
       const dsa = getDecodedSellerAccount(sa);
       if (dsa.item_count !== 0) {
-        setError("remove items before deleting");
+        setError(
+          "You still have items, remove them before deleting your account",
+        );
       } else {
         setSellerAccount(sa);
       }
@@ -75,14 +77,14 @@ const DeleteSellerAccount = ({ setMode }) => {
       <label className="isSure" htmlFor="isSure">
         I want to delete my seller account
       </label>
-      <p>{error}</p>
       <button
         className="delete-btn"
-        disabled={!isSure || loading || !sellerAccount}
+        disabled={!isSure || error || loading || !sellerAccount}
         onClick={deleteSellerAccountHandler}
       >
         Validate transaction on wallet
       </button>
+      <p className="delete-error">{error}</p>
     </div>
   );
 };
