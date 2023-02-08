@@ -1,11 +1,11 @@
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
 import * as anchor from "@project-serum/anchor";
-import { program, storePubKey } from "../../utils/solana/program";
+import { program, storePubKey } from "../../../utils/solana/program";
 import {
   getDecodedSellerAccount,
   getSellerAccount,
-} from "../../utils/solana/sellerAccount";
+} from "../../../utils/solana/sellerAccount";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import "./DeleteSellerAccount.css";

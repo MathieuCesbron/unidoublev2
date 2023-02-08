@@ -3,7 +3,7 @@ import { TfiDropbox } from "react-icons/tfi";
 import { IoTicketOutline } from "react-icons/io5";
 import { CiBoxes } from "react-icons/ci";
 import { TiDeleteOutline } from "react-icons/ti";
-import DeleteSellerAccount from "./DeleteSellerAccount";
+import DeleteSellerAccount from "./Delete/DeleteSellerAccount";
 import "./SellerAccount.css";
 
 const SellerAccount = () => {
