@@ -113,7 +113,6 @@ describe("unidouble", () => {
     const category = 0;
     const price = 250;
     const amount = 2;
-    const shdw_files = "1.jpeg/2.jpeg/3.mov/4.jpg";
 
     const [item] = await anchor.web3.PublicKey.findProgramAddress(
       // We use the 2 argument because a u16 is 2x a u8.
@@ -124,7 +123,7 @@ describe("unidouble", () => {
 
     try {
       const txListItem = await program.methods
-        .listItem(category, price, amount, shdw_files)
+        .listItem(category, price, amount)
         .accounts({
           user: seller.publicKey,
           store: store,
@@ -143,12 +142,11 @@ describe("unidouble", () => {
     const new_category = 1;
     const new_price = 200;
     const new_amount = 3;
-    const new_shdw_files = "1.jpeg/2.jpeg/3.mov";
 
     //  Update item
     try {
       const txUpdateItem = await program.methods
-        .updateItem(new_category, new_price, new_amount, new_shdw_files)
+        .updateItem(new_category, new_price, new_amount)
         .accounts({
           user: seller.publicKey,
           store: store,

@@ -41,12 +41,6 @@ pub enum ErrorCode {
     #[msg("The shadow hash should be exactly 44 chars")]
     InvalidShdwHash,
 
-    #[msg("The shadow files should be less or equal to 40 chars")]
-    InvalidShdwFilesLen,
-
-    #[msg("The shadow files should have 5 or less files")]
-    InvalidShdwFilesCount,
-
     #[msg("The seller is invalid")]
     InvalidSeller,
 

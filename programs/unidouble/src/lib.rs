@@ -55,25 +55,10 @@ pub mod unidouble {
         Ok(())
     }
 
-    pub fn list_item(
-        ctx: Context<ListItem>,
-        category: u8,
-        price: u32,
-        amount: u16,
-        shdw_files: String,
-    ) -> Result<()> {
+    pub fn list_item(ctx: Context<ListItem>, category: u8, price: u32, amount: u16) -> Result<()> {
         require!(category < 32, ErrorCode::InvalidCategory);
         require!(price >= 100 && price <= 100000000, ErrorCode::InvalidPrice);
         require!(amount > 0 && amount <= 50000, ErrorCode::InvalidAmount);
-        require!(
-            shdw_files.chars().count() <= 40,
-            ErrorCode::InvalidShdwFilesLen
-        );
-        // Limited to 5 files per item.
-        require!(
-            shdw_files.matches("/").count() <= 4,
-            ErrorCode::InvalidShdwFilesCount
-        );
 
         let store = &mut ctx.accounts.store;
         require!(
@@ -92,7 +77,6 @@ pub mod unidouble {
         item.amount = amount;
         item.seller_public_key = ctx.accounts.user.key();
         item.seller_account_public_key = ctx.accounts.seller_account.key();
-        item.shdw_files = shdw_files;
 
         Ok(())
     }
@@ -102,20 +86,10 @@ pub mod unidouble {
         category: u8,
         price: u32,
         amount: u16,
-        shdw_files: String,
     ) -> Result<()> {
         require!(category < 32, ErrorCode::InvalidCategory);
         require!(price >= 100 && price <= 100000000, ErrorCode::InvalidPrice);
         require!(amount > 0 && amount <= 50000, ErrorCode::InvalidAmount);
-        require!(
-            shdw_files.chars().count() <= 40,
-            ErrorCode::InvalidShdwFilesLen
-        );
-        // Limited to 5 files per item.
-        require!(
-            shdw_files.matches("/").count() <= 4,
-            ErrorCode::InvalidShdwFilesCount
-        );
 
         let store = &mut ctx.accounts.store;
         store.info[ctx.accounts.item.category as usize] -= 1;
@@ -125,7 +99,6 @@ pub mod unidouble {
         item.category = category;
         item.price = price;
         item.amount = amount;
-        item.shdw_files = shdw_files;
 
         Ok(())
     }
@@ -826,9 +799,6 @@ pub struct Item {
     pub price: u32,  // +4
     pub amount: u16, // +4
 
-    // shdw_files is a string of all the files in shadow drive. Files are
-    // separated by slashes, e.g. 1.jpeg/2.jpeg/3.mov/4.jpg.
-    pub shdw_files: String,                // +4+40=44
     pub seller_public_key: Pubkey,         // +32
     pub seller_account_public_key: Pubkey, // +32
 
