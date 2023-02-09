@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   privateConnection,
   program,
@@ -13,14 +13,23 @@ import {
   getSellerAccount,
 } from "../../../utils/solana/sellerAccount";
 import { ShdwDrive } from "@shadow-drive/sdk";
+import { PublicKey } from "@solana/web3.js";
 
-const ListItem = ({ setMode }) => {
+interface Props {
+  setMode: (s: string) => void;
+}
+
+type account = {
+  pubkey: PublicKey;
+};
+
+const ListItem = (props: Props) => {
   const wallet = useAnchorWallet();
   const { publicKey } = useWallet();
 
-  const [file, setFile] = useState();
+  const [file, setFile] = useState<File>();
   const [shdwHash, setShdwHash] = useState("");
-  const [sellerAccount, setSellerAccount] = useState();
+  const [sellerAccount, setSellerAccount] = useState<account>();
   const [itemNumber, setItemNumber] = useState(-1);
   const [loading, setLoading] = useState(true);
 
@@ -44,25 +53,28 @@ const ListItem = ({ setMode }) => {
     })();
   }, [publicKey]);
 
-  const listItemHandler = async (e) => {
+  const listItemHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    console.log(file);
     // Upload data on shadow drive if we are on mainnet.
     const drive = await new ShdwDrive(privateConnection, wallet).init();
 
-    // try {
-    //   const uploadFile = await drive.uploadFile(
-    //     shdwHash,
-    //     new File(["test"], "item.json"),
-    //   );
-    //   console.log(uploadFile);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const uploadFile = await drive.uploadFile(
+        new PublicKey(shdwHash),
+        new File(["{oula: 'test'}"], "test.json"),
+        // file!,
+        "v2",
+      );
+      console.log(uploadFile);
+    } catch (error) {
+      console.log(error);
+    }
 
     const [item] = anchor.web3.PublicKey.findProgramAddressSync(
       [
-        publicKey.toBuffer(),
+        publicKey!.toBuffer(),
         new anchor.BN(itemNumber).toArrayLike(Buffer, "le", 2),
       ],
       program.programId,
@@ -76,9 +88,9 @@ const ListItem = ({ setMode }) => {
           itemFormData.amount,
         )
         .accounts({
-          user: publicKey,
+          user: publicKey!,
           store: storePubKey,
-          sellerAccount: sellerAccount.pubkey,
+          sellerAccount: sellerAccount?.pubkey,
           item: item,
         })
         .rpc();
@@ -94,7 +106,7 @@ const ListItem = ({ setMode }) => {
         <IoArrowBackCircleOutline
           className="back-arrow"
           size={"2.3em"}
-          onClick={() => setMode("account")}
+          onClick={() => props.setMode("account")}
         />
         <h2 className="list-title">List new item</h2>
       </div>
