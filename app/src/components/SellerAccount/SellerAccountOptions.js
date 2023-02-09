@@ -25,7 +25,7 @@ const SellerAccountOptions = () => {
       return;
     }
 
-    const getSellerAccountWrapper = async () => {
+    (async () => {
       const sellerAccount = await getSellerAccount(publicKey);
       if (sellerAccount === undefined) {
         setIsSeller(false);
@@ -33,9 +33,7 @@ const SellerAccountOptions = () => {
         setIsSeller(true);
       }
       setLoading(false);
-    };
-
-    getSellerAccountWrapper();
+    })();
   }, [publicKey]);
 
   return (

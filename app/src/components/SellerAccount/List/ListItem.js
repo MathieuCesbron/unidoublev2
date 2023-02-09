@@ -1,21 +1,91 @@
-import { program } from "../../../utils/solana/program";
+import { useEffect, useState } from "react";
+import {
+  privateConnection,
+  program,
+  storePubKey,
+} from "../../../utils/solana/program";
 import * as anchor from "@project-serum/anchor";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { country } from "../../../utils/config/store";
+import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import "./ListItem.css";
+import {
+  getDecodedSellerAccount,
+  getSellerAccount,
+} from "../../../utils/solana/sellerAccount";
+import { ShdwDrive } from "@shadow-drive/sdk";
 
 const ListItem = ({ setMode }) => {
+  const wallet = useAnchorWallet();
   const { publicKey } = useWallet();
+
+  const [file, setFile] = useState();
+  const [shdwHash, setShdwHash] = useState("");
+  const [sellerAccount, setSellerAccount] = useState();
+  const [itemNumber, setItemNumber] = useState(-1);
+  const [loading, setLoading] = useState(true);
+
+  const [itemFormData, setItemFormData] = useState({
+    category: "",
+    privateKey: "",
+    price: "",
+    amount: "",
+  });
+
+  useEffect(() => {
+    (async () => {
+      const sa = await getSellerAccount(publicKey);
+      setSellerAccount(sa);
+
+      const dsa = getDecodedSellerAccount(sa);
+      setShdwHash(dsa.shdw_hash);
+      setItemNumber(dsa.item_count);
+
+      setLoading(false);
+    })();
+  }, [publicKey]);
 
   const listItemHandler = async (e) => {
     e.preventDefault();
-    // const [item] = anchor.web3.PublicKey.findProgramAddressSync(
-    //   [publicKey.toBuffer(), new anchor.BN(country).toBuffer("le", 2)],
-    //   program.programId,
-    // );
-    // const txListItem = await program.methods.
-    console.log("list new item");
+
+    // Upload data on shadow drive if we are on mainnet.
+    const drive = await new ShdwDrive(privateConnection, wallet).init();
+
+    // try {
+    //   const uploadFile = await drive.uploadFile(
+    //     shdwHash,
+    //     new File(["test"], "item.json"),
+    //   );
+    //   console.log(uploadFile);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
+    const [item] = anchor.web3.PublicKey.findProgramAddressSync(
+      [
+        publicKey.toBuffer(),
+        new anchor.BN(itemNumber).toArrayLike(Buffer, "le", 2),
+      ],
+      program.programId,
+    );
+
+    try {
+      const txListItem = await program.methods
+        .listItem(
+          itemFormData.category,
+          itemFormData.price,
+          itemFormData.amount,
+        )
+        .accounts({
+          user: publicKey,
+          store: storePubKey,
+          sellerAccount: sellerAccount.pubkey,
+          item: item,
+        })
+        .rpc();
+      console.log("tx list item: ", txListItem);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -37,7 +107,7 @@ const ListItem = ({ setMode }) => {
           <label>Private key</label>
           <input className="input-private-key" type="password"></input>
         </div>
-        <button className="list-btn" type="submit">
+        <button disabled={loading} className="list-btn" type="submit">
           Validate transaction on wallet
         </button>
       </form>

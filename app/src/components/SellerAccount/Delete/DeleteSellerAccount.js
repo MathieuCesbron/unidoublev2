@@ -21,7 +21,7 @@ const DeleteSellerAccount = ({ setMode }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkSellerAccount = async () => {
+    (async () => {
       const sa = await getSellerAccount(publicKey);
       const dsa = getDecodedSellerAccount(sa);
       if (dsa.item_count !== 0) {
@@ -32,9 +32,7 @@ const DeleteSellerAccount = ({ setMode }) => {
         setSellerAccount(sa);
       }
       setLoading(false);
-    };
-
-    checkSellerAccount();
+    })();
   }, [publicKey]);
 
   async function deleteSellerAccountHandler() {
