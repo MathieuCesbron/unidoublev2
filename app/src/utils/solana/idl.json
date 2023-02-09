@@ -129,10 +129,6 @@
         {
           "name": "amount",
           "type": "u16"
-        },
-        {
-          "name": "shdwFiles",
-          "type": "string"
         }
       ]
     },
@@ -172,10 +168,6 @@
         {
           "name": "amount",
           "type": "u16"
-        },
-        {
-          "name": "shdwFiles",
-          "type": "string"
         }
       ]
     },
@@ -507,11 +499,7 @@
           },
           {
             "name": "country",
-            "type": "string"
-          },
-          {
-            "name": "shdwHash",
-            "type": "string"
+            "type": "u16"
           },
           {
             "name": "sellerPublicKey",
@@ -520,10 +508,6 @@
           {
             "name": "storePublicKey",
             "type": "publicKey"
-          },
-          {
-            "name": "diffiePublicKey",
-            "type": "string"
           },
           {
             "name": "salesVolume",
@@ -536,6 +520,14 @@
           {
             "name": "itemCount",
             "type": "u16"
+          },
+          {
+            "name": "diffiePublicKey",
+            "type": "string"
+          },
+          {
+            "name": "shdwHash",
+            "type": "string"
           }
         ]
       }
@@ -560,10 +552,6 @@
           {
             "name": "amount",
             "type": "u16"
-          },
-          {
-            "name": "shdwFiles",
-            "type": "string"
           },
           {
             "name": "sellerPublicKey",
@@ -705,66 +693,56 @@
     },
     {
       "code": 6013,
-      "name": "InvalidShdwFilesLen",
-      "msg": "The shadow files should be less or equal to 40 chars"
-    },
-    {
-      "code": 6014,
-      "name": "InvalidShdwFilesCount",
-      "msg": "The shadow files should have 5 or less files"
-    },
-    {
-      "code": 6015,
       "name": "InvalidSeller",
       "msg": "The seller is invalid"
     },
     {
-      "code": 6016,
+      "code": 6014,
       "name": "InvalidAssociatedTokenAddress",
       "msg": "The associated token address is invalid"
     },
     {
-      "code": 6017,
+      "code": 6015,
       "name": "InvalidTokenProgram",
       "msg": "The token program is invalid"
     },
     {
-      "code": 6018,
+      "code": 6016,
       "name": "InvalidBuyerIndex",
       "msg": "The buyer index is invalid"
     },
     {
-      "code": 6019,
+      "code": 6017,
       "name": "InvalidProgramToken",
       "msg": "The program token is invalid"
     },
     {
-      "code": 6020,
+      "code": 6018,
       "name": "OrderMustNotBeApproved",
       "msg": "The order must not be approved"
     },
     {
-      "code": 6021,
+      "code": 6019,
       "name": "OrderMustBeApproved",
       "msg": "The order must be approved"
     },
     {
-      "code": 6022,
+      "code": 6020,
       "name": "InvalidIndex",
       "msg": "The index is invalid"
     },
     {
-      "code": 6023,
+      "code": 6021,
       "name": "InvalidRating",
       "msg": "The rating is invalid"
     },
     {
-      "code": 6024,
+      "code": 6022,
       "name": "InvalidOrder",
       "msg": "The order is invalid"
     },
     {
-      "code": 6025,
+      "code": 6023,
       "name": "OrderAlreadyRated",
       "msg": "The order is already rated"
     }
