@@ -41,7 +41,10 @@ const CreateSellerAccount = () => {
         );
       case 3:
         return (
-          <CreateSellerAccountStep3 sellerDiffiePubKey={sellerDiffiePubKey} />
+          <CreateSellerAccountStep3
+            setStep={setStep}
+            sellerDiffiePubKey={sellerDiffiePubKey}
+          />
         );
       default:
         return <div>Should never happen</div>;

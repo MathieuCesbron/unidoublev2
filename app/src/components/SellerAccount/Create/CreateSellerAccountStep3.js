@@ -4,8 +4,9 @@ import { program, storePubKey } from "../../../utils/solana/program";
 import * as anchor from "@project-serum/anchor";
 import solanaLogo from "../../../images/solana-logo.png";
 import useStore from "../../../store";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
 
-const CreateSellerAccountStep3 = ({ sellerDiffiePubKey }) => {
+const CreateSellerAccountStep3 = ({ setStep, sellerDiffiePubKey }) => {
   const { publicKey } = useWallet();
 
   const [error, setError] = useState("");
@@ -39,8 +40,15 @@ const CreateSellerAccountStep3 = ({ sellerDiffiePubKey }) => {
   };
 
   return (
-    <div>
-      <h2 className="step-title">Create Seller Account</h2>
+    <>
+      <div className="step-top">
+        <IoArrowBackCircleOutline
+          size={"1.5em"}
+          className="step-back-icon"
+          onClick={() => setStep(2)}
+        />
+        <h2>Create Seller Account</h2>
+      </div>
       <p>
         This is the last step, your account will be registred on Solana. you
         will be able to list items and hopefully make sales after that !
@@ -57,7 +65,7 @@ const CreateSellerAccountStep3 = ({ sellerDiffiePubKey }) => {
         {error &&
           "Error while creating the seller account, are you sure you have enough funds ?"}
       </p>
-    </div>
+    </>
   );
 };
 
