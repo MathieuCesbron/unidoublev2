@@ -108,23 +108,34 @@ const ListItem = (props) => {
       </div>
       <form className="list-form" onSubmit={listItemHandler}>
         <div className="list-form-field">
-          <label>Title</label>
-          <input className="input-title"></input>
+          <label className="list-form-label">Title:</label>
+          <input className="list-input list-input-title"></input>
         </div>
+        <hr className="list-separator" />
         <div className="list-form-field">
-          <label>Description</label>
-          <input className="input-description"></input>
+          <label className="list-form-label">Description: </label>
+          <textarea className="list-input list-textarea-description"></textarea>
         </div>
+        <hr className="list-separator" />
+        <label className="list-form-label-image">
+          You can upload at most 10 images:
+        </label>
+        <div className="list-image-uploader">
+          <ImagesUploader
+            fileList={fileList}
+            setFileList={setFileList}
+            setFileListBlob={setFileListBlob}
+            itemNumber={itemNumber}
+          />
+        </div>
+        <hr className="list-separator" />
         <div className="list-form-field">
-          <label>Private key</label>
-          <input className="input-private-key" type="password"></input>
+          <label className="list-form-label">Private key: </label>
+          <input
+            className="list-input list-input-private-key"
+            type="password"
+          ></input>
         </div>
-        <ImagesUploader
-          fileList={fileList}
-          setFileList={setFileList}
-          setFileListBlob={setFileListBlob}
-          itemNumber={itemNumber}
-        />
         <button disabled={loading} className="list-btn" type="submit">
           Validate transaction on wallet
         </button>
