@@ -7,28 +7,21 @@ import {
 import * as anchor from "@project-serum/anchor";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
-import "./ListItem.css";
 import {
   getDecodedSellerAccount,
   getSellerAccount,
 } from "../../../utils/solana/sellerAccount";
-import { ShadowFile, ShdwDrive } from "@shadow-drive/sdk";
+import { ShdwDrive } from "@shadow-drive/sdk";
 import { PublicKey } from "@solana/web3.js";
-import { upload } from "@testing-library/user-event/dist/upload";
-
-// interface Props {
-//   setMode: (s: string) => void;
-// }
-
-// type account = {
-//   pubkey: PublicKey;
-// };
+import ImagesUploader from "./ImagesUploader";
+import "./ListItem.css";
 
 const ListItem = (props) => {
   const wallet = useWallet();
   const { publicKey } = useWallet();
 
-  const [fileList, setFileList] = useState();
+  const [fileList, setFileList] = useState([]);
+  const [fileListBlob, setFileListBlob] = useState([]);
   const [shdwHash, setShdwHash] = useState("");
   const [sellerAccount, setSellerAccount] = useState();
   const [itemNumber, setItemNumber] = useState(-1);
@@ -68,7 +61,7 @@ const ListItem = (props) => {
 
       const uploadMultipleFiles = await drive.uploadMultipleFiles(
         new PublicKey(shdwHash),
-        fileList,
+        fileListBlob,
       );
       console.log(uploadMultipleFiles);
     } catch (error) {
@@ -105,12 +98,6 @@ const ListItem = (props) => {
 
   return (
     <div className="list-wrapper">
-      <input
-        type={"file"}
-        onChange={(e) => {
-          setFileList(e.target.files);
-        }}
-      ></input>
       <div className="list-top">
         <IoArrowBackCircleOutline
           className="back-arrow"
@@ -132,7 +119,12 @@ const ListItem = (props) => {
           <label>Private key</label>
           <input className="input-private-key" type="password"></input>
         </div>
-
+        <ImagesUploader
+          fileList={fileList}
+          setFileList={setFileList}
+          setFileListBlob={setFileListBlob}
+          itemNumber={itemNumber}
+        />
         <button disabled={loading} className="list-btn" type="submit">
           Validate transaction on wallet
         </button>
