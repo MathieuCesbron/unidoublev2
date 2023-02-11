@@ -5,7 +5,7 @@ import {
   storePubKey,
 } from "../../../utils/solana/program";
 import * as anchor from "@project-serum/anchor";
-import { AnchorWallet, useWallet } from "@solana/wallet-adapter-react";
+import { useWallet } from "@solana/wallet-adapter-react";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import "./ListItem.css";
 import {
@@ -16,21 +16,21 @@ import { ShadowFile, ShdwDrive } from "@shadow-drive/sdk";
 import { PublicKey } from "@solana/web3.js";
 import { upload } from "@testing-library/user-event/dist/upload";
 
-interface Props {
-  setMode: (s: string) => void;
-}
+// interface Props {
+//   setMode: (s: string) => void;
+// }
 
-type account = {
-  pubkey: PublicKey;
-};
+// type account = {
+//   pubkey: PublicKey;
+// };
 
-const ListItem = (props: Props) => {
+const ListItem = (props) => {
   const wallet = useWallet();
   const { publicKey } = useWallet();
 
-  const [fileList, setFileList] = useState<any>();
+  const [fileList, setFileList] = useState();
   const [shdwHash, setShdwHash] = useState("");
-  const [sellerAccount, setSellerAccount] = useState<account>();
+  const [sellerAccount, setSellerAccount] = useState();
   const [itemNumber, setItemNumber] = useState(-1);
   const [loading, setLoading] = useState(true);
 
@@ -54,24 +54,21 @@ const ListItem = (props: Props) => {
     })();
   }, [publicKey]);
 
-  const listItemHandler = async (e: React.FormEvent) => {
+  const listItemHandler = async (e) => {
     e.preventDefault();
 
     // Upload data on shadow drive if we are on mainnet.
 
-    const files: ShadowFile[] = [
+    const files = [
       { name: "test.json", file: Buffer.from(JSON.stringify({ ama: "test" })) },
     ];
 
     try {
-      const drive = await new ShdwDrive(
-        privateConnection,
-        wallet as AnchorWallet,
-      ).init();
+      const drive = await new ShdwDrive(privateConnection, wallet).init();
 
       const uploadMultipleFiles = await drive.uploadMultipleFiles(
         new PublicKey(shdwHash),
-        fileList as FileList,
+        fileList,
       );
       console.log(uploadMultipleFiles);
     } catch (error) {
