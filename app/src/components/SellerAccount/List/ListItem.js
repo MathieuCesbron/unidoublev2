@@ -14,6 +14,8 @@ import {
 import { ShdwDrive } from "@shadow-drive/sdk";
 import { PublicKey } from "@solana/web3.js";
 import ImagesUploader from "./ImagesUploader";
+import USDCLogo from "../../../images/usdc-logo.png";
+import SelectCategory from "./SelectCategory";
 import "./ListItem.css";
 
 const ListItem = (props) => {
@@ -26,6 +28,8 @@ const ListItem = (props) => {
   const [sellerAccount, setSellerAccount] = useState();
   const [itemNumber, setItemNumber] = useState(-1);
   const [loading, setLoading] = useState(true);
+
+  const [category, setCategory] = useState("");
 
   const [itemFormData, setItemFormData] = useState({
     category: "",
@@ -108,17 +112,22 @@ const ListItem = (props) => {
       </div>
       <form className="list-form" onSubmit={listItemHandler}>
         <div className="list-form-field">
-          <label className="list-form-label">Title:</label>
+          <label className="list-form-label">Title</label>
           <input className="list-input list-input-title"></input>
         </div>
         <hr className="list-separator" />
         <div className="list-form-field">
-          <label className="list-form-label">Description: </label>
+          <label className="list-form-label">Description</label>
           <textarea className="list-input list-textarea-description"></textarea>
         </div>
         <hr className="list-separator" />
+        <div className="list-form-field">
+          <label className="list-form-label">Category</label>
+          <SelectCategory category={category} setCategory={setCategory} />
+        </div>
+        <hr className="list-separator" />
         <label className="list-form-label-image">
-          You can upload at most 10 images:
+          You can upload up to 10 images
         </label>
         <div className="list-image-uploader">
           <ImagesUploader
@@ -129,8 +138,28 @@ const ListItem = (props) => {
           />
         </div>
         <hr className="list-separator" />
+        <div className="list-form-price-amount">
+          <div className="list-form-price">
+            <div className="list-form-label list-form-label-price">
+              <label>Price</label>
+              <img
+                className="list-usdc-logo"
+                src={USDCLogo}
+                alt="usdc token logo"
+              />
+            </div>
+            <input className="list-input-price" type="number"></input>
+          </div>
+          <div className="list-form-amount">
+            <label className="list-form-label list-form-label-amount">
+              Amount
+            </label>
+            <input className="list-input-amount" type="number"></input>
+          </div>
+        </div>
+        <hr className="list-separator" />
         <div className="list-form-field">
-          <label className="list-form-label">Private key: </label>
+          <label className="list-form-label">Private key</label>
           <input
             className="list-input list-input-private-key"
             type="password"
