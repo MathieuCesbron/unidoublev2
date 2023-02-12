@@ -66,17 +66,17 @@ const ListItem = (props) => {
       { name: "test.json", file: Buffer.from(JSON.stringify({ ama: "test" })) },
     ];
 
-    // try {
-    //   const drive = await new ShdwDrive(privateConnection, wallet).init();
+    try {
+      const drive = await new ShdwDrive(privateConnection, wallet).init();
 
-    //   const uploadMultipleFiles = await drive.uploadMultipleFiles(
-    //     new PublicKey(shdwHash),
-    //     fileListBlob,
-    //   );
-    //   console.log(uploadMultipleFiles);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      const uploadMultipleFiles = await drive.uploadMultipleFiles(
+        new PublicKey(shdwHash),
+        fileListBlob,
+      );
+      console.log(uploadMultipleFiles);
+    } catch (error) {
+      console.log(error);
+    }
 
     const [item] = anchor.web3.PublicKey.findProgramAddressSync(
       [

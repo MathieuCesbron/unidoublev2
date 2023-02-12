@@ -3,8 +3,10 @@ import {
   publicKey as publicKeyBorsh,
   struct,
   str,
-  u32,
+  u8,
   u16,
+  u32,
+  f32,
 } from "@project-serum/borsh";
 import { connection, programID } from "../../utils/solana/program";
 import { country } from "../../utils/config/store";
@@ -49,4 +51,43 @@ const getDecodedSellerAccount = (sellerAccount) => {
   ]).decode(sellerAccount.account.data, 8);
 };
 
-export { getSellerAccount, getDecodedSellerAccount };
+const getMyItems = async (publicKey) => {
+  const myItemsFilters = {
+    filters: [
+      {
+        dataSize: 1000,
+      },
+      {
+        memcmp: {
+          offset: 8 + 2 + 1 + 4 + 2,
+          bytes: publicKey,
+        },
+      },
+    ],
+  };
+
+  return await connection.getProgramAccounts(programID, myItemsFilters);
+};
+
+const getDecodedMyItems = async (myItems) => {
+  return myItems.map((myItem) => {
+    return struct([
+      u16("number"),
+      u8("category"),
+      u32("price"),
+      u16("amount"),
+      publicKeyBorsh("seller_public_key"),
+      publicKeyBorsh("seller_account_public_key"),
+      u32("buyer_count"),
+      u16("rating_count"),
+      f32("rating"),
+    ]).decode(myItem.account.data, 8);
+  });
+};
+
+export {
+  getSellerAccount,
+  getDecodedSellerAccount,
+  getMyItems,
+  getDecodedMyItems,
+};

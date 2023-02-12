@@ -793,11 +793,11 @@ pub struct SellerAccount {
 
 #[account]
 pub struct Item {
-    pub number: u16,  // +4
+    pub number: u16,  // +2
     pub category: u8, // +1
     // price in USDC cent, a price of 1 USDC will equal 100 on-chain.
     pub price: u32,  // +4
-    pub amount: u16, // +4
+    pub amount: u16, // +2
 
     pub seller_public_key: Pubkey,         // +32
     pub seller_account_public_key: Pubkey, // +32
