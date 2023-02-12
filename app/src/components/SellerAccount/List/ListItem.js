@@ -32,11 +32,14 @@ const ListItem = (props) => {
   const [category, setCategory] = useState("");
 
   const [itemFormData, setItemFormData] = useState({
-    category: "",
+    title: "",
+    description: "",
     privateKey: "",
     price: "",
     amount: "",
   });
+
+  console.log(itemFormData);
 
   useEffect(() => {
     (async () => {
@@ -100,6 +103,13 @@ const ListItem = (props) => {
     // }
   };
 
+  const setNewArticleFormDataHandler = (event) => {
+    setItemFormData((prevItemFormData) => ({
+      ...prevItemFormData,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
   return (
     <div className="list-wrapper">
       <div className="list-top">
@@ -113,12 +123,26 @@ const ListItem = (props) => {
       <form className="list-form" onSubmit={listItemHandler}>
         <div className="list-form-field">
           <label className="list-form-label">Title</label>
-          <input className="list-input list-input-title"></input>
+          <input
+            className="list-input list-input-title"
+            name="title"
+            value={itemFormData.title}
+            onChange={setNewArticleFormDataHandler}
+            minLength="10"
+            maxLength="75"
+          ></input>
         </div>
         <hr className="list-separator" />
         <div className="list-form-field">
           <label className="list-form-label">Description</label>
-          <textarea className="list-input list-textarea-description"></textarea>
+          <textarea
+            className="list-input list-textarea-description"
+            name="description"
+            value={itemFormData.description}
+            onChange={setNewArticleFormDataHandler}
+            minLength={10}
+            maxLength={10000}
+          ></textarea>
         </div>
         <hr className="list-separator" />
         <div className="list-form-field">
@@ -148,13 +172,31 @@ const ListItem = (props) => {
                 alt="usdc token logo"
               />
             </div>
-            <input className="list-input-price" type="number"></input>
+            <input
+              className="list-input-price"
+              type="number"
+              name="price"
+              value={itemFormData.price}
+              onChange={setNewArticleFormDataHandler}
+              min="1"
+              max="1000000"
+              step={0.01}
+            ></input>
           </div>
           <div className="list-form-amount">
             <label className="list-form-label list-form-label-amount">
               Amount
             </label>
-            <input className="list-input-amount" type="number"></input>
+            <input
+              className="list-input-amount"
+              type="number"
+              name="amount"
+              value={itemFormData.amount}
+              onChange={setNewArticleFormDataHandler}
+              min="1"
+              max="50000"
+              step="1"
+            ></input>
           </div>
         </div>
         <hr className="list-separator" />
@@ -163,6 +205,11 @@ const ListItem = (props) => {
           <input
             className="list-input list-input-private-key"
             type="password"
+            name="privateKey"
+            value={itemFormData.privateKey}
+            onChange={setNewArticleFormDataHandler}
+            minLength="62"
+            maxLength="63"
           ></input>
         </div>
         <button disabled={loading} className="list-btn" type="submit">
