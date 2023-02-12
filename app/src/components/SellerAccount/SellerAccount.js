@@ -5,6 +5,7 @@ import { CiBoxes } from "react-icons/ci";
 import { TiDeleteOutline } from "react-icons/ti";
 import DeleteSellerAccount from "./Delete/DeleteSellerAccount";
 import ListItem from "./List/ListItem";
+import MyItems from "./MyItems/MyItems";
 import "./SellerAccount.css";
 
 const SellerAccount = () => {
@@ -23,13 +24,17 @@ const SellerAccount = () => {
   };
 
   const myItemsHandler = () => {
-    console.log("my items");
+    setMode("myItems");
   };
 
   const SellerAccountMode = () => {
     switch (mode) {
       case "newItem":
         return <ListItem setMode={setMode} />;
+      case "myItems":
+        return <MyItems setMode={setMode} />;
+      case "delete":
+        return <DeleteSellerAccount setMode={setMode} />;
       case "account":
         return (
           <div className="seller-account">
@@ -60,8 +65,6 @@ const SellerAccount = () => {
             </button>
           </div>
         );
-      case "delete":
-        return <DeleteSellerAccount setMode={setMode} />;
     }
   };
 

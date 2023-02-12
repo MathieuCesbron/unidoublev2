@@ -17,8 +17,8 @@ import { PublicKey } from "@solana/web3.js";
 import ImagesUploader from "./ImagesUploader";
 import USDCLogo from "../../../images/usdc-logo.png";
 import SelectCategory from "./SelectCategory";
+import "../Option.css";
 import "./ListItem.css";
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 
 const ListItem = (props) => {
   const wallet = useWallet();
@@ -114,14 +114,14 @@ const ListItem = (props) => {
   };
 
   return (
-    <div className="list-wrapper">
-      <div className="list-top">
+    <div className="option-wrapper">
+      <div className="option-top">
         <IoArrowBackCircleOutline
-          className="back-arrow"
+          className="option-back-arrow"
           size={"2.3em"}
           onClick={() => props.setMode("account")}
         />
-        <h2 className="list-title">List new item</h2>
+        <h2 className="option-title">List new item</h2>
       </div>
       <form className="list-form" onSubmit={listItemHandler}>
         <div className="list-form-field">
