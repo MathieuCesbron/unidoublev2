@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  network,
   privateConnection,
   program,
   storePubKey,
@@ -17,6 +18,7 @@ import ImagesUploader from "./ImagesUploader";
 import USDCLogo from "../../../images/usdc-logo.png";
 import SelectCategory from "./SelectCategory";
 import "./ListItem.css";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 
 const ListItem = (props) => {
   const wallet = useWallet();
@@ -57,8 +59,11 @@ const ListItem = (props) => {
   const listItemHandler = async (e) => {
     e.preventDefault();
 
-    // Upload data on shadow drive if we are on mainnet.
-
+    // Case 1: Wallet is on devnet
+    // We upload the shadow files to a shared shadow storage.
+    //
+    // Case 2: Wallet is on mainnet-beta
+    // We upload the shadow files to the shadow storage of the seller.
     const files = [
       { name: "test.json", file: Buffer.from(JSON.stringify({ ama: "test" })) },
     ];
