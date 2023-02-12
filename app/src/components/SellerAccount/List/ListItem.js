@@ -41,8 +41,6 @@ const ListItem = (props) => {
     amount: "",
   });
 
-  console.log(itemFormData);
-
   useEffect(() => {
     (async () => {
       const sa = await getSellerAccount(publicKey);
@@ -68,47 +66,47 @@ const ListItem = (props) => {
       { name: "test.json", file: Buffer.from(JSON.stringify({ ama: "test" })) },
     ];
 
-    try {
-      const drive = await new ShdwDrive(privateConnection, wallet).init();
-
-      const uploadMultipleFiles = await drive.uploadMultipleFiles(
-        new PublicKey(shdwHash),
-        fileListBlob,
-      );
-      console.log(uploadMultipleFiles);
-    } catch (error) {
-      console.log(error);
-    }
-
-    // const [item] = anchor.web3.PublicKey.findProgramAddressSync(
-    //   [
-    //     publicKey!.toBuffer(),
-    //     new anchor.BN(itemNumber).toArrayLike(Buffer, "le", 2),
-    //   ],
-    //   program.programId,
-    // );
-
     // try {
-    //   const txListItem = await program.methods
-    //     .listItem(
-    //       itemFormData.category,
-    //       itemFormData.price,
-    //       itemFormData.amount,
-    //     )
-    //     .accounts({
-    //       user: publicKey!,
-    //       store: storePubKey,
-    //       sellerAccount: sellerAccount?.pubkey,
-    //       item: item,
-    //     })
-    //     .rpc();
-    //   console.log("tx list item: ", txListItem);
+    //   const drive = await new ShdwDrive(privateConnection, wallet).init();
+
+    //   const uploadMultipleFiles = await drive.uploadMultipleFiles(
+    //     new PublicKey(shdwHash),
+    //     fileListBlob,
+    //   );
+    //   console.log(uploadMultipleFiles);
     // } catch (error) {
     //   console.log(error);
     // }
+
+    const [item] = anchor.web3.PublicKey.findProgramAddressSync(
+      [
+        publicKey.toBuffer(),
+        new anchor.BN(itemNumber).toArrayLike(Buffer, "le", 2),
+      ],
+      program.programId,
+    );
+
+    try {
+      const txListItem = await program.methods
+        .listItem(
+          itemFormData.category,
+          itemFormData.price * 100,
+          itemFormData.amount,
+        )
+        .accounts({
+          user: publicKey,
+          store: storePubKey,
+          sellerAccount: sellerAccount?.pubkey,
+          item: item,
+        })
+        .rpc();
+      console.log("tx list item: ", txListItem);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const setNewArticleFormDataHandler = (event) => {
+  const setItemFormDataHandler = (event) => {
     setItemFormData((prevItemFormData) => ({
       ...prevItemFormData,
       [event.target.name]: event.target.value,
@@ -132,7 +130,7 @@ const ListItem = (props) => {
             className="list-input list-input-title"
             name="title"
             value={itemFormData.title}
-            onChange={setNewArticleFormDataHandler}
+            onChange={setItemFormDataHandler}
             minLength="10"
             maxLength="75"
           ></input>
@@ -144,7 +142,7 @@ const ListItem = (props) => {
             className="list-input list-textarea-description"
             name="description"
             value={itemFormData.description}
-            onChange={setNewArticleFormDataHandler}
+            onChange={setItemFormDataHandler}
             minLength={10}
             maxLength={10000}
           ></textarea>
@@ -182,7 +180,7 @@ const ListItem = (props) => {
               type="number"
               name="price"
               value={itemFormData.price}
-              onChange={setNewArticleFormDataHandler}
+              onChange={setItemFormDataHandler}
               min="1"
               max="1000000"
               step={0.01}
@@ -197,7 +195,7 @@ const ListItem = (props) => {
               type="number"
               name="amount"
               value={itemFormData.amount}
-              onChange={setNewArticleFormDataHandler}
+              onChange={setItemFormDataHandler}
               min="1"
               max="50000"
               step="1"
@@ -212,7 +210,7 @@ const ListItem = (props) => {
             type="password"
             name="privateKey"
             value={itemFormData.privateKey}
-            onChange={setNewArticleFormDataHandler}
+            onChange={setItemFormDataHandler}
             minLength="62"
             maxLength="63"
           ></input>
