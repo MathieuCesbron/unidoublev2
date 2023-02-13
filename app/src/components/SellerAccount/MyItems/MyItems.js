@@ -14,9 +14,10 @@ import "./MyItems.css";
 const MyItems = (props) => {
   const { publicKey } = useWallet();
 
-  const [sellerAccount, setSellerAccount] = useState();
+  const [shadowHash, setShadowHash] = useState();
   const [decodedMyItems, setDecodedMyItems] = useState([]);
 
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
   const myItemsPerPage = 5;
@@ -27,16 +28,14 @@ const MyItems = (props) => {
   useEffect(() => {
     (async () => {
       const mi = await getMyItems(publicKey);
-      console.log(mi);
-
       const dmi = await getDecodedMyItems(mi);
-      console.log(dmi);
       setDecodedMyItems(dmi);
 
       const sa = await getSellerAccount(publicKey);
-      setSellerAccount(sa);
-
       const dsa = getDecodedSellerAccount(sa);
+      setShadowHash(dsa.shdw_hash);
+
+      setLoading(false);
     })();
   }, [publicKey]);
 
@@ -50,11 +49,13 @@ const MyItems = (props) => {
         />
         <h2 className="option-title">My Items</h2>
       </div>
-      <div className="my-items-wrapper">
-        {currentMyItems.map((data) => (
-          <MyItem data={data} />
-        ))}
-      </div>
+      {!loading && (
+        <div className="my-items-wrapper">
+          {currentMyItems.map((data, index) => (
+            <MyItem itemData={data} shadowHash={shadowHash} key={index} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
