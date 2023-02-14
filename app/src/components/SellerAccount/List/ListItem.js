@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  network,
   privateConnection,
   program,
   storePubKey,
@@ -62,16 +61,27 @@ const ListItem = (props) => {
     //
     // Case 2: Wallet is on mainnet-beta
     // We upload the shadow files to the shadow storage of the seller.
-    const files = [
-      { name: "test.json", file: Buffer.from(JSON.stringify({ ama: "test" })) },
-    ];
+
+    const itemJSONBlob = new Blob(
+      [
+        JSON.stringify({
+          title: itemFormData.title,
+          description: itemFormData.description,
+          extensions: fileList.map((file) => file.type.split("/")[1]),
+        }),
+      ],
+      {
+        type: "application/json",
+      },
+    );
+    itemJSONBlob.name = `item${itemNumber}.json`;
 
     try {
       const drive = await new ShdwDrive(privateConnection, wallet).init();
 
       const uploadMultipleFiles = await drive.uploadMultipleFiles(
         new PublicKey(shdwHash),
-        fileListBlob,
+        [...fileListBlob, itemJSONBlob],
       );
       console.log(uploadMultipleFiles);
     } catch (error) {

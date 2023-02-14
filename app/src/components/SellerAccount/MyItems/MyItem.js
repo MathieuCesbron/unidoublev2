@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
+import { Image } from "antd";
+import "./MyItem.css";
 
 const MyItem = ({ itemData, shadowHash }) => {
   const [itemInfo, setItemInfo] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -24,18 +28,33 @@ const MyItem = ({ itemData, shadowHash }) => {
     <div className="my-item-wrapper">
       {!loading && (
         <>
-          <h4>{itemInfo.title}</h4>
-          <p>{itemInfo.description}</p>
-          <>
-            {itemInfo.extensions.map((extension, index) => (
-              <img
-                src={`https://shdw-drive.genesysgo.net/${shadowHash}/item${
-                  itemData.number
-                }_image${index + 1}.${extension}`}
-                key={index}
-              />
-            ))}
-          </>
+          <Image
+            preview={{ visible: false }}
+            width={200}
+            height={200}
+            style={{
+              objectFit: "cover",
+              border: "black solid",
+              borderRadius: "5px",
+            }}
+            src={`https://shdw-drive.genesysgo.net/${shadowHash}/item${itemData.number}_image1.${itemInfo.extensions[0]}`}
+            onClick={() => setVisible(true)}
+          />
+          <div style={{ display: "none" }}>
+            <Image.PreviewGroup
+              preview={{ visible, onVisibleChange: (vis) => setVisible(vis) }}
+            >
+              {itemInfo.extensions.map((extension, index) => (
+                <Image
+                  src={`https://shdw-drive.genesysgo.net/${shadowHash}/item${
+                    itemData.number
+                  }_image${index + 1}.${extension}`}
+                />
+              ))}
+            </Image.PreviewGroup>
+          </div>
+          {/* <h4>{itemInfo.title}</h4>
+          <p>{itemInfo.description}</p> */}
         </>
       )}
     </div>
