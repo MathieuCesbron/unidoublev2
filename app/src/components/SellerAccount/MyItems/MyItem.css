@@ -1,28 +1,125 @@
 .my-item-wrapper {
   display: flex;
-  border: black solid;
+  border: grey solid;
+  border-radius: 8px;
+}
+
+.my-item-image {
+  border-right: grey solid;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 
 .my-item-body {
-  margin-left: 1em;
+  padding: 0.5em 0.5em 0.5em 1em;
+}
+
+/* top */
+
+.my-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 30%;
+  overflow: hidden;
 }
 
 .my-item-title {
-  font-size: 1rem;
+  margin: 0 1em 0 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
-.my-item-price-stars {
+.my-item-btn {
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 5px;
+}
+
+.my-item-update-btn {
+  background-color: rgb(146, 185, 248);
+}
+
+.my-item-update-btn:hover,
+.my-item-update-btn:focus {
+  background-color: black;
+  cursor: pointer;
+}
+
+/* middle */
+
+.my-item-mid {
   display: flex;
   align-items: center;
-  margin: 0;
-  padding: 0;
-}
-
-.my-item-usdc-logo {
-  height: 60px;
+  height: 40%;
 }
 
 .my-item-price {
-  margin: 0 1em 0 0.5em;
+  display: flex;
+  align-items: center;
+}
+
+.my-item-usdc-logo {
+  width: 60px;
+  margin-right: 1em;
+}
+
+.my-item-usdc {
   font-size: 2.5rem;
+}
+.my-item-rate {
+  margin: auto;
+}
+
+/* bottom */
+
+.my-item-bottom {
+  height: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.my-item-stats {
+  margin: 0 0 0.5em 0;
+}
+
+.my-item-score {
+  margin: 0;
+}
+
+.my-item-delete-btn {
+  align-self: flex-end;
+  background-color: rgb(242, 77, 77);
+}
+
+.my-item-delete-btn:focus,
+.my-item-delete-btn:hover {
+  cursor: pointer;
+  background-color: rgb(150, 3, 3);
+}
+
+@media (max-width: 850px) {
+  .my-item-rate {
+    display: none;
+    font-size: 20;
+  }
+}
+
+@media (max-width: 650px) {
+  .my-item-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .my-item-image {
+    border: none;
+    border-radius: 0;
+    border-bottom: grey solid;
+    margin-bottom: 1em;
+  }
 }

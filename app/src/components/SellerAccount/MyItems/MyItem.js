@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Image } from "antd";
 import USDCLogo from "../../../images/usdc-logo.png";
+import { Rate } from "antd";
 import "./MyItem.css";
 
-const MyItem = ({ itemData, shadowHash }) => {
+const MyItem = ({ itemData, shadowHash, salesCount, salesVolume }) => {
   const [itemInfo, setItemInfo] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -33,11 +34,10 @@ const MyItem = ({ itemData, shadowHash }) => {
             preview={{ visible: false }}
             style={{
               objectFit: "cover",
-              border: "black solid",
-              borderRadius: "5px",
               width: "250px",
               height: "250px",
             }}
+            className="my-item-image"
             src={`https://shdw-drive.genesysgo.net/${shadowHash}/item${itemData.number}_image1.${itemInfo.extensions[0]}`}
             onClick={() => setVisible(true)}
           />
@@ -57,14 +57,39 @@ const MyItem = ({ itemData, shadowHash }) => {
         </>
       )}
       <div className="my-item-body">
-        <h3 className="my-item-title">{itemInfo.title}</h3>
-        <div className="my-item-price-stars">
-          <img className="my-item-usdc-logo" src={USDCLogo} alt="usdc-logo" />
-          <p className="my-item-price">{itemData.price / 100}</p>
+        <div className="my-item-top">
+          <h3 className="my-item-title">{itemInfo.title}</h3>
+          <button className="my-item-btn my-item-update-btn">UPDATE</button>
         </div>
-        <p className="my-item-available-buyer">
-          {itemData.amount} available / {itemData.buyer_count} buyer
-        </p>
+        <div className="my-item-mid">
+          <div className="my-item-price">
+            <img className="my-item-usdc-logo" src={USDCLogo} alt="usdc-logo" />
+            <p className="my-item-usdc">{itemData.price / 100}</p>
+          </div>
+          <Rate
+            disabled
+            allowHalf
+            defaultValue={itemData.rating}
+            style={{ fontSize: 28 }}
+            className="my-item-rate"
+          />
+        </div>
+        <div className="my-item-bottom">
+          <div>
+            <p className="my-item-stats">
+              {itemData.amount} available / {itemData.buyer_count} buyer
+            </p>
+            <p className="my-item-score">
+              SCORE:&nbsp;
+              {itemData.rating *
+                itemData.rating_count *
+                itemData.buyer_count *
+                salesCount *
+                salesVolume}
+            </p>
+          </div>
+          <button className="my-item-btn my-item-delete-btn">DELETE</button>
+        </div>
       </div>
     </div>
   );

@@ -15,6 +15,8 @@ const MyItems = (props) => {
   const { publicKey } = useWallet();
 
   const [shadowHash, setShadowHash] = useState();
+  const [salesCount, setSalesCount] = useState();
+  const [salesVolume, setSalesVolume] = useState();
   const [decodedMyItems, setDecodedMyItems] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -34,6 +36,8 @@ const MyItems = (props) => {
       const sa = await getSellerAccount(publicKey);
       const dsa = getDecodedSellerAccount(sa);
       setShadowHash(dsa.shdw_hash);
+      setSalesCount(dsa.sales_count);
+      setSalesVolume(dsa.sales_volume);
 
       setLoading(false);
     })();
@@ -52,7 +56,13 @@ const MyItems = (props) => {
       {!loading && (
         <div className="my-items-wrapper">
           {currentMyItems.map((data, index) => (
-            <MyItem itemData={data} shadowHash={shadowHash} key={index} />
+            <MyItem
+              itemData={data}
+              shadowHash={shadowHash}
+              salesCount={salesCount}
+              salesVolume={salesVolume}
+              key={index}
+            />
           ))}
         </div>
       )}
