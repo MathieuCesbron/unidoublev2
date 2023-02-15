@@ -26,6 +26,14 @@ const MyItem = ({ itemData, shadowHash, salesCount, salesVolume }) => {
     })();
   }, []);
 
+  const myItemUpdateHandler = () => {
+    console.log("update");
+  };
+
+  const myItemDeleteHandler = () => {
+    console.log("delete");
+  };
+
   return (
     <div className="my-item-wrapper">
       {!loading && (
@@ -59,7 +67,12 @@ const MyItem = ({ itemData, shadowHash, salesCount, salesVolume }) => {
       <div className="my-item-body">
         <div className="my-item-top">
           <h3 className="my-item-title">{itemInfo.title}</h3>
-          <button className="my-item-btn my-item-update-btn">UPDATE</button>
+          <button
+            className="my-item-btn my-item-update-btn"
+            onClick={myItemUpdateHandler}
+          >
+            UPDATE
+          </button>
         </div>
         <div className="my-item-mid">
           <div className="my-item-price">
@@ -88,7 +101,12 @@ const MyItem = ({ itemData, shadowHash, salesCount, salesVolume }) => {
                 salesVolume}
             </p>
           </div>
-          <button className="my-item-btn my-item-delete-btn">DELETE</button>
+          <button
+            className="my-item-btn my-item-delete-btn"
+            onClick={myItemDeleteHandler}
+          >
+            DELETE
+          </button>
         </div>
       </div>
     </div>
