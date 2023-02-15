@@ -1,2 +1,28 @@
 .my-item-wrapper {
+  display: flex;
+  border: black solid;
+}
+
+.my-item-body {
+  margin-left: 1em;
+}
+
+.my-item-title {
+  font-size: 1rem;
+}
+
+.my-item-price-stars {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.my-item-usdc-logo {
+  height: 60px;
+}
+
+.my-item-price {
+  margin: 0 1em 0 0.5em;
+  font-size: 2.5rem;
 }

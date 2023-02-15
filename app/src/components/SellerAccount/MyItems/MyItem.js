@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Image } from "antd";
+import USDCLogo from "../../../images/usdc-logo.png";
 import "./MyItem.css";
 
 const MyItem = ({ itemData, shadowHash }) => {
@@ -30,12 +31,12 @@ const MyItem = ({ itemData, shadowHash }) => {
         <>
           <Image
             preview={{ visible: false }}
-            width={200}
-            height={200}
             style={{
               objectFit: "cover",
               border: "black solid",
               borderRadius: "5px",
+              width: "250px",
+              height: "250px",
             }}
             src={`https://shdw-drive.genesysgo.net/${shadowHash}/item${itemData.number}_image1.${itemInfo.extensions[0]}`}
             onClick={() => setVisible(true)}
@@ -53,10 +54,18 @@ const MyItem = ({ itemData, shadowHash }) => {
               ))}
             </Image.PreviewGroup>
           </div>
-          {/* <h4>{itemInfo.title}</h4>
-          <p>{itemInfo.description}</p> */}
         </>
       )}
+      <div className="my-item-body">
+        <h3 className="my-item-title">{itemInfo.title}</h3>
+        <div className="my-item-price-stars">
+          <img className="my-item-usdc-logo" src={USDCLogo} alt="usdc-logo" />
+          <p className="my-item-price">{itemData.price / 100}</p>
+        </div>
+        <p className="my-item-available-buyer">
+          {itemData.amount} available / {itemData.buyer_count} buyer
+        </p>
+      </div>
     </div>
   );
 };
