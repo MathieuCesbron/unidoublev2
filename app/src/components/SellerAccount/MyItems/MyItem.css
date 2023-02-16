@@ -124,4 +124,7 @@
     border-bottom: grey solid;
     margin-bottom: 1em;
   }
+  .my-item-body {
+    width: 93%;
+  }
 }
