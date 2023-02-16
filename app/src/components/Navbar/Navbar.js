@@ -1,9 +1,9 @@
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import Search from "./Search";
 import unidoubleLogo from "../../images/unidouble-logo.png";
-import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import { useWallet } from "@solana/wallet-adapter-react";
+import "./Navbar.css";
 
 const Navbar = () => {
   const { connected } = useWallet();
