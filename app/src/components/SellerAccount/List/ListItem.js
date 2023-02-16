@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  connection,
   privateConnection,
   program,
   storePubKey,
@@ -111,6 +112,8 @@ const ListItem = (props) => {
         })
         .rpc();
       console.log("tx list item: ", txListItem);
+      await connection.confirmTransaction(txListItem);
+      props.setMode("myItems");
     } catch (error) {
       console.log(error);
     }

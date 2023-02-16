@@ -2,6 +2,7 @@
   display: flex;
   border: grey solid;
   border-radius: 8px;
+  margin-bottom: 1em;
 }
 
 .my-item-image {
@@ -12,6 +13,7 @@
 
 .my-item-body {
   padding: 0.5em 0.5em 0.5em 1em;
+  width: 100%;
 }
 
 /* top */

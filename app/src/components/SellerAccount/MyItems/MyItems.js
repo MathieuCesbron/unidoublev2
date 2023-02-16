@@ -63,7 +63,7 @@ const MyItems = (props) => {
       </div>
       {!loading && (
         <div className="my-items-wrapper">
-          {currentMyItems.map((data, index) => (
+          {currentMyItems.map((data) => (
             <MyItem
               itemData={data}
               shadowHash={shadowHash}
@@ -71,7 +71,7 @@ const MyItems = (props) => {
               salesVolume={salesVolume}
               setDecodedMyItems={setDecodedMyItems}
               sellerAccountPublicKey={sellerAccountPublicKey}
-              key={index}
+              key={data.number}
             />
           ))}
         </div>

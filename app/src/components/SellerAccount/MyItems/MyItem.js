@@ -11,6 +11,7 @@ const MyItem = ({
   shadowHash,
   salesCount,
   salesVolume,
+  setDecodedMyItems,
   sellerAccountPublicKey,
 }) => {
   const { publicKey } = useWallet();
@@ -30,6 +31,7 @@ const MyItem = ({
   };
 
   const handleDeleteItem = async () => {
+    // TODO: should also delete data on decentralized storage
     const txDeleteItem = await program.methods
       .deleteItem()
       .accounts({
@@ -40,6 +42,12 @@ const MyItem = ({
       })
       .rpc();
     console.log(txDeleteItem);
+    setDecodedMyItems((prevDecodedMyItems) =>
+      prevDecodedMyItems.filter(
+        (prevDecodedMyItem) => prevDecodedMyItem.pubkey !== itemData.pubkey,
+      ),
+    );
+    setIsModalDeleteOpen(false);
   };
 
   useEffect(() => {
