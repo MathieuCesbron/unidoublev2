@@ -96,6 +96,7 @@ const MyItem = ({
             >
               {itemInfo.extensions.map((extension, index) => (
                 <Image
+                  key={index}
                   src={`https://shdw-drive.genesysgo.net/${shadowHash}/item${
                     itemData.number
                   }_image${index + 1}.${extension}`}
