@@ -1,14 +1,46 @@
 import { useEffect, useState } from "react";
 import { Image } from "antd";
 import USDCLogo from "../../../images/usdc-logo.png";
-import { Rate } from "antd";
+import { Rate, Modal, Checkbox } from "antd";
 import "./MyItem.css";
+import { program, storePubKey } from "../../../utils/solana/program";
+import { useWallet } from "@solana/wallet-adapter-react";
 
-const MyItem = ({ itemData, shadowHash, salesCount, salesVolume }) => {
+const MyItem = ({
+  itemData,
+  shadowHash,
+  salesCount,
+  salesVolume,
+  sellerAccountPublicKey,
+}) => {
+  const { publicKey } = useWallet();
   const [itemInfo, setItemInfo] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [visible, setVisible] = useState(false);
+  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+  const [isDeleteItemSure, setIsDeleteItemSure] = useState(false);
+
+  const handleDeleteCancel = () => {
+    setIsModalDeleteOpen(false);
+  };
+
+  const checkboxHandler = (e) => {
+    setIsDeleteItemSure(e.target.checked);
+  };
+
+  const handleDeleteItem = async () => {
+    const txDeleteItem = await program.methods
+      .deleteItem()
+      .accounts({
+        user: publicKey,
+        sellerAccount: sellerAccountPublicKey,
+        item: itemData.pubkey,
+        store: storePubKey,
+      })
+      .rpc();
+    console.log(txDeleteItem);
+  };
 
   useEffect(() => {
     (async () => {
@@ -31,7 +63,7 @@ const MyItem = ({ itemData, shadowHash, salesCount, salesVolume }) => {
   };
 
   const myItemDeleteHandler = () => {
-    console.log("delete");
+    setIsModalDeleteOpen(true);
   };
 
   return (
@@ -109,6 +141,22 @@ const MyItem = ({ itemData, shadowHash, salesCount, salesVolume }) => {
           </button>
         </div>
       </div>
+      <Modal
+        title={`Delete item: ${itemInfo.title}`}
+        open={isModalDeleteOpen}
+        onCancel={handleDeleteCancel}
+        onOk={handleDeleteItem}
+        okButtonProps={{
+          danger: true,
+          disabled: !isDeleteItemSure,
+        }}
+        okText="DELETE"
+      >
+        <p>You will get 0.00785 SOL back.</p>
+        <Checkbox onChange={checkboxHandler}>
+          I want to delete this article
+        </Checkbox>
+      </Modal>
     </div>
   );
 };

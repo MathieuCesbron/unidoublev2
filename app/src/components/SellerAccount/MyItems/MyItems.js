@@ -14,6 +14,7 @@ import "./MyItems.css";
 const MyItems = (props) => {
   const { publicKey } = useWallet();
 
+  const [sellerAccountPublicKey, setSellerAccountPublicKey] = useState();
   const [shadowHash, setShadowHash] = useState();
   const [salesCount, setSalesCount] = useState();
   const [salesVolume, setSalesVolume] = useState();
@@ -31,9 +32,16 @@ const MyItems = (props) => {
     (async () => {
       const mi = await getMyItems(publicKey);
       const dmi = await getDecodedMyItems(mi);
-      setDecodedMyItems(dmi);
+      setDecodedMyItems(
+        dmi.map((elem, index) => ({
+          ...elem,
+          pubkey: mi[index].pubkey,
+        })),
+      );
 
       const sa = await getSellerAccount(publicKey);
+      setSellerAccountPublicKey(sa.pubkey);
+
       const dsa = getDecodedSellerAccount(sa);
       setShadowHash(dsa.shdw_hash);
       setSalesCount(dsa.sales_count);
@@ -61,6 +69,8 @@ const MyItems = (props) => {
               shadowHash={shadowHash}
               salesCount={salesCount}
               salesVolume={salesVolume}
+              setDecodedMyItems={setDecodedMyItems}
+              sellerAccountPublicKey={sellerAccountPublicKey}
               key={index}
             />
           ))}
