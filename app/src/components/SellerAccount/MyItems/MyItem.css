@@ -35,6 +35,12 @@
   word-break: break-word;
 }
 
+.my-item-category {
+  margin-top: 0.1em;
+  font-size: 1rem;
+  color: grey;
+}
+
 .my-item-btn {
   font-size: 1rem;
   font-weight: bold;

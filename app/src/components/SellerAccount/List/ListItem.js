@@ -99,11 +99,7 @@ const ListItem = (props) => {
 
     try {
       const txListItem = await program.methods
-        .listItem(
-          itemFormData.category,
-          itemFormData.price * 100,
-          itemFormData.amount,
-        )
+        .listItem(category, itemFormData.price * 100, itemFormData.amount)
         .accounts({
           user: publicKey,
           store: storePubKey,

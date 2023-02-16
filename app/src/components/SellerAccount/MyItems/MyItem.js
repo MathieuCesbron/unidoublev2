@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Image } from "antd";
 import USDCLogo from "../../../images/usdc-logo.png";
 import { Rate, Modal, Checkbox } from "antd";
-import "./MyItem.css";
 import { program, storePubKey } from "../../../utils/solana/program";
 import { useWallet } from "@solana/wallet-adapter-react";
+import categories from "../../../utils/config/categories";
+import "./MyItem.css";
 
 const MyItem = ({
   itemData,
@@ -106,7 +107,12 @@ const MyItem = ({
       )}
       <div className="my-item-body">
         <div className="my-item-top">
-          <h3 className="my-item-title">{itemInfo.title}</h3>
+          <div>
+            <h3 className="my-item-title">{itemInfo.title}</h3>
+            <p className="my-item-category">
+              {categories.find((c) => c.value === itemData.category).label}
+            </p>
+          </div>
           <button
             className="my-item-btn my-item-update-btn"
             onClick={myItemUpdateHandler}
