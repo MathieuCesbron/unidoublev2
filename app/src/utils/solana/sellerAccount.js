@@ -52,11 +52,9 @@ const getDecodedSellerAccount = (sellerAccount) => {
 };
 
 const getMyItems = async (publicKey) => {
-  const myItemsFilters = {
+  const filters = {
     filters: [
-      {
-        dataSize: 1000,
-      },
+      { dataSize: 1000 },
       {
         memcmp: {
           offset: 8 + 2 + 1 + 4 + 2,
@@ -66,10 +64,27 @@ const getMyItems = async (publicKey) => {
     ],
   };
 
-  return await connection.getProgramAccounts(programID, myItemsFilters);
+  return await connection.getProgramAccounts(programID, filters);
 };
 
-const getDecodedMyItems = async (myItems) => {
+const getItemsByCategory = async (category) => {
+  const filters = {
+    filters: [
+      { dataSize: 1000 },
+      {
+        memcmp: {
+          offset: 8 + 2,
+          bytes: bs58.encode(Buffer.from([category.value])),
+          length: 1,
+        },
+      },
+    ],
+  };
+
+  return await connection.getProgramAccounts(programID, filters);
+};
+
+const getDecodedMyItems = (myItems) => {
   return myItems.map((myItem) => {
     return struct([
       u16("number"),
@@ -89,5 +104,6 @@ export {
   getSellerAccount,
   getDecodedSellerAccount,
   getMyItems,
+  getItemsByCategory,
   getDecodedMyItems,
 };

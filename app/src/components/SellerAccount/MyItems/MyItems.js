@@ -31,7 +31,7 @@ const MyItems = (props) => {
   useEffect(() => {
     (async () => {
       const mi = await getMyItems(publicKey);
-      const dmi = await getDecodedMyItems(mi);
+      const dmi = getDecodedMyItems(mi);
       setDecodedMyItems(
         dmi.map((elem, index) => ({
           ...elem,
