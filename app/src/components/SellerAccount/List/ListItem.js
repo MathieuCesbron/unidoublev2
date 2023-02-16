@@ -28,7 +28,7 @@ const ListItem = (props) => {
   const [fileListBlob, setFileListBlob] = useState([]);
   const [shdwHash, setShdwHash] = useState("");
   const [sellerAccount, setSellerAccount] = useState();
-  const [itemNumber, setItemNumber] = useState(-1);
+  const [itemCount, setItemCount] = useState(-1);
   const [loading, setLoading] = useState(true);
 
   const [category, setCategory] = useState("");
@@ -48,7 +48,7 @@ const ListItem = (props) => {
 
       const dsa = getDecodedSellerAccount(sa);
       setShdwHash(dsa.shdw_hash);
-      setItemNumber(dsa.item_count);
+      setItemCount(dsa.item_count);
 
       setLoading(false);
     })();
@@ -75,7 +75,7 @@ const ListItem = (props) => {
         type: "application/json",
       },
     );
-    itemJSONBlob.name = `item${itemNumber}.json`;
+    itemJSONBlob.name = `item${itemCount + 1}.json`;
 
     try {
       const drive = await new ShdwDrive(privateConnection, wallet).init();
@@ -92,7 +92,7 @@ const ListItem = (props) => {
     const [item] = anchor.web3.PublicKey.findProgramAddressSync(
       [
         publicKey.toBuffer(),
-        new anchor.BN(itemNumber).toArrayLike(Buffer, "le", 2),
+        new anchor.BN(itemCount).toArrayLike(Buffer, "le", 2),
       ],
       program.programId,
     );
@@ -174,7 +174,7 @@ const ListItem = (props) => {
             fileList={fileList}
             setFileList={setFileList}
             setFileListBlob={setFileListBlob}
-            itemNumber={itemNumber}
+            itemCount={itemCount}
           />
         </div>
         <hr className="list-separator" />

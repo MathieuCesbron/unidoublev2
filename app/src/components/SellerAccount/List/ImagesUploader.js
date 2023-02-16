@@ -14,7 +14,7 @@ const ImagesUploader = ({
   fileList,
   setFileList,
   setFileListBlob,
-  itemNumber,
+  itemCount,
 }) => {
   const maxNumImages = 10;
 
@@ -41,7 +41,7 @@ const ImagesUploader = ({
       newFileList.map((file, index) => {
         const renamedFile = new File(
           [file.originFileObj],
-          `item${itemNumber}_image${index}.${file.originFileObj.name
+          `item${itemCount + 1}_image${index + 1}.${file.originFileObj.name
             .split(".")
             .pop()}`,
         );
