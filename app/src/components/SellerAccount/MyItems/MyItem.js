@@ -2,9 +2,16 @@ import { useEffect, useState } from "react";
 import { Image } from "antd";
 import USDCLogo from "../../../images/usdc-logo.png";
 import { Rate, Modal, Checkbox } from "antd";
-import { program, storePubKey } from "../../../utils/solana/program";
+import {
+  privateConnection,
+  program,
+  storePubKey,
+} from "../../../utils/solana/program";
 import { useWallet } from "@solana/wallet-adapter-react";
 import categories from "../../../utils/config/categories";
+import { ShdwDrive } from "@shadow-drive/sdk";
+import { PublicKey } from "@solana/web3.js";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import "./MyItem.css";
 
 const MyItem = ({
@@ -15,7 +22,9 @@ const MyItem = ({
   setDecodedMyItems,
   sellerAccountPublicKey,
 }) => {
+  const wallet = useWallet();
   const { publicKey } = useWallet();
+
   const [itemInfo, setItemInfo] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,26 +38,6 @@ const MyItem = ({
 
   const checkboxHandler = (e) => {
     setIsDeleteItemSure(e.target.checked);
-  };
-
-  const handleDeleteItem = async () => {
-    // TODO: should also delete data on decentralized storage
-    const txDeleteItem = await program.methods
-      .deleteItem()
-      .accounts({
-        user: publicKey,
-        sellerAccount: sellerAccountPublicKey,
-        item: itemData.pubkey,
-        store: storePubKey,
-      })
-      .rpc();
-    console.log(txDeleteItem);
-    setDecodedMyItems((prevDecodedMyItems) =>
-      prevDecodedMyItems.filter(
-        (prevDecodedMyItem) => prevDecodedMyItem.pubkey !== itemData.pubkey,
-      ),
-    );
-    setIsModalDeleteOpen(false);
   };
 
   useEffect(() => {
@@ -66,6 +55,51 @@ const MyItem = ({
         });
     })();
   }, []);
+
+  const handleDeleteItem = async () => {
+    const drive = await new ShdwDrive(privateConnection, wallet).init();
+
+    // delete files on shadow drive only if we are on mainnet.
+    // TODO: check that it works on mainnet, I succeeded to delete a file, it should works.
+    if (WalletAdapterNetwork === WalletAdapterNetwork.Mainnet) {
+      const filesToDelete = [`item${itemData.number}.json`];
+
+      itemInfo.extensions.forEach((extension, index) => {
+        filesToDelete.push(
+          `item${itemData.number}_image${index + 1}.${extension}`,
+        );
+      });
+
+      filesToDelete.forEach(async (fileToDelete) => {
+        console.log(
+          `https://shdw-drive.genesysgo.net/${shadowHash}/${fileToDelete}`,
+        );
+        const deleteRes = await drive.deleteFile(
+          new PublicKey(shadowHash),
+          `https://shdw-drive.genesysgo.net/${shadowHash}/${fileToDelete}`,
+          "v2",
+        );
+        console.log(deleteRes);
+      });
+    }
+
+    const txDeleteItem = await program.methods
+      .deleteItem()
+      .accounts({
+        user: publicKey,
+        sellerAccount: sellerAccountPublicKey,
+        item: itemData.pubkey,
+        store: storePubKey,
+      })
+      .rpc();
+    console.log(txDeleteItem);
+    setDecodedMyItems((prevDecodedMyItems) =>
+      prevDecodedMyItems.filter(
+        (prevDecodedMyItem) => prevDecodedMyItem.pubkey !== itemData.pubkey,
+      ),
+    );
+    setIsModalDeleteOpen(false);
+  };
 
   const myItemUpdateHandler = () => {
     console.log("update");
