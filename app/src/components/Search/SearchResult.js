@@ -7,6 +7,7 @@ import {
   getSellerAccount,
 } from "../../utils/solana/sellerAccount";
 import Item from "../Item/Item";
+import "../SellerAccount/Option.css";
 
 const SearchResult = () => {
   const { publicKey } = useWallet();
@@ -30,10 +31,12 @@ const SearchResult = () => {
   // }, []);
 
   return (
-    <div>
-      <h2>search result</h2>
+    <div className="option-wrapper">
+      <div className="option-top">
+        <h2>Category {category.label}</h2>
+      </div>
       {decodedItems.map((data) => (
-        <Item itemData={data} key={data.unique_number} />
+        <Item itemData={data} key={data.unique_number} mode={"search"} />
       ))}
     </div>
   );

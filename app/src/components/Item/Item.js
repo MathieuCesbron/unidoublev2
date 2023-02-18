@@ -12,10 +12,12 @@ import categories from "../../utils/config/categories";
 import { ShdwDrive } from "@shadow-drive/sdk";
 import { PublicKey } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import { Button } from "antd";
 import "./Item.css";
 
 const Item = ({
   itemData,
+  mode,
   salesCount,
   salesVolume,
   setDecodedItems,
@@ -145,12 +147,9 @@ const Item = ({
               {categories.find((c) => c.value === itemData.category).label}
             </p>
           </div>
-          <button
-            className="item-btn item-update-btn"
-            onClick={ItemUpdateHandler}
-          >
+          <Button type="primary" onClick={ItemUpdateHandler} size="large">
             UPDATE
-          </button>
+          </Button>
         </div>{" "}
         <div className="item-mid">
           <div className="item-price">
@@ -179,12 +178,15 @@ const Item = ({
                 salesVolume}
             </p>
           </div>
-          <button
-            className="item-btn item-delete-btn"
+          <Button
+            type="primary"
+            danger
+            size="large"
+            style={{ alignSelf: "flex-end" }}
             onClick={ItemDeleteHandler}
           >
             DELETE
-          </button>
+          </Button>
         </div>
       </div>
       <Modal
