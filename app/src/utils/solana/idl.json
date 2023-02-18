@@ -119,6 +119,10 @@
       ],
       "args": [
         {
+          "name": "uniqueNumber",
+          "type": "u32"
+        },
+        {
           "name": "category",
           "type": "u8"
         },
@@ -538,8 +542,8 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "number",
-            "type": "u16"
+            "name": "uniqueNumber",
+            "type": "u32"
           },
           {
             "name": "category",
@@ -572,6 +576,10 @@
           {
             "name": "rating",
             "type": "f32"
+          },
+          {
+            "name": "shdwHashSeller",
+            "type": "string"
           }
         ]
       }
@@ -748,6 +756,6 @@
     }
   ],
   "metadata": {
-    "address": "9kb8yC2fAvyn6ZnQj8xLLQGuS9X2aK8kda4yVgamvrUA"
+    "address": "yZDFyRqh6W4QjU2VdC7iYYFHjRuJiT6YcLDgXJ2zLKe"
   }
 }

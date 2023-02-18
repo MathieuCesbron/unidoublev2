@@ -114,16 +114,22 @@ describe("unidouble", () => {
     const price = 250;
     const amount = 2;
 
+    const max_u32 = 4_294_967_295;
+    const unique_number = Math.floor(Math.random() * max_u32);
+
     const [item] = await anchor.web3.PublicKey.findProgramAddress(
-      // We use the 2 argument because a u16 is 2x a u8.
-      [seller.publicKey.toBuffer(), new anchor.BN(0).toBuffer("le", 2)],
+      // We use the 4 argument because a u32 is 4x a u8.
+      [
+        seller.publicKey.toBuffer(),
+        new anchor.BN(unique_number).toBuffer("le", 4),
+      ],
       program.programId
     );
     console.log("item address: ", item.toString());
 
     try {
       const txListItem = await program.methods
-        .listItem(category, price, amount)
+        .listItem(unique_number, category, price, amount)
         .accounts({
           user: seller.publicKey,
           store: store,

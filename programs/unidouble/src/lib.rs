@@ -7,7 +7,7 @@ use spl_token::instruction::transfer;
 
 pub mod error;
 
-declare_id!("9kb8yC2fAvyn6ZnQj8xLLQGuS9X2aK8kda4yVgamvrUA");
+declare_id!("yZDFyRqh6W4QjU2VdC7iYYFHjRuJiT6YcLDgXJ2zLKe");
 
 #[program]
 pub mod unidouble {
@@ -55,7 +55,13 @@ pub mod unidouble {
         Ok(())
     }
 
-    pub fn list_item(ctx: Context<ListItem>, category: u8, price: u32, amount: u16) -> Result<()> {
+    pub fn list_item(
+        ctx: Context<ListItem>,
+        unique_number: u32,
+        category: u8,
+        price: u32,
+        amount: u16,
+    ) -> Result<()> {
         require!(category < 32, ErrorCode::InvalidCategory);
         require!(price >= 100 && price <= 100000000, ErrorCode::InvalidPrice);
         require!(amount > 0 && amount <= 50000, ErrorCode::InvalidAmount);
@@ -71,12 +77,13 @@ pub mod unidouble {
         seller_account.item_count += 1;
 
         let item = &mut ctx.accounts.item;
-        item.number = seller_account.item_count;
+        item.unique_number = unique_number;
         item.category = category;
         item.price = price;
         item.amount = amount;
         item.seller_public_key = ctx.accounts.user.key();
-        item.seller_account_public_key = ctx.accounts.seller_account.key();
+        item.seller_account_public_key = seller_account.key();
+        item.shdw_hash_seller = seller_account.shdw_hash.clone();
 
         Ok(())
     }
@@ -473,6 +480,7 @@ pub struct InitSellerAccount<'info> {
 }
 
 #[derive(Accounts)]
+#[instruction(unique_number:u32)]
 pub struct ListItem<'info> {
     #[account(mut)]
     pub user: Signer<'info>,
@@ -492,7 +500,7 @@ pub struct ListItem<'info> {
         init,
         payer = user,
         space = 1000,
-        seeds = [user.key.as_ref(), seller_account.item_count.to_le_bytes().as_ref()],
+        seeds = [user.key.as_ref(), unique_number.to_le_bytes().as_ref()],
         bump,
     )]
     pub item: Account<'info, Item>,
@@ -793,8 +801,9 @@ pub struct SellerAccount {
 
 #[account]
 pub struct Item {
-    pub number: u16,  // +2
-    pub category: u8, // +1
+    // unidque_number is a random number used to uniquely identify the item.
+    pub unique_number: u32, // +4
+    pub category: u8,       // +1
     // price in USDC cent, a price of 1 USDC will equal 100 on-chain.
     pub price: u32,  // +4
     pub amount: u16, // +2
@@ -805,6 +814,8 @@ pub struct Item {
     pub buyer_count: u32,  // +4
     pub rating_count: u16, // +2
     pub rating: f32,       // +4
+
+    pub shdw_hash_seller: String, // +4+44=48
 }
 
 #[account]

@@ -4,9 +4,13 @@ The objective of Unidouble is to be a better version of Ebay.
 
 ## Deploy a new version of the program to devnet
 
+First we need to change `localnet` to `devnet` in anchor.toml.
+
 ```bash
 rm -rf target/deploy/\*
 ```
+
+Must be done twice.
 
 ```bash
 anchor build
@@ -16,8 +20,6 @@ anchor deploy
 Change the old `programId` to the result of `anchor keys list`
 
 ## Deploy a store to devnet
-
-First we need to change `localnet` to `devnet` in anchor.toml.
 
 ```bash
 anchor run devnet

@@ -16,7 +16,6 @@ import "./Item.css";
 
 const Item = ({
   itemData,
-  shadowHash,
   salesCount,
   salesVolume,
   setDecodedItems,
@@ -43,7 +42,7 @@ const Item = ({
   useEffect(() => {
     (async () => {
       fetch(
-        `https://shdw-drive.genesysgo.net/${shadowHash}/item${itemData.number}.json`,
+        `https://shdw-drive.genesysgo.net/${itemData.shdw_hash_seller}/${itemData.unique_number}.json`,
       )
         .then((res) => res.json())
         .then((resData) => {
@@ -72,11 +71,11 @@ const Item = ({
 
       filesToDelete.forEach(async (fileToDelete) => {
         console.log(
-          `https://shdw-drive.genesysgo.net/${shadowHash}/${fileToDelete}`,
+          `https://shdw-drive.genesysgo.net/${itemData.shdw_hash_seller}/${fileToDelete}`,
         );
         const deleteRes = await drive.deleteFile(
-          new PublicKey(shadowHash),
-          `https://shdw-drive.genesysgo.net/${shadowHash}/${fileToDelete}`,
+          new PublicKey(itemData.shdw_hash_seller),
+          `https://shdw-drive.genesysgo.net/${itemData.shdw_hash_seller}/${fileToDelete}`,
           "v2",
         );
         console.log(deleteRes);
@@ -121,19 +120,17 @@ const Item = ({
               height: "250px",
             }}
             className="item-image"
-            src={`https://shdw-drive.genesysgo.net/${shadowHash}/item${itemData.number}_image1.${itemInfo.extensions[0]}`}
+            src={`https://shdw-drive.genesysgo.net/${itemData.shdw_hash_seller}/${itemInfo.images[0]}`}
             onClick={() => setVisible(true)}
           />
           <div style={{ display: "none" }}>
             <Image.PreviewGroup
               preview={{ visible, onVisibleChange: (vis) => setVisible(vis) }}
             >
-              {itemInfo.extensions.map((extension, index) => (
+              {itemInfo.images.map((image) => (
                 <Image
-                  key={index}
-                  src={`https://shdw-drive.genesysgo.net/${shadowHash}/item${
-                    itemData.number
-                  }_image${index + 1}.${extension}`}
+                  key={image}
+                  src={`https://shdw-drive.genesysgo.net/${itemData.shdw_hash_seller}/${image}`}
                 />
               ))}
             </Image.PreviewGroup>

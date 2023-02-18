@@ -57,7 +57,7 @@ const getMyItems = async (publicKey) => {
       { dataSize: 1000 },
       {
         memcmp: {
-          offset: 8 + 2 + 1 + 4 + 2,
+          offset: 8 + 4 + 1 + 4 + 2,
           bytes: publicKey,
         },
       },
@@ -73,7 +73,7 @@ const getItemsByCategory = async (category) => {
       { dataSize: 1000 },
       {
         memcmp: {
-          offset: 8 + 2,
+          offset: 8 + 4,
           bytes: bs58.encode(Buffer.from([category.value])),
           length: 1,
         },
@@ -84,10 +84,10 @@ const getItemsByCategory = async (category) => {
   return await connection.getProgramAccounts(programID, filters);
 };
 
-const getDecodedMyItems = (myItems) => {
-  return myItems.map((myItem) => {
+const getDecodedItems = (items) => {
+  return items.map((item) => {
     return struct([
-      u16("number"),
+      u32("unique_number"),
       u8("category"),
       u32("price"),
       u16("amount"),
@@ -96,7 +96,8 @@ const getDecodedMyItems = (myItems) => {
       u32("buyer_count"),
       u16("rating_count"),
       f32("rating"),
-    ]).decode(myItem.account.data, 8);
+      str("shdw_hash_seller"),
+    ]).decode(item.account.data, 8);
   });
 };
 
@@ -105,5 +106,5 @@ export {
   getDecodedSellerAccount,
   getMyItems,
   getItemsByCategory,
-  getDecodedMyItems,
+  getDecodedItems,
 };

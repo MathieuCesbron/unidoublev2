@@ -1,24 +1,42 @@
+import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
 import useStore from "../../store";
 import {
-  getDecodedMyItems,
+  getDecodedItems,
   getItemsByCategory,
+  getSellerAccount,
 } from "../../utils/solana/sellerAccount";
+import Item from "../Item/Item";
 
 const SearchResult = () => {
+  const { publicKey } = useWallet();
+
   const category = useStore((state) => state.category);
 
-  const [itemsRendered, setItemsRendered] = useState([]);
+  const [decodedItems, setDecodedItems] = useState([]);
 
   useEffect(() => {
     (async () => {
       const items = await getItemsByCategory(category);
-      console.log(items);
-      console.log(getDecodedMyItems(items));
+      const di = getDecodedItems(items);
+      setDecodedItems(di);
     })();
-  });
+  }, [category]);
 
-  return <div>search result</div>;
+  // get the shadow hash
+  // useEffect(async () => {
+  //   const sa = await getSellerAccount(publicKey);
+  //   // setSel
+  // }, []);
+
+  return (
+    <div>
+      <h2>search result</h2>
+      {decodedItems.map((data) => (
+        <Item itemData={data} key={data.unique_number} />
+      ))}
+    </div>
+  );
 };
 
 export default SearchResult;

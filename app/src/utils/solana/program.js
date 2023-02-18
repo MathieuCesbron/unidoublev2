@@ -20,7 +20,7 @@ const program = new Program(idl, programID, provider);
 
 const storePubKey =
   network === WalletAdapterNetwork.Devnet
-    ? "4ZxU8ybfhsSDrziuBkCuoTqUT7jHgFQHhcDgT2iD9DEx"
+    ? "5hCh8ztiTc6i6bK49B1eYwCrmUWjtovjZK8CQkzMDmxV"
     : "TODO: put the mainnet public key here when deployed";
 
 const creatorPubKey = "4zGnN2e9jFQofWWs2daNqmdnv8GRG8YPbBWQtVCjKJ3G";

@@ -1,6 +1,7 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload } from "antd";
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -10,12 +11,7 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-const ImagesUploader = ({
-  fileList,
-  setFileList,
-  setFileListBlob,
-  itemCount,
-}) => {
+const ImagesUploader = ({ fileList, setFileList, setFileListBlob }) => {
   const maxNumImages = 10;
 
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -38,12 +34,10 @@ const ImagesUploader = ({
   const handleChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
     setFileListBlob(
-      newFileList.map((file, index) => {
+      newFileList.map((file) => {
         const renamedFile = new File(
           [file.originFileObj],
-          `item${itemCount + 1}_image${index + 1}.${file.originFileObj.name
-            .split(".")
-            .pop()}`,
+          `${uuidv4()}.${file.originFileObj.name.split(".").pop()}`,
         );
         return renamedFile;
       }),

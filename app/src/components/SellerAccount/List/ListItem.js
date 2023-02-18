@@ -62,20 +62,24 @@ const ListItem = (props) => {
     //
     // Case 2: Wallet is on mainnet-beta
     // We upload the shadow files to the shadow storage of the seller.
+    const max_u32 = 4_294_967_295;
+    const unique_number = Math.floor(Math.random() * max_u32);
+
+    console.log(fileListBlob[0].name);
 
     const itemJSONBlob = new Blob(
       [
         JSON.stringify({
           title: itemFormData.title,
           description: itemFormData.description,
-          extensions: fileList.map((file) => file.type.split("/")[1]),
+          images: fileListBlob.map((file) => file.name),
         }),
       ],
       {
         type: "application/json",
       },
     );
-    itemJSONBlob.name = `item${itemCount + 1}.json`;
+    itemJSONBlob.name = `${unique_number}.json`;
 
     try {
       const drive = await new ShdwDrive(privateConnection, wallet).init();
@@ -92,14 +96,19 @@ const ListItem = (props) => {
     const [item] = anchor.web3.PublicKey.findProgramAddressSync(
       [
         publicKey.toBuffer(),
-        new anchor.BN(itemCount).toArrayLike(Buffer, "le", 2),
+        new anchor.BN(unique_number).toArrayLike(Buffer, "le", 4),
       ],
       program.programId,
     );
 
     try {
       const txListItem = await program.methods
-        .listItem(category, itemFormData.price * 100, itemFormData.amount)
+        .listItem(
+          unique_number,
+          category,
+          itemFormData.price * 100,
+          itemFormData.amount,
+        )
         .accounts({
           user: publicKey,
           store: storePubKey,
@@ -170,7 +179,6 @@ const ListItem = (props) => {
             fileList={fileList}
             setFileList={setFileList}
             setFileListBlob={setFileListBlob}
-            itemCount={itemCount}
           />
         </div>
         <hr className="list-separator" />

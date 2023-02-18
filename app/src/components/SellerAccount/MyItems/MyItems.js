@@ -5,9 +5,9 @@ import {
   getDecodedSellerAccount,
   getSellerAccount,
   getMyItems,
-  getDecodedMyItems,
+  getDecodedItems,
 } from "../../../utils/solana/sellerAccount";
-import MyItem from "../../Item/Item";
+import Item from "../../Item/Item";
 import "../Option.css";
 import "./MyItems.css";
 
@@ -15,7 +15,6 @@ const MyItems = (props) => {
   const { publicKey } = useWallet();
 
   const [sellerAccountPublicKey, setSellerAccountPublicKey] = useState();
-  const [shadowHash, setShadowHash] = useState();
   const [salesCount, setSalesCount] = useState();
   const [salesVolume, setSalesVolume] = useState();
   const [decodedMyItems, setDecodedMyItems] = useState([]);
@@ -31,7 +30,7 @@ const MyItems = (props) => {
   useEffect(() => {
     (async () => {
       const mi = await getMyItems(publicKey);
-      const dmi = getDecodedMyItems(mi);
+      const dmi = getDecodedItems(mi);
       setDecodedMyItems(
         dmi.map((elem, index) => ({
           ...elem,
@@ -43,7 +42,6 @@ const MyItems = (props) => {
       setSellerAccountPublicKey(sa.pubkey);
 
       const dsa = getDecodedSellerAccount(sa);
-      setShadowHash(dsa.shdw_hash);
       setSalesCount(dsa.sales_count);
       setSalesVolume(dsa.sales_volume);
 
@@ -64,14 +62,13 @@ const MyItems = (props) => {
       {!loading && (
         <div className="my-items-wrapper">
           {currentMyItems.map((data) => (
-            <MyItem
+            <Item
               itemData={data}
-              shadowHash={shadowHash}
               salesCount={salesCount}
               salesVolume={salesVolume}
               setDecodedItems={setDecodedMyItems}
               sellerAccountPublicKey={sellerAccountPublicKey}
-              key={data.number}
+              key={data.unique_number}
             />
           ))}
         </div>
