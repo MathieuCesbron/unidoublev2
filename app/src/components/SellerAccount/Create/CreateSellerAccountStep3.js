@@ -5,9 +5,11 @@ import * as anchor from "@project-serum/anchor";
 import solanaLogo from "../../../images/solana-logo.png";
 import useStore from "../../../store";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const CreateSellerAccountStep3 = ({ setStep, sellerDiffiePubKey }) => {
   const { publicKey } = useWallet();
+  const navigate = useNavigate();
 
   const [error, setError] = useState("");
 
@@ -33,6 +35,7 @@ const CreateSellerAccountStep3 = ({ setStep, sellerDiffiePubKey }) => {
         .rpc();
       setIsSeller(true);
       console.log("tx init seller account: ", txInitSellerAccount);
+      navigate("/seller-account");
     } catch (error) {
       console.log(error);
       setError(error);

@@ -1,0 +1,16 @@
+.account-wrapper {
+  width: 80%;
+  max-width: 600px;
+  margin: 3em auto;
+  text-align: center;
+}
+
+.account-btn {
+  margin: 2em;
+}
+
+.create-account-btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

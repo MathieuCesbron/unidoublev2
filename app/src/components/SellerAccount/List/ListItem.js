@@ -44,6 +44,9 @@ const ListItem = (props) => {
   useEffect(() => {
     (async () => {
       const sa = await getSellerAccount(publicKey);
+      if (!sa) {
+        return;
+      }
       setSellerAccount(sa);
 
       const dsa = getDecodedSellerAccount(sa);

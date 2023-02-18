@@ -8,17 +8,19 @@ import {
 } from "../../../utils/solana/sellerAccount";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
+import useStore from "../../../store";
 import "./DeleteSellerAccount.css";
 
 const DeleteSellerAccount = ({ setMode }) => {
+  const { publicKey } = useWallet();
+  const navigate = useNavigate();
+
   const [isSure, setIsSure] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [sellerAccount, setSellerAccount] = useState();
 
-  const { publicKey } = useWallet();
-
-  const navigate = useNavigate();
+  const setIsSeller = useStore((state) => state.setIsSeller);
 
   useEffect(() => {
     (async () => {
@@ -47,6 +49,7 @@ const DeleteSellerAccount = ({ setMode }) => {
         })
         .rpc();
       console.log("tx delete seller account: ", txDeleteSellerAccount);
+      setIsSeller("false");
       navigate("/");
     } catch (error) {
       console.log(error);
