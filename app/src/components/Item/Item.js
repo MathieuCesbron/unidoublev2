@@ -12,7 +12,7 @@ import categories from "../../utils/config/categories";
 import { ShdwDrive } from "@shadow-drive/sdk";
 import { PublicKey } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import { Button } from "antd";
+import { Button, Tag } from "antd";
 import "./Item.css";
 
 const Item = ({
@@ -147,9 +147,16 @@ const Item = ({
               {categories.find((c) => c.value === itemData.category).label}
             </p>
           </div>
-          <Button type="primary" onClick={ItemUpdateHandler} size="large">
-            UPDATE
-          </Button>
+          {mode === "search" ? (
+            <Tag color="blue" style={{ margin: "0" }}>
+              {/* TODO: put actual ranking here */}
+              #1
+            </Tag>
+          ) : (
+            <Button type="primary" onClick={ItemUpdateHandler} size="large">
+              UPDATE
+            </Button>
+          )}
         </div>{" "}
         <div className="item-mid">
           <div className="item-price">
@@ -178,20 +185,31 @@ const Item = ({
                 salesVolume}
             </p>
           </div>
-          <Button
-            type="primary"
-            danger
-            size="large"
-            style={{ alignSelf: "flex-end" }}
-            onClick={ItemDeleteHandler}
-          >
-            DELETE
-          </Button>
+          {mode === "search" ? (
+            <Button
+              type="primary"
+              size="large"
+              style={{ alignSelf: "flex-end" }}
+            >
+              CHECKOUT
+            </Button>
+          ) : (
+            <Button
+              type="primary"
+              danger
+              size="large"
+              style={{ alignSelf: "flex-end" }}
+              onClick={ItemDeleteHandler}
+            >
+              DELETE
+            </Button>
+          )}
         </div>
       </div>
       <Modal
         title={`Delete item: ${itemInfo.title}`}
         open={isModalDeleteOpen}
+        centered
         onCancel={handleDeleteCancel}
         onOk={handleDeleteItem}
         okButtonProps={{
