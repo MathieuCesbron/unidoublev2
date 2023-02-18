@@ -68,6 +68,32 @@
       ]
     },
     {
+      "name": "initBuyerAccount",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "buyerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "shdwHash",
+          "type": "string"
+        }
+      ]
+    },
+    {
       "name": "deleteSellerAccount",
       "accounts": [
         {
@@ -529,6 +555,18 @@
             "name": "diffiePublicKey",
             "type": "string"
           },
+          {
+            "name": "shdwHash",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BuyerAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
             "name": "shdwHash",
             "type": "string"

@@ -26,7 +26,7 @@ const Navbar = () => {
           className="a-left"
           onClick={() => navigate("/seller-account")}
         >
-          Seller account
+          Account
         </button>
         <button disabled={!connected} className="a-right">
           Orders

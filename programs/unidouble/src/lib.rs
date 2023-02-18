@@ -48,6 +48,11 @@ pub mod unidouble {
         Ok(())
     }
 
+    pub fn init_buyer_account(ctx: Context<InitBuyerAccount>, shdw_hash: String) -> Result<()> {
+        ctx.accounts.buyer_account.shdw_hash = shdw_hash;
+        Ok(())
+    }
+
     pub fn delete_seller_account(ctx: Context<DeleteSellerAccount>) -> Result<()> {
         let store = &mut ctx.accounts.store;
         store.seller_count -= 1;
@@ -480,6 +485,23 @@ pub struct InitSellerAccount<'info> {
 }
 
 #[derive(Accounts)]
+pub struct InitBuyerAccount<'info> {
+    #[account(mut)]
+    pub user: Signer<'info>,
+
+    #[account(
+        init,
+        payer = user,
+        space = 56,
+        seeds = [user.key().as_ref(), b"buyer".as_ref()],
+        bump,
+    )]
+    pub buyer_account: Account<'info, BuyerAccount>,
+
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
 #[instruction(unique_number:u32)]
 pub struct ListItem<'info> {
     #[account(mut)]
@@ -797,6 +819,11 @@ pub struct SellerAccount {
 
     pub diffie_public_key: String, // +64+4
     pub shdw_hash: String,         // +4+44=48
+}
+
+#[account]
+pub struct BuyerAccount {
+    pub shdw_hash: String, // +4+44=48
 }
 
 #[account]

@@ -172,6 +172,31 @@ describe("unidouble", () => {
     const amountToBuy = 2;
     const buyerShdwHash = "4u4nZ3Dgt5jnVu7wT6NY7MXrRojjT9Mx2u5cGXi2Lz3c";
 
+    let [buyerAccount] = await anchor.web3.PublicKey.findProgramAddress(
+      [
+        buyer.publicKey.toBuffer(),
+        Buffer.from(anchor.utils.bytes.utf8.encode("buyer")),
+      ],
+      program.programId
+    );
+    console.log(`buyer account address: ${buyerAccount.toString()}`);
+
+    // create buyer account
+    try {
+      const txInitBuyerAccount = await program.methods
+        .initBuyerAccount(shdw_hash)
+        .accounts({ user: buyer.publicKey, buyerAccount: buyerAccount })
+        .signers([buyer])
+        .rpc();
+      await provider.connection.confirmTransaction(
+        txInitBuyerAccount,
+        "confirmed"
+      );
+      console.log(`tx init buyer account: ${txInitBuyerAccount}`);
+    } catch (error) {
+      console.log(error);
+    }
+
     // mint fake USDC to buyer token account
     const mintInfo = await getMint(provider.connection, mint);
     console.log(
