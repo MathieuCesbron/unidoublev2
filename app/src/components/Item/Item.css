@@ -1,24 +1,24 @@
-.my-item-wrapper {
+.item-wrapper {
   display: flex;
   border: grey solid;
   border-radius: 8px;
   margin-bottom: 1em;
 }
 
-.my-item-image {
+.item-image {
   border-right: grey solid;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
 }
 
-.my-item-body {
+.item-body {
   padding: 0.5em 0.5em 0.5em 1em;
   width: 100%;
 }
 
 /* top */
 
-.my-item-top {
+.item-top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -26,7 +26,7 @@
   overflow: hidden;
 }
 
-.my-item-title {
+.item-title {
   margin: 0 1em 0 0;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -35,13 +35,13 @@
   word-break: break-word;
 }
 
-.my-item-category {
+.item-category {
   margin-top: 0.1em;
   font-size: 1rem;
   color: grey;
 }
 
-.my-item-btn {
+.item-btn {
   font-size: 1rem;
   font-weight: bold;
   color: white;
@@ -50,88 +50,88 @@
   border-radius: 5px;
 }
 
-.my-item-update-btn {
+.item-update-btn {
   background-color: rgb(146, 185, 248);
 }
 
-.my-item-update-btn:hover,
-.my-item-update-btn:focus {
+.item-update-btn:hover,
+.item-update-btn:focus {
   background-color: black;
   cursor: pointer;
 }
 
 /* middle */
 
-.my-item-mid {
+.item-mid {
   display: flex;
   align-items: center;
   height: 40%;
 }
 
-.my-item-price {
+.item-price {
   display: flex;
   align-items: center;
 }
 
-.my-item-usdc-logo {
+.item-usdc-logo {
   width: 60px;
   margin-right: 1em;
 }
 
-.my-item-usdc {
+.item-usdc {
   font-size: 2.5rem;
 }
-.my-item-rate {
+.item-rate {
   margin: auto;
 }
 
 /* bottom */
 
-.my-item-bottom {
+.item-bottom {
   height: 30%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.my-item-stats {
+.item-stats {
   margin: 0 0 0.5em 0;
 }
 
-.my-item-score {
+.item-score {
   margin: 0;
 }
 
-.my-item-delete-btn {
+.item-delete-btn {
   align-self: flex-end;
   background-color: rgb(242, 77, 77);
 }
 
-.my-item-delete-btn:focus,
-.my-item-delete-btn:hover {
+.item-delete-btn:focus,
+.item-delete-btn:hover {
   cursor: pointer;
   background-color: rgb(150, 3, 3);
 }
 
 @media (max-width: 850px) {
-  .my-item-rate {
+  .item-rate {
     display: none;
     font-size: 20;
   }
 }
 
 @media (max-width: 650px) {
-  .my-item-wrapper {
+  .item-wrapper {
     flex-direction: column;
     align-items: center;
   }
-  .my-item-image {
+  .item-image {
     border: none;
     border-radius: 0;
     border-bottom: grey solid;
     margin-bottom: 1em;
   }
-  .my-item-body {
+  .item-body {
     width: 93%;
   }
 }

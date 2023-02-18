@@ -7,7 +7,7 @@ import {
   getMyItems,
   getDecodedMyItems,
 } from "../../../utils/solana/sellerAccount";
-import MyItem from "./MyItem";
+import MyItem from "../../Item/Item";
 import "../Option.css";
 import "./MyItems.css";
 
@@ -69,7 +69,7 @@ const MyItems = (props) => {
               shadowHash={shadowHash}
               salesCount={salesCount}
               salesVolume={salesVolume}
-              setDecodedMyItems={setDecodedMyItems}
+              setDecodedItems={setDecodedMyItems}
               sellerAccountPublicKey={sellerAccountPublicKey}
               key={data.number}
             />

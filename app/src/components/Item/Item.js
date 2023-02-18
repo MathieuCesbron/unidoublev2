@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
 import { Image } from "antd";
-import USDCLogo from "../../../images/usdc-logo.png";
+import USDCLogo from "../../images/usdc-logo.png";
 import { Rate, Modal, Checkbox } from "antd";
 import {
   privateConnection,
   program,
   storePubKey,
-} from "../../../utils/solana/program";
+} from "../../utils/solana/program";
 import { useWallet } from "@solana/wallet-adapter-react";
-import categories from "../../../utils/config/categories";
+import categories from "../../utils/config/categories";
 import { ShdwDrive } from "@shadow-drive/sdk";
 import { PublicKey } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import "./MyItem.css";
+import "./Item.css";
 
-const MyItem = ({
+const Item = ({
   itemData,
   shadowHash,
   salesCount,
   salesVolume,
-  setDecodedMyItems,
+  setDecodedItems,
   sellerAccountPublicKey,
 }) => {
   const wallet = useWallet();
@@ -93,24 +93,24 @@ const MyItem = ({
       })
       .rpc();
     console.log(txDeleteItem);
-    setDecodedMyItems((prevDecodedMyItems) =>
-      prevDecodedMyItems.filter(
-        (prevDecodedMyItem) => prevDecodedMyItem.pubkey !== itemData.pubkey,
+    setDecodedItems((prevDecodedItems) =>
+      prevDecodedItems.filter(
+        (prevDecodedItem) => prevDecodedItem.pubkey !== itemData.pubkey,
       ),
     );
     setIsModalDeleteOpen(false);
   };
 
-  const myItemUpdateHandler = () => {
+  const ItemUpdateHandler = () => {
     console.log("update");
   };
 
-  const myItemDeleteHandler = () => {
+  const ItemDeleteHandler = () => {
     setIsModalDeleteOpen(true);
   };
 
   return (
-    <div className="my-item-wrapper">
+    <div className="item-wrapper">
       {!loading && (
         <>
           <Image
@@ -120,7 +120,7 @@ const MyItem = ({
               width: "250px",
               height: "250px",
             }}
-            className="my-item-image"
+            className="item-image"
             src={`https://shdw-drive.genesysgo.net/${shadowHash}/item${itemData.number}_image1.${itemInfo.extensions[0]}`}
             onClick={() => setVisible(true)}
           />
@@ -140,40 +140,40 @@ const MyItem = ({
           </div>
         </>
       )}
-      <div className="my-item-body">
-        <div className="my-item-top">
+      <div className="item-body">
+        <div className="item-top">
           <div>
-            <h3 className="my-item-title">{itemInfo.title}</h3>
-            <p className="my-item-category">
+            <h3 className="item-title">{itemInfo.title}</h3>
+            <p className="item-category">
               {categories.find((c) => c.value === itemData.category).label}
             </p>
           </div>
           <button
-            className="my-item-btn my-item-update-btn"
-            onClick={myItemUpdateHandler}
+            className="item-btn item-update-btn"
+            onClick={ItemUpdateHandler}
           >
             UPDATE
           </button>
-        </div>
-        <div className="my-item-mid">
-          <div className="my-item-price">
-            <img className="my-item-usdc-logo" src={USDCLogo} alt="usdc-logo" />
-            <p className="my-item-usdc">{itemData.price / 100}</p>
+        </div>{" "}
+        <div className="item-mid">
+          <div className="item-price">
+            <img className="item-usdc-logo" src={USDCLogo} alt="usdc-logo" />
+            <p className="item-usdc">{itemData.price / 100}</p>
           </div>
           <Rate
             disabled
             allowHalf
             defaultValue={itemData.rating}
             style={{ fontSize: 28 }}
-            className="my-item-rate"
+            className="item-rate"
           />
         </div>
-        <div className="my-item-bottom">
+        <div className="item-bottom">
           <div>
-            <p className="my-item-stats">
+            <p className="item-stats">
               {itemData.amount} available / {itemData.buyer_count} buyer
             </p>
-            <p className="my-item-score">
+            <p className="item-score">
               SCORE:&nbsp;
               {itemData.rating *
                 itemData.rating_count *
@@ -183,8 +183,8 @@ const MyItem = ({
             </p>
           </div>
           <button
-            className="my-item-btn my-item-delete-btn"
-            onClick={myItemDeleteHandler}
+            className="item-btn item-delete-btn"
+            onClick={ItemDeleteHandler}
           >
             DELETE
           </button>
@@ -210,4 +210,4 @@ const MyItem = ({
   );
 };
 
-export default MyItem;
+export default Item;
