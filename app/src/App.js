@@ -5,7 +5,7 @@ import SearchResult from "./components/Search/SearchResult";
 import CreateAccount from "./components/CreateAccount/CreateAccount";
 import BuyerAccount from "./components/BuyerAccount/BuyerAccount";
 import SellerAccount from "./components/SellerAccount/SellerAccount";
-import CreateSellerAccount from "./components/SellerAccount/Create/CreateSellerAccount";
+import CreateSellerAccount from "./components/CreateAccount/CreateSellerAccount";
 import "./App.css";
 
 const App = () => {
@@ -19,7 +19,7 @@ const App = () => {
           path="/create-seller-account"
           element={<CreateSellerAccount />}
         />
-        <Route path="/create-buyer-account" element={<CreateSellerAccount />} />
+        {/* <Route path="/create-buyer-account" element={<CreateSellerAccount />} /> */}
         <Route path="/seller-account" element={<SellerAccount />} />
         <Route path="/buyer-account" element={<BuyerAccount />} />
         <Route path="/search" element={<SearchResult />} />

@@ -1,12 +1,12 @@
 import { useState, useMemo, useEffect } from "react";
-import { curve } from "../../../utils/crypto/crypto";
+import { curve } from "../../utils/crypto/crypto";
 import CreateSellerAccountSummary from "./CreateSellerAccountSummary";
 import CreateSellerAccountStep1 from "./CreateSellerAccountStep1";
 import CreateSellerAccountStep2 from "./CreateSellerAccountStep2";
 import CreateSellerAccountStep3 from "./CreateSellerAccountStep3";
 import { ProgressBar, Step } from "react-step-progress-bar";
-import "./CreateSellerAccount.css";
 import { useWallet } from "@solana/wallet-adapter-react";
+import "./CreateSellerAccount.css";
 
 const CreateSellerAccount = () => {
   const { publicKey } = useWallet();

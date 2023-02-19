@@ -1,8 +1,8 @@
-import solanaLogo from "../../../images/solana-logo.png";
-import plusLogo from "../../../images/plus-logo.png";
-import shadowLogo from "../../../images/shadow-logo.png";
+import solanaLogo from "../../images/solana-logo.png";
+import plusLogo from "../../images/plus-logo.png";
+import shadowLogo from "../../images/shadow-logo.png";
 import { Button } from "antd";
-import { network } from "../../../utils/solana/program";
+import { network } from "../../utils/solana/program";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import "./CreateSellerAccountSummary.css";
 

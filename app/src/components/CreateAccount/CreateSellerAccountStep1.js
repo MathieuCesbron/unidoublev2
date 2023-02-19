@@ -1,13 +1,13 @@
-import solanaLogo from "../../../images/solana-logo.png";
-import plusLogo from "../../../images/plus-logo.png";
-import shadowLogo from "../../../images/shadow-logo.png";
+import solanaLogo from "../../images/solana-logo.png";
+import plusLogo from "../../images/plus-logo.png";
+import shadowLogo from "../../images/shadow-logo.png";
 import { ShdwDrive } from "@shadow-drive/sdk";
-import { privateConnection } from "../../../utils/solana/program";
+import { privateConnection } from "../../utils/solana/program";
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
-import useStore from "../../../store";
+import useStore from "../../store";
 import { useState } from "react";
-import "./CreateSellerAccountStep.css";
 import { Button } from "antd";
+import "./CreateSellerAccountStep.css";
 
 const CreateSellerAccountStep1 = ({ setStep }) => {
   const wallet = useAnchorWallet();
