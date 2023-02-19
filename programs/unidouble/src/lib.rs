@@ -7,7 +7,7 @@ use spl_token::instruction::transfer;
 
 pub mod error;
 
-declare_id!("8TX5BDqLqkpMGXskS9Rse6oB1S261K6ZScyXyQjTUeQx");
+declare_id!("6Da4gfrun22oqyqUaU2kZrij8dAPpBG12yG7J51rv7ts");
 
 #[program]
 pub mod unidouble {

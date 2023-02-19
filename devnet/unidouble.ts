@@ -18,13 +18,6 @@ console.log("store public key: ", store.toString());
 
 const deployDevnet = async () => {
   // init store
-  console.log(
-    country,
-    bump,
-    creator,
-    store,
-    anchor.web3.SystemProgram.programId.toString()
-  );
   try {
     const txInitStore = await program.methods
       .initStore(country, bump)

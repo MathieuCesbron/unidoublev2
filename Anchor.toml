@@ -2,7 +2,7 @@
 seeds = false
 skip-lint = false
 [programs.localnet]
-unidouble = "8TX5BDqLqkpMGXskS9Rse6oB1S261K6ZScyXyQjTUeQx"
+unidouble = "6Da4gfrun22oqyqUaU2kZrij8dAPpBG12yG7J51rv7ts"
 
 [registry]
 url = "https://api.apr.dev"
