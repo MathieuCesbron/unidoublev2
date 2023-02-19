@@ -7,6 +7,7 @@ import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import useStore from "../../../store";
 import { useState } from "react";
 import "./CreateSellerAccountStep.css";
+import { Button } from "antd";
 
 const CreateSellerAccountStep1 = ({ setStep }) => {
   const wallet = useAnchorWallet();
@@ -64,9 +65,9 @@ const CreateSellerAccountStep1 = ({ setStep }) => {
         <img className="token-logo" src={shadowLogo} alt="shadow token logo" />1
         SHDW Token
       </p>
-      <button className="step-btn" onClick={createStorageAccount}>
+      <Button type="primary" size="large" onClick={createStorageAccount}>
         Approve transaction on wallet
-      </button>
+      </Button>
       <p className="step-error">
         {error &&
           "Error while creating the storage account, are you sure you have enough funds ?"}

@@ -6,6 +6,7 @@ import solanaLogo from "../../../images/solana-logo.png";
 import useStore from "../../../store";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { Button } from "antd";
 
 const CreateSellerAccountStep3 = ({ setStep, sellerDiffiePubKey }) => {
   const { publicKey } = useWallet();
@@ -61,9 +62,12 @@ const CreateSellerAccountStep3 = ({ setStep, sellerDiffiePubKey }) => {
         <img className="token-logo" src={solanaLogo} alt="solana token logo" />
         0.00231 SOL
       </p>
-      <button className="step-btn" onClick={createSellerAccountHandler}>
+      {/* <button className="step-btn" onClick={createSellerAccountHandler}>
         Approve transaction on wallet
-      </button>
+      </button> */}
+      <Button type="primary" size="large" onClick={createSellerAccountHandler}>
+        Approve transaction on wallet
+      </Button>
       <p className="step-error">
         {error &&
           "Error while creating the seller account, are you sure you have enough funds ?"}

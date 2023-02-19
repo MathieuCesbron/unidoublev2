@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Tooltip } from "react-tooltip";
+import { Button } from "antd";
 import "./CreateSellerAccountStep.css";
 
 const CreateSellerAccountStep2 = ({ setStep, sellerDiffiePrivateKey }) => {
@@ -36,13 +37,14 @@ const CreateSellerAccountStep2 = ({ setStep, sellerDiffiePrivateKey }) => {
           I have copied my private key
         </label>
       </div>
-      <button
-        className="step-btn"
+      <Button
         disabled={!isSure}
+        type="primary"
+        size="large"
         onClick={() => setStep(3)}
       >
         Next step
-      </button>
+      </Button>
     </div>
   );
 };

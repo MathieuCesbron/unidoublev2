@@ -53,26 +53,6 @@
   color: red;
 }
 
-.step-btn {
-  margin-top: 0.5em;
-  padding: 0.5em 1.5em;
-  font-size: 1.8rem;
-  border-radius: 20px;
-  background-color: rgb(120, 141, 232);
-  color: white;
-  border: none;
-}
-
-.step-btn:focus:enabled,
-.step-btn:hover:enabled {
-  cursor: pointer;
-  background-color: black;
-}
-
-.step-btn:disabled {
-  background-color: lightgrey;
-}
-
 .check {
   margin: 1em;
 }

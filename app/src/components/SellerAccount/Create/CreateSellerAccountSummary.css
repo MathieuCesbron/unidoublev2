@@ -32,18 +32,3 @@
   width: 35px;
   margin: 0 1.5em;
 }
-
-.btn-create {
-  padding: 0.5em 1.5em;
-  font-size: 2rem;
-  border-radius: 20px;
-  background-color: rgb(120, 141, 232);
-  color: white;
-  border: none;
-}
-
-.btn-create:focus,
-.btn-create:hover {
-  cursor: pointer;
-  background-color: black;
-}

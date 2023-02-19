@@ -1,10 +1,10 @@
 import solanaLogo from "../../../images/solana-logo.png";
 import plusLogo from "../../../images/plus-logo.png";
 import shadowLogo from "../../../images/shadow-logo.png";
-
-import "./CreateSellerAccountSummary.css";
+import { Button } from "antd";
 import { network } from "../../../utils/solana/program";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import "./CreateSellerAccountSummary.css";
 
 const CreateSellerAccountSummary = ({ setStep }) => {
   const startSellerAccountCreationHandler = () => {
@@ -37,12 +37,13 @@ const CreateSellerAccountSummary = ({ setStep }) => {
         <img className="token-logo" src={shadowLogo} alt="shadow token logo" />1
         SHDW Token
       </p>
-      <button
-        className="btn-create"
+      <Button
+        type="primary"
+        size="large"
         onClick={startSellerAccountCreationHandler}
       >
-        Start account creation
-      </button>
+        Start seller account creation
+      </Button>
     </>
   );
 };
