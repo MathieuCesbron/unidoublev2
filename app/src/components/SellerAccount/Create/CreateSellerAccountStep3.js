@@ -62,9 +62,6 @@ const CreateSellerAccountStep3 = ({ setStep, sellerDiffiePubKey }) => {
         <img className="token-logo" src={solanaLogo} alt="solana token logo" />
         0.00231 SOL
       </p>
-      {/* <button className="step-btn" onClick={createSellerAccountHandler}>
-        Approve transaction on wallet
-      </button> */}
       <Button type="primary" size="large" onClick={createSellerAccountHandler}>
         Approve transaction on wallet
       </Button>

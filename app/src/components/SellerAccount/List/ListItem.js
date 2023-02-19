@@ -17,6 +17,7 @@ import { PublicKey } from "@solana/web3.js";
 import ImagesUploader from "./ImagesUploader";
 import USDCLogo from "../../../images/usdc-logo.png";
 import SelectCategory from "./SelectCategory";
+import { Button } from "antd";
 import "../Option.css";
 import "./ListItem.css";
 
@@ -28,7 +29,6 @@ const ListItem = (props) => {
   const [fileListBlob, setFileListBlob] = useState([]);
   const [shdwHash, setShdwHash] = useState("");
   const [sellerAccount, setSellerAccount] = useState();
-  const [itemCount, setItemCount] = useState(-1);
   const [loading, setLoading] = useState(true);
 
   const [category, setCategory] = useState("");
@@ -51,7 +51,6 @@ const ListItem = (props) => {
 
       const dsa = getDecodedSellerAccount(sa);
       setShdwHash(dsa.shdw_hash);
-      setItemCount(dsa.item_count);
 
       setLoading(false);
     })();
@@ -67,8 +66,6 @@ const ListItem = (props) => {
     // We upload the shadow files to the shadow storage of the seller.
     const max_u32 = 4_294_967_295;
     const unique_number = Math.floor(Math.random() * max_u32);
-
-    console.log(fileListBlob[0].name);
 
     const itemJSONBlob = new Blob(
       [
@@ -144,7 +141,7 @@ const ListItem = (props) => {
         />
         <h2 className="option-title">List new item</h2>
       </div>
-      <form className="list-form" onSubmit={listItemHandler}>
+      <form className="list-form" name="list" onSubmit={listItemHandler}>
         <div className="list-form-field">
           <label className="list-form-label">Title</label>
           <input
@@ -235,9 +232,15 @@ const ListItem = (props) => {
             maxLength="63"
           ></input>
         </div>
-        <button disabled={loading} className="list-btn" type="submit">
+        <Button
+          disabled={loading}
+          type="primary"
+          htmlType="submit"
+          size="large"
+          style={{ margin: "2em auto" }}
+        >
           Validate transaction on wallet
-        </button>
+        </Button>
       </form>
     </div>
   );
