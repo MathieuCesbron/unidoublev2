@@ -4,7 +4,7 @@ import shadowLogo from "../../images/shadow-logo.png";
 import { Button } from "antd";
 import { network } from "../../utils/solana/program";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import "./CreateSellerAccountSummary.css";
+import "./CreateAccountSummary.css";
 
 const CreateSellerAccountSummary = ({ setStep }) => {
   const startSellerAccountCreationHandler = () => {
@@ -21,7 +21,7 @@ const CreateSellerAccountSummary = ({ setStep }) => {
       <h1 className="create-title">Become a Unidouble seller</h1>
       <p>
         It costs less than $1 to start listing items, you can delete the account
-        when you want. The seller account creation is in 3 steps and take less
+        when you want. The seller account creation is in 3 steps and takes less
         than 1 minute to do !
       </p>
       <ol className="create-list">

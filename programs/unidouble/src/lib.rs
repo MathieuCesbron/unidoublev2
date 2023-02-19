@@ -7,7 +7,7 @@ use spl_token::instruction::transfer;
 
 pub mod error;
 
-declare_id!("yZDFyRqh6W4QjU2VdC7iYYFHjRuJiT6YcLDgXJ2zLKe");
+declare_id!("8TX5BDqLqkpMGXskS9Rse6oB1S261K6ZScyXyQjTUeQx");
 
 #[program]
 pub mod unidouble {
@@ -49,7 +49,10 @@ pub mod unidouble {
     }
 
     pub fn init_buyer_account(ctx: Context<InitBuyerAccount>, shdw_hash: String) -> Result<()> {
-        ctx.accounts.buyer_account.shdw_hash = shdw_hash;
+        let buyer_account = &mut ctx.accounts.buyer_account;
+        buyer_account.buyer_public_key = ctx.accounts.user.key();
+        buyer_account.shdw_hash = shdw_hash;
+
         Ok(())
     }
 
@@ -492,7 +495,7 @@ pub struct InitBuyerAccount<'info> {
     #[account(
         init,
         payer = user,
-        space = 56,
+        space = 88,
         seeds = [user.key().as_ref(), b"buyer".as_ref()],
         bump,
     )]
@@ -823,7 +826,8 @@ pub struct SellerAccount {
 
 #[account]
 pub struct BuyerAccount {
-    pub shdw_hash: String, // +4+44=48
+    pub buyer_public_key: Pubkey, // +32
+    pub shdw_hash: String,        // +4+44=48
 }
 
 #[account]

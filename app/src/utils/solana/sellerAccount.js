@@ -37,6 +37,26 @@ const getSellerAccount = async (publicKey) => {
   )[0];
 };
 
+const getBuyerAccount = async (publicKey) => {
+  const buyerAccountFilters = {
+    filters: [
+      {
+        dataSize: 88,
+      },
+      {
+        memcmp: {
+          offset: 8,
+          bytes: publicKey,
+        },
+      },
+    ],
+  };
+
+  return (
+    await connection.getProgramAccounts(programID, buyerAccountFilters)
+  )[0];
+};
+
 const getDecodedSellerAccount = (sellerAccount) => {
   return struct([
     u32("number"),
@@ -103,6 +123,7 @@ const getDecodedItems = (items) => {
 
 export {
   getSellerAccount,
+  getBuyerAccount,
   getDecodedSellerAccount,
   getMyItems,
   getItemsByCategory,

@@ -6,7 +6,7 @@ import CreateSellerAccountStep2 from "./CreateSellerAccountStep2";
 import CreateSellerAccountStep3 from "./CreateSellerAccountStep3";
 import { ProgressBar, Step } from "react-step-progress-bar";
 import { useWallet } from "@solana/wallet-adapter-react";
-import "./CreateSellerAccount.css";
+import "./CreateTypeAccount.css";
 
 const CreateSellerAccount = () => {
   const { publicKey } = useWallet();

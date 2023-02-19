@@ -6,6 +6,9 @@ const useStore = create((set) => ({
   category: { value: -1, label: "All" },
   setCategory: (category) => set((state) => ({ category })),
 
+  isBuyer: undefined,
+  setIsBuyer: (isBuyer) => set((state) => ({ isBuyer })),
+
   isSeller: undefined,
   setIsSeller: (isSeller) => set((state) => ({ isSeller })),
 

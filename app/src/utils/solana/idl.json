@@ -568,6 +568,10 @@
         "kind": "struct",
         "fields": [
           {
+            "name": "buyerPublicKey",
+            "type": "publicKey"
+          },
+          {
             "name": "shdwHash",
             "type": "string"
           }
@@ -794,6 +798,6 @@
     }
   ],
   "metadata": {
-    "address": "yZDFyRqh6W4QjU2VdC7iYYFHjRuJiT6YcLDgXJ2zLKe"
+    "address": "8TX5BDqLqkpMGXskS9Rse6oB1S261K6ZScyXyQjTUeQx"
   }
 }

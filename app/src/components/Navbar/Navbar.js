@@ -4,7 +4,10 @@ import unidoubleLogo from "../../images/unidouble-logo.png";
 import { useNavigate } from "react-router-dom";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
-import { getSellerAccount } from "../../utils/solana/sellerAccount";
+import {
+  getSellerAccount,
+  getBuyerAccount,
+} from "../../utils/solana/sellerAccount";
 import useStore from "../../store";
 import "./Navbar.css";
 
@@ -37,6 +40,13 @@ const Navbar = () => {
         setIsSeller(true);
       }
 
+      const buyerAccount = await getBuyerAccount(publicKey);
+      if (buyerAccount === undefined) {
+        setIsBuyer(false);
+      } else {
+        setIsBuyer(true);
+      }
+
       setLoading(false);
     })();
   }, [publicKey]);
@@ -49,6 +59,7 @@ const Navbar = () => {
   }, [publicKey]);
 
   const accountMode = () => {
+    console.log(isBuyer);
     if (isSeller === true) {
       navigate("seller-account");
     } else if (isBuyer === true) {

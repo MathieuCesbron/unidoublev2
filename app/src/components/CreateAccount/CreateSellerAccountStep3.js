@@ -54,7 +54,7 @@ const CreateSellerAccountStep3 = ({ setStep, sellerDiffiePubKey }) => {
         <h2>Create Seller Account</h2>
       </div>
       <p>
-        This is the last step, your account will be registred on Solana. you
+        This is the last step, your account will be registred on Solana. You
         will be able to list items and hopefully make sales after that !
       </p>
       <h3 className="total-cost">Cost: </h3>
