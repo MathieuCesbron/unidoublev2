@@ -9,6 +9,7 @@ import {
   getBuyerAccount,
 } from "../../utils/solana/sellerAccount";
 import useStore from "../../store";
+import { Button } from "antd";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -22,6 +23,15 @@ const Navbar = () => {
   const setIsBuyer = useStore((state) => state.setIsBuyer);
 
   const [loading, setLoading] = useState(true);
+
+  // We go back to the home page when the publicKey change.
+  // It's the easy solution, we should stay on the page sometimes.
+  // TODO: make a better logic when user changes publicKey.
+  useEffect(() => {
+    setIsBuyer(undefined);
+    setIsSeller(undefined);
+    navigate("/");
+  }, [publicKey]);
 
   useEffect(() => {
     if (!connected) {
@@ -51,15 +61,7 @@ const Navbar = () => {
     })();
   }, [publicKey]);
 
-  // We go back to the home page when the publicKey change.
-  // It's the easy solution, we should stay on the page sometimes.
-  // TODO: make a better logic when user changes publicKey.
-  useEffect(() => {
-    navigate("/");
-  }, [publicKey]);
-
   const accountMode = () => {
-    console.log(isBuyer);
     if (isSeller === true) {
       navigate("seller-account");
     } else if (isBuyer === true) {
@@ -81,17 +83,28 @@ const Navbar = () => {
         <Search />
       </div>
       <div className="buttons-wrapper">
-        <button
+        <Button
           disabled={!connected || loading}
-          className="a-left"
+          type="text"
+          size="large"
+          style={{
+            color: "black",
+            fontWeight: 600,
+            fontSize: "1.3rem",
+            padding: "0 1.5em",
+          }}
+          className="navbar-link"
           onClick={accountMode}
         >
-          Account
-        </button>
-        <button disabled={!connected} className="a-right">
-          Orders
-        </button>
-        <WalletMultiButton />
+          {isBuyer ? "Orders" : "Account"}
+        </Button>
+        <WalletMultiButton
+          style={{
+            backgroundColor: "#f5f9ff",
+            border: "black solid 1px",
+            color: "black",
+          }}
+        />
       </div>
     </nav>
   );
