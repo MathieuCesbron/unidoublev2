@@ -9,6 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import useStore from "../../../store";
+import { Button } from "antd";
 import "./DeleteSellerAccount.css";
 
 const DeleteSellerAccount = ({ setMode }) => {
@@ -78,13 +79,16 @@ const DeleteSellerAccount = ({ setMode }) => {
       <label className="isSure" htmlFor="isSure">
         I want to delete my seller account
       </label>
-      <button
-        className="delete-btn"
+      <Button
         disabled={!isSure || error || loading || !sellerAccount}
         onClick={deleteSellerAccountHandler}
+        type="primary"
+        danger
+        style={{ display: "block", margin: "auto" }}
+        size="large"
       >
         Validate transaction on wallet
-      </button>
+      </Button>
       <p className="delete-error">{error}</p>
     </div>
   );
