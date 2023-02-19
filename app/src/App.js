@@ -7,6 +7,7 @@ import BuyerAccount from "./components/BuyerAccount/BuyerAccount";
 import SellerAccount from "./components/SellerAccount/SellerAccount";
 import CreateSellerAccount from "./components/CreateAccount/CreateSellerAccount";
 import CreateBuyerAccount from "./components/CreateAccount/CreateBuyerAccount";
+import ItemResult from "./components/Search/ItemResult";
 import "./App.css";
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/seller-account" element={<SellerAccount />} />
         <Route path="/buyer-account" element={<BuyerAccount />} />
         <Route path="/search" element={<SearchResult />} />
+        <Route path="/item/:unique_number" element={<ItemResult />} />
       </Routes>
     </>
   );

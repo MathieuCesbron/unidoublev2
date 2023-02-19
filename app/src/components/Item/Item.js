@@ -13,6 +13,7 @@ import { ShdwDrive } from "@shadow-drive/sdk";
 import { PublicKey } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { Button, Tag } from "antd";
+import { useNavigate } from "react-router-dom";
 import "./Item.css";
 
 const Item = ({
@@ -25,6 +26,7 @@ const Item = ({
 }) => {
   const wallet = useWallet();
   const { publicKey } = useWallet();
+  const navigate = useNavigate();
 
   const [itemInfo, setItemInfo] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -110,6 +112,12 @@ const Item = ({
     setIsModalDeleteOpen(true);
   };
 
+  const itemCheckoutHandler = () => {
+    navigate(`/item/:${itemData.unique_number}`, {
+      state: { itemInfo: itemInfo, itemData: itemData },
+    });
+  };
+
   return (
     <div className="item-wrapper">
       {!loading && (
@@ -190,6 +198,7 @@ const Item = ({
               type="primary"
               size="large"
               style={{ alignSelf: "flex-end" }}
+              onClick={itemCheckoutHandler}
             >
               CHECKOUT
             </Button>

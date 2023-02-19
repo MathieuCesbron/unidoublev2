@@ -1,0 +1,23 @@
+.item-result-wrapper {
+  display: flex;
+}
+
+.item-result-form {
+  margin-left: 2em;
+}
+
+.item-result-field {
+  display: flex;
+  align-items: center;
+}
+
+.item-result-quantity-label {
+  font-size: 1.5rem;
+  margin-right: 1em;
+  /* font-weight: bold; */
+}
+
+.item-result-description {
+  margin-top: 2em;
+  word-break: break-word;
+}
