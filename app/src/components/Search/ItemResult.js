@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
-import { Button, Image, Rate, Modal, InputNumber } from "antd";
+import { Button, Image, Rate, Modal, InputNumber, Input, Form } from "antd";
 import USDCLogo from "../../images/usdc-logo.png";
 import "../SellerAccount/Option.css";
 import "./ItemResult.css";
@@ -12,11 +12,28 @@ const ItemResult = () => {
   const [visible, setVisible] = useState(false);
   const [showModalBuy, setShowModalBuy] = useState(false);
 
+  const [amountToBuy, setAmountToBuy] = useState(1);
+  const [deliveryAddressData, setDeliveryAddressData] = useState({
+    address: "",
+    city: "",
+    state: "",
+    zip: "",
+    encryptedDeliveryAddress: "",
+  });
+
   useEffect(() => {
     (async () => {
       // if state is undefined, we should get the data on chain since we have the unique_number on the url.
     })();
   });
+
+  const updateDeliveryAddressData = (e) =>
+    setDeliveryAddressData((prevDeliveryAddressData) => ({
+      ...prevDeliveryAddressData,
+      [e.target.name]: e.target.value,
+      // TODO: calculate the encrypted delivery address here.
+      encryptedDeliveryAddress: "calculate the encrypted delivery address here",
+    }));
 
   return (
     <div className="option-wrapper">
@@ -90,14 +107,41 @@ const ItemResult = () => {
         onCancel={() => setShowModalBuy(false)}
         okText="Validate transaction on wallet"
       >
-        <p className="item-result-modal-price">
-          Price: {state.itemData.price / 100} USDC
+        <p>
+          Your delivery address is encrypted on the blockchain, only the seller
+          can decrypt it. You can review the article bought and get 1% cashback.
         </p>
-        <div className="item-result-input-amount">
-          <label className="item-result-amount-label">Amount to buy: </label>
-          <InputNumber min={1} max={state.itemData.amount}></InputNumber>
-        </div>
-        <hr />
+        <hr className="item-result-hr" />
+        <Form>
+          <p className="item-result-modal-price">
+            Price: {state.itemData.price / 100} USDC
+          </p>
+          <div className="item-result-input-amount">
+            <label className="item-result-amount-label">Amount to buy: </label>
+            <InputNumber
+              min={1}
+              max={state.itemData.amount}
+              onChange={(value) => setAmountToBuy(value)}
+            ></InputNumber>
+          </div>
+          <hr className="item-result-hr" />
+          <label className="item-result-label">Address</label>
+          <Input name="address" onChange={updateDeliveryAddressData}></Input>
+          <label className="item-result-label">City</label>
+          <Input name="city" onChange={updateDeliveryAddressData}></Input>
+          <label className="item-result-label">State</label>
+          <Input name="state" onChange={updateDeliveryAddressData}></Input>
+          <label className="item-result-label">Zip</label>
+          <Input name="zip" onChange={updateDeliveryAddressData}></Input>
+        </Form>
+        <hr className="item-result-hr" />
+        <label>Encrypted delivery address</label>
+        <Input
+          disabled
+          value={deliveryAddressData.encryptedDeliveryAddress}
+        ></Input>
+        <hr className="item-result-hr" />
+        <p>Price to pay: {(state.itemData.price / 100) * amountToBuy} USDC</p>
       </Modal>
     </div>
   );
