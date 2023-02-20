@@ -1,9 +1,13 @@
 .item-result-wrapper {
   display: flex;
+  min-height: 350px;
 }
 
-.item-result-form {
-  margin-left: 2em;
+.item-result-body {
+  margin-left: 4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .item-result-field {
@@ -11,13 +15,42 @@
   align-items: center;
 }
 
-.item-result-quantity-label {
+.item-usdc {
+  margin: 0;
+}
+
+.item-result-amount {
+  margin: 0;
   font-size: 1.5rem;
-  margin-right: 1em;
-  /* font-weight: bold; */
+}
+
+.item-result-buyers {
+  margin: 0;
+  color: grey;
 }
 
 .item-result-description {
   margin-top: 2em;
   word-break: break-word;
+}
+
+@media (max-width: 600px) {
+  .item-result-wrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .item-result-body {
+    align-items: center;
+    margin: 0;
+  }
+
+  .item-result-field {
+    margin: 1em;
+  }
+
+  .item-result-stats {
+    margin: 1em;
+  }
 }

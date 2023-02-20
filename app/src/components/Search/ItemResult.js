@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
-import { Button, Image, Input } from "antd";
+import { Button, Image, Rate } from "antd";
+import USDCLogo from "../../images/usdc-logo.png";
 import "../SellerAccount/Option.css";
 import "./ItemResult.css";
 
@@ -15,8 +16,6 @@ const ItemResult = () => {
       // if state is undefined, we should get the data on chain since we have the unique_number on the url.
     })();
   });
-
-  console.log(state);
 
   return (
     <div className="option-wrapper">
@@ -48,19 +47,35 @@ const ItemResult = () => {
             ))}
           </Image.PreviewGroup>
         </div>
-        <form className="item-result-form">
+        <div className="item-result-body">
           <div className="item-result-field">
-            <label className="item-result-field-label">Quantity:</label>
-            <Input placeholder="1"></Input>
+            <img className="item-usdc-logo" src={USDCLogo} alt="usdc-logo" />
+            <p className="item-usdc">{state.itemData.price / 100}</p>
           </div>
-          <div className="item-result-field">
-            <label className="item-result-field-label">Price:</label>
-            <p>{state.itemData.price / 100}</p>
+          <Rate
+            disabled
+            allowHalf
+            defaultValue={state.itemData.rating}
+            style={{ fontSize: 28, margin: "0", maxWidth: "100%" }}
+          />
+          <div className="item-result-stats">
+            <p className="item-result-amount">
+              {state.itemData.amount} available
+            </p>
+            {state.itemData.buyer_count ? (
+              <p className="item-result-buyers">
+                {state.itemData.buyer_count}
+                {state.itemData.buyer_count === 1 ? " person" : " persons"}{" "}
+                bought this item
+              </p>
+            ) : (
+              <p className="item-result-buyers">Nobody bought this item yet</p>
+            )}
           </div>
           <Button type="primary" size="large">
             Buy item
           </Button>
-        </form>
+        </div>
       </div>
       <p className="item-result-description">{state.itemInfo.description}</p>
     </div>
