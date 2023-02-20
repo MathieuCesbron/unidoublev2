@@ -34,6 +34,23 @@
   word-break: break-word;
 }
 
+/* Modal buy */
+
+.item-result-modal-price {
+  font-size: 1rem;
+  margin: 1em 0 0 0;
+}
+
+.item-result-input-amount {
+  display: flex;
+  align-items: center;
+}
+
+.item-result-amount-label {
+  margin-right: 1em;
+  font-size: 1rem;
+}
+
 @media (max-width: 600px) {
   .item-result-wrapper {
     flex-direction: column;

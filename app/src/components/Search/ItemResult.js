@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
-import { Button, Image, Rate } from "antd";
+import { Button, Image, Rate, Modal, InputNumber } from "antd";
 import USDCLogo from "../../images/usdc-logo.png";
 import "../SellerAccount/Option.css";
 import "./ItemResult.css";
@@ -10,6 +10,7 @@ const ItemResult = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
+  const [showModalBuy, setShowModalBuy] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -72,12 +73,32 @@ const ItemResult = () => {
               <p className="item-result-buyers">Nobody bought this item yet</p>
             )}
           </div>
-          <Button type="primary" size="large">
+          <Button
+            type="primary"
+            size="large"
+            onClick={() => setShowModalBuy(true)}
+          >
             Buy item
           </Button>
         </div>
       </div>
       <p className="item-result-description">{state.itemInfo.description}</p>
+      <Modal
+        title={`Buy ${state.itemInfo.title}`}
+        centered
+        open={showModalBuy}
+        onCancel={() => setShowModalBuy(false)}
+        okText="Validate transaction on wallet"
+      >
+        <p className="item-result-modal-price">
+          Price: {state.itemData.price / 100} USDC
+        </p>
+        <div className="item-result-input-amount">
+          <label className="item-result-amount-label">Amount to buy: </label>
+          <InputNumber min={1} max={state.itemData.amount}></InputNumber>
+        </div>
+        <hr />
+      </Modal>
     </div>
   );
 };
