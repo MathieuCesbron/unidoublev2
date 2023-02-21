@@ -386,7 +386,10 @@ pub mod unidouble {
     ) -> Result<()> {
         let order = &mut ctx.accounts.order;
         require!(!order.is_rated, ErrorCode::OrderAlreadyRated);
-        require!(rating <= 5, ErrorCode::InvalidRating);
+        require!(
+            rating == 1 || rating == 2 || rating == 3 || rating == 4 || rating == 5,
+            ErrorCode::InvalidRating
+        );
         require!(
             shdw_hash_review.chars().count() == 44,
             ErrorCode::InvalidShdwHash
@@ -434,6 +437,14 @@ pub mod unidouble {
         item.rating = (item.rating * item.rating_count as f32 + rating as f32)
             / (item.rating_count as f32 + 1.0);
         item.rating_count += 1;
+
+        // Set the value of the catalog average rating
+        let m: f32 = 3.5;
+        // Set the value of the confidence number
+        let c: f32 = 100.0;
+        let bayesian_average =
+            (item.rating_count as f32 * item.rating + m * c) / (item.rating_count as f32 + c);
+        item.score = bayesian_average;
 
         Ok(())
     }
@@ -845,6 +856,7 @@ pub struct Item {
     pub buyer_count: u32,  // +4
     pub rating_count: u16, // +2
     pub rating: f32,       // +4
+    pub score: f32,        // +4
 
     pub shdw_hash_seller: String, // +4+44=48
 }

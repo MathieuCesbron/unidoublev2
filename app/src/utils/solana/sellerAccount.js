@@ -125,6 +125,7 @@ const getDecodedItems = (items) => {
         u32("buyer_count"),
         u16("rating_count"),
         f32("rating"),
+        f32("score"),
         str("shdw_hash_seller"),
       ]).decode(item.account.data, 8),
     };
