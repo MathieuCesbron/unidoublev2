@@ -57,6 +57,13 @@ const getBuyerAccount = async (publicKey) => {
   )[0];
 };
 
+const getDecodedBuyerAccount = (buyerAccount) => {
+  return struct([publicKeyBorsh("buyer_public_key"), str("shdw_hash")]).decode(
+    buyerAccount.account.data,
+    8,
+  );
+};
+
 const getDecodedSellerAccount = (sellerAccount) => {
   return struct([
     u32("number"),
@@ -125,10 +132,11 @@ const getDecodedItems = (items) => {
 };
 
 export {
-  getSellerAccount,
   getBuyerAccount,
+  getSellerAccount,
+  getDecodedBuyerAccount,
   getDecodedSellerAccount,
   getMyItems,
-  getItemsByCategory,
   getDecodedItems,
+  getItemsByCategory,
 };

@@ -31,7 +31,7 @@ const shdwBucketDevnet = "AdSA1249vEWYX7pW9ybP7eb6WeDZvvxRDqbgJz9AdGcf";
 
 // Bucket owned by public key: 4zGnN2e9jFQofWWs2daNqmdnv8GRG8YPbBWQtVCjKJ3G.
 // There is no way to create a bucket on devnet, it is a mainnet bucket used for testing on devnet.
-const shdwBucketBuyerDevnet = "4zGnN2e9jFQofWWs2daNqmdnv8GRG8YPbBWQtVCjKJ3G";
+const shdwBucketBuyerDevnet = "8fjitq47635kPGYUGJbFkJqqPqrgjkyeZ7M5TwJEJZkr";
 
 const USDC_MINT = new web3.PublicKey(
   "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
