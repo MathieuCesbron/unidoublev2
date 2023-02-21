@@ -8,6 +8,7 @@ import {
   getDecodedItems,
 } from "../../../utils/solana/account";
 import Item from "../../Item/Item";
+import { TbMoodEmpty } from "react-icons/tb";
 import "../Option.css";
 import "./MyItems.css";
 
@@ -61,16 +62,23 @@ const MyItems = (props) => {
       </div>
       {!loading && (
         <div className="my-items-wrapper">
-          {currentMyItems.map((data) => (
-            <Item
-              itemData={data}
-              salesCount={salesCount}
-              salesVolume={salesVolume}
-              setDecodedItems={setDecodedMyItems}
-              sellerAccountPublicKey={sellerAccountPublicKey}
-              key={data.unique_number}
-            />
-          ))}
+          {currentMyItems.length !== 0 ? (
+            currentMyItems.map((data) => (
+              <Item
+                itemData={data}
+                salesCount={salesCount}
+                salesVolume={salesVolume}
+                setDecodedItems={setDecodedMyItems}
+                sellerAccountPublicKey={sellerAccountPublicKey}
+                key={data.unique_number}
+              />
+            ))
+          ) : (
+            <div className="option-empty-wrapper">
+              <TbMoodEmpty size={"5em"} />
+              <p className="option-empty">You have no items listed yet...</p>
+            </div>
+          )}
         </div>
       )}
     </div>

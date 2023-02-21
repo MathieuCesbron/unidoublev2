@@ -4,14 +4,12 @@ import useStore from "../../store";
 import {
   getDecodedItems,
   getItemsByCategory,
-  getSellerAccount,
 } from "../../utils/solana/account";
 import Item from "../Item/Item";
+import { TbMoodEmpty } from "react-icons/tb";
 import "../SellerAccount/Option.css";
 
 const SearchResult = () => {
-  const { publicKey } = useWallet();
-
   const category = useStore((state) => state.category);
 
   const [decodedItems, setDecodedItems] = useState([]);
@@ -24,20 +22,21 @@ const SearchResult = () => {
     })();
   }, [category]);
 
-  // get the shadow hash
-  // useEffect(async () => {
-  //   const sa = await getSellerAccount(publicKey);
-  //   // setSel
-  // }, []);
-
   return (
     <div className="option-wrapper">
       <div className="option-top">
         <h2>Category {category.label}</h2>
       </div>
-      {decodedItems.map((data) => (
-        <Item itemData={data} key={data.unique_number} mode={"search"} />
-      ))}
+      {decodedItems.length !== 0 ? (
+        decodedItems.map((data) => (
+          <Item itemData={data} key={data.unique_number} mode={"search"} />
+        ))
+      ) : (
+        <div className="option-empty-wrapper">
+          <TbMoodEmpty size={"5em"} />
+          <p className="option-empty">No items listed here yet...</p>
+        </div>
+      )}
     </div>
   );
 };
