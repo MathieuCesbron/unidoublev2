@@ -26,8 +26,12 @@ const storePubKey =
 const creatorPubKey = "4zGnN2e9jFQofWWs2daNqmdnv8GRG8YPbBWQtVCjKJ3G";
 
 // Bucket owned by public key: 7NowSCVNu6gmQihr1A7MUSves7a5CZY5boGYZQ2vawKT.
-// There is no way to create bucket on devnet, it is a mainnet bucket used for testing on devnet.
+// There is no way to create a bucket on devnet, it is a mainnet bucket used for testing on devnet.
 const shdwBucketDevnet = "AdSA1249vEWYX7pW9ybP7eb6WeDZvvxRDqbgJz9AdGcf";
+
+// Bucket owned by public key: 4zGnN2e9jFQofWWs2daNqmdnv8GRG8YPbBWQtVCjKJ3G.
+// There is no way to create a bucket on devnet, it is a mainnet bucket used for testing on devnet.
+const shdwBucketBuyerDevnet = "4zGnN2e9jFQofWWs2daNqmdnv8GRG8YPbBWQtVCjKJ3G";
 
 export {
   network,
@@ -38,4 +42,5 @@ export {
   storePubKey,
   creatorPubKey,
   shdwBucketDevnet,
+  shdwBucketBuyerDevnet,
 };

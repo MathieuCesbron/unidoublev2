@@ -3,11 +3,16 @@ import { ProgressBar, Step } from "react-step-progress-bar";
 import CreateBuyerAccountStep1 from "./CreateBuyerAccountStep1";
 import CreateBuyerAccountSummary from "./CreateBuyerAccountSummary";
 import useStore from "../../store";
-import { privateConnection } from "../../utils/solana/program";
+import {
+  network,
+  privateConnection,
+  shdwBucketBuyerDevnet,
+} from "../../utils/solana/program";
 import { ShdwDrive } from "@shadow-drive/sdk";
 import { useWallet } from "@solana/wallet-adapter-react";
 import CreateBuyerAccountStep2 from "./CreateBuyerAccountStep2";
 import "./CreateTypeAccount.css";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 
 const CreateBuyerAccount = () => {
   const wallet = useWallet();
@@ -21,8 +26,13 @@ const CreateBuyerAccount = () => {
     (async () => {
       const drive = await new ShdwDrive(privateConnection, wallet).init();
       const accts = await drive.getStorageAccounts("v2");
-      if (accts) {
+      if (accts.length === 1) {
         setShdwBucket(accts[0].publicKey.toString());
+        setSkipStep1(true);
+      }
+
+      if (network !== WalletAdapterNetwork.Mainnet) {
+        setShdwBucket(shdwBucketBuyerDevnet);
         setSkipStep1(true);
       }
     })();

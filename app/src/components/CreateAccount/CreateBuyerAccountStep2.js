@@ -16,7 +16,6 @@ const CreateBuyerAccountStep2 = () => {
 
   const setIsBuyer = useStore((state) => state.setIsBuyer);
   const shdwBucket = useStore((state) => state.shdwBucket);
-  console.log(shdwBucket);
 
   const createBuyerAccountHandler = async () => {
     setError("");
