@@ -113,8 +113,13 @@ const Item = ({
   };
 
   const itemCheckoutHandler = () => {
-    navigate(`/item/:${itemData.unique_number}`, {
-      state: { itemInfo: itemInfo, itemData: itemData },
+    // We have to give the seller_public_key separately.
+    navigate(`/item/${itemData.unique_number}`, {
+      state: {
+        itemInfo: itemInfo,
+        itemData: itemData,
+        seller_public_key: itemData.seller_public_key.toString(),
+      },
     });
   };
 

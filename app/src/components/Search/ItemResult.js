@@ -3,37 +3,89 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { Button, Image, Rate, Modal, InputNumber, Input, Form } from "antd";
 import USDCLogo from "../../images/usdc-logo.png";
+import {
+  getDecodedSellerAccount,
+  getSellerAccount,
+} from "../../utils/solana/sellerAccount";
+import { curve } from "../../utils/crypto/crypto";
+import { AES, mode, enc } from "crypto-js";
 import "../SellerAccount/Option.css";
 import "./ItemResult.css";
 
 const ItemResult = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+
   const [visible, setVisible] = useState(false);
   const [showModalBuy, setShowModalBuy] = useState(false);
 
+  const [sellerDiffiePublicKey, setSellerDiffiePublicKey] = useState("");
+
+  const [buyerDiffieKeyPair] = useState(curve.genKeyPair());
+  const [buyerDiffiePubKey] = useState(
+    buyerDiffieKeyPair.getPublic().encode("hex"),
+  );
+
   const [amountToBuy, setAmountToBuy] = useState(1);
-  const [deliveryAddressData, setDeliveryAddressData] = useState({
+  const [addressData, setAddressData] = useState({
     address: "",
     city: "",
     state: "",
     zip: "",
-    encryptedDeliveryAddress: "",
   });
+
+  const [encryptedAddress, setEncrypedAddress] = useState();
+  const [salt, setSalt] = useState("");
+  const [iv, setIv] = useState("");
 
   useEffect(() => {
     (async () => {
-      // if state is undefined, we should get the data on chain since we have the unique_number on the url.
-    })();
-  });
+      // TODO: if state is undefined, we should get the data on chain since we have the unique_number on the url.
 
-  const updateDeliveryAddressData = (e) =>
-    setDeliveryAddressData((prevDeliveryAddressData) => ({
-      ...prevDeliveryAddressData,
+      // get the diffie public key of the seller
+      const sa = await getSellerAccount(state.seller_public_key);
+      const dsa = getDecodedSellerAccount(sa);
+      setSellerDiffiePublicKey(dsa.diffie_public_key);
+    })();
+  }, []);
+
+  const updateAddressData = (e) => {
+    setAddressData((prevAddressData) => ({
+      ...prevAddressData,
       [e.target.name]: e.target.value,
-      // TODO: calculate the encrypted delivery address here.
-      encryptedDeliveryAddress: "calculate the encrypted delivery address here",
     }));
+  };
+
+  useEffect(() => {
+    const sellerDiffieBasepoint = curve
+      .keyFromPublic(Buffer.from(sellerDiffiePublicKey, "hex"))
+      .getPublic();
+
+    const sharedSecret = buyerDiffieKeyPair
+      .derive(sellerDiffieBasepoint)
+      .toString("hex");
+
+    const cipher = AES.encrypt(JSON.stringify(addressData), sharedSecret, {
+      mode: mode.CTR,
+    });
+
+    const cipherText = cipher.ciphertext.toString();
+    setSalt(cipher.salt.toString());
+    setIv(cipher.iv.toString());
+    setEncrypedAddress(cipherText);
+
+    // It works to decrypt this way:
+    // const text = AES.decrypt(
+    //   {
+    //     ciphertext: enc.Hex.parse(cipherText),
+    //     iv: enc.Hex.parse(cipher.iv.toString()),
+    //     salt: enc.Hex.parse(cipher.salt.toString()),
+    //   },
+    //   sharedSecret,
+    //   { mode: mode.CTR },
+    // );
+    // console.log("decyrpt:", text.toString(enc.Utf8));
+  }, [addressData]);
 
   return (
     <div className="option-wrapper">
@@ -119,6 +171,8 @@ const ItemResult = () => {
           <div className="item-result-input-amount">
             <label className="item-result-amount-label">Amount to buy: </label>
             <InputNumber
+              type="number"
+              placeholder="1"
               min={1}
               max={state.itemData.amount}
               onChange={(value) => setAmountToBuy(value)}
@@ -126,20 +180,17 @@ const ItemResult = () => {
           </div>
           <hr className="item-result-hr" />
           <label className="item-result-label">Address</label>
-          <Input name="address" onChange={updateDeliveryAddressData}></Input>
+          <Input name="address" onChange={updateAddressData}></Input>
           <label className="item-result-label">City</label>
-          <Input name="city" onChange={updateDeliveryAddressData}></Input>
+          <Input name="city" onChange={updateAddressData}></Input>
           <label className="item-result-label">State</label>
-          <Input name="state" onChange={updateDeliveryAddressData}></Input>
+          <Input name="state" onChange={updateAddressData}></Input>
           <label className="item-result-label">Zip</label>
-          <Input name="zip" onChange={updateDeliveryAddressData}></Input>
+          <Input name="zip" onChange={updateAddressData}></Input>
         </Form>
         <hr className="item-result-hr" />
         <label>Encrypted delivery address</label>
-        <Input
-          disabled
-          value={deliveryAddressData.encryptedDeliveryAddress}
-        ></Input>
+        <Input disabled value={encryptedAddress}></Input>
         <hr className="item-result-hr" />
         <p>Price to pay: {(state.itemData.price / 100) * amountToBuy} USDC</p>
       </Modal>
