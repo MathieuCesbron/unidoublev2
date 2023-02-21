@@ -6,7 +6,7 @@ import {
   getSellerAccount,
   getMyItems,
   getDecodedItems,
-} from "../../../utils/solana/sellerAccount";
+} from "../../../utils/solana/account";
 import Item from "../../Item/Item";
 import "../Option.css";
 import "./MyItems.css";

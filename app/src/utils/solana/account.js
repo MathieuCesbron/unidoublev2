@@ -8,8 +8,8 @@ import {
   u32,
   f32,
 } from "@project-serum/borsh";
-import { connection, programID } from "../../utils/solana/program";
-import { country } from "../../utils/config/store";
+import { connection, programID } from "./program";
+import { country } from "../config/store";
 
 const getSellerAccount = async (publicKey) => {
   const sellerAccountFilters = {

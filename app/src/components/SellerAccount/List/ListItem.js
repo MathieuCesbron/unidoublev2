@@ -11,7 +11,7 @@ import { IoArrowBackCircleOutline } from "react-icons/io5";
 import {
   getDecodedSellerAccount,
   getSellerAccount,
-} from "../../../utils/solana/sellerAccount";
+} from "../../../utils/solana/account";
 import { ShdwDrive } from "@shadow-drive/sdk";
 import { PublicKey } from "@solana/web3.js";
 import ImagesUploader from "./ImagesUploader";

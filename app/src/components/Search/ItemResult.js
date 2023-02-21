@@ -8,7 +8,7 @@ import USDCLogo from "../../images/usdc-logo.png";
 import {
   getDecodedSellerAccount,
   getSellerAccount,
-} from "../../utils/solana/sellerAccount";
+} from "../../utils/solana/account";
 import { curve } from "../../utils/crypto/crypto";
 import { AES, mode, enc } from "crypto-js";
 import { useWallet } from "@solana/wallet-adapter-react";

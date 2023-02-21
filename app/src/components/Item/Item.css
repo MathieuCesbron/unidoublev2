@@ -6,7 +6,7 @@
 }
 
 .item-image {
-  border-right: grey solid;
+  border-right: grey solid 1px;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
 }

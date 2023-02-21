@@ -5,7 +5,7 @@ import { program, storePubKey } from "../../../utils/solana/program";
 import {
   getDecodedSellerAccount,
   getSellerAccount,
-} from "../../../utils/solana/sellerAccount";
+} from "../../../utils/solana/account";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import useStore from "../../../store";

@@ -8,7 +8,7 @@ import {
   getSellerAccount,
   getBuyerAccount,
   getDecodedBuyerAccount,
-} from "../../utils/solana/sellerAccount";
+} from "../../utils/solana/account";
 import useStore from "../../store";
 import { Button } from "antd";
 import "./Navbar.css";
