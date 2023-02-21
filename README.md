@@ -10,14 +10,16 @@ First we need to change `localnet` to `devnet` in anchor.toml.
 rm -rf target/deploy/\*
 ```
 
-Must be done twice.
+```bash
+anchor build
+```
+
+Change the old `programId` to the new one.
 
 ```bash
 anchor build
 anchor deploy
 ```
-
-Change the old `programId` to the result of `anchor keys list`
 
 ## Deploy a store to devnet
 

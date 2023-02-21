@@ -20,21 +20,26 @@ import {
   USDC_MINT,
   connection,
   network,
+  privateConnection,
 } from "../../utils/solana/program";
 import { BN } from "bn.js";
 import { PublicKey } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import { ShdwDrive } from "@shadow-drive/sdk";
+import useStore from "../../store";
 import "../SellerAccount/Option.css";
 import "./ItemResult.css";
 
 const ItemResult = () => {
+  const wallet = useWallet();
   const { publicKey } = useWallet();
   const { state } = useLocation();
   const navigate = useNavigate();
 
   const [visible, setVisible] = useState(false);
   const [showModalBuy, setShowModalBuy] = useState(false);
-  const [shadowBucketBuyer, setShadowBucketBuyer] = useState("");
+
+  const shdwBucket = useStore((state) => state.shdwBucket);
 
   const [sellerDiffiePublicKey, setSellerDiffiePublicKey] = useState("");
 
@@ -105,17 +110,38 @@ const ItemResult = () => {
   }, [addressData]);
 
   const buyItemHandler = async () => {
-    let uuid = Math.floor(Math.random() * 1000000);
-
-    // We can only use USDC on mainnet.
-    if (network !== WalletAdapterNetwork.Mainnet) {
-      return;
-    }
-
+    const uuid = Math.floor(Math.random() * 1000000);
     const [order] = anchor.web3.PublicKey.findProgramAddressSync(
       [publicKey.toBuffer(), new anchor.BN(uuid).toArrayLike(Buffer, "le", 8)],
       programID,
     );
+
+    try {
+      const drive = await new ShdwDrive(privateConnection, wallet).init();
+
+      const orderJSONBlob = new Blob([
+        JSON.stringify({
+          number: uuid,
+          address: encryptedAddress,
+          salt: salt,
+          iv: iv,
+          item_pubkey: state.itemData.pubkey,
+          order_pubkey: order.toString(),
+        }),
+      ]);
+      orderJSONBlob.name = `order_${uuid}.json`;
+
+      const uploadOrderFile = await drive.uploadFile(
+        new PublicKey(shdwBucket),
+        orderJSONBlob,
+      );
+    } catch (error) {
+      console.log(error);
+    }
+    // We can only use USDC on mainnet.
+    if (network !== WalletAdapterNetwork.Mainnet) {
+      return;
+    }
 
     // TODO: check that it works, should create usdc token address for store before.
     try {
@@ -126,7 +152,7 @@ const ItemResult = () => {
       );
 
       const txBuyItem = await program.methods
-        .buyItem(new BN(uuid), amountToBuy, shadowBucketBuyer)
+        .buyItem(new BN(uuid), amountToBuy, shdwBucket)
         .accounts({
           user: publicKey,
           sellerAccount: state.itemData.seller_account_public_key,

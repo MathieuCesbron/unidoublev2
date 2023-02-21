@@ -114,7 +114,7 @@ const getItemsByCategory = async (category) => {
 const getDecodedItems = (items) => {
   return items.map((item) => {
     return {
-      pubkey: item.pubkey,
+      pubkey: item.pubkey.toString(),
       ...struct([
         u32("unique_number"),
         u8("category"),

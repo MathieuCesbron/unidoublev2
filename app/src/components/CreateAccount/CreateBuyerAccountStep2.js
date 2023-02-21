@@ -23,7 +23,7 @@ const CreateBuyerAccountStep2 = () => {
     const [buyerAccount] = anchor.web3.PublicKey.findProgramAddressSync(
       [
         publicKey.toBuffer(),
-        Buffer.from(anchor.utils.bytes.utf8.encode("buyer")),
+        Buffer.from(anchor.utils.bytes.utf8.encode("unidouble_buyer")),
       ],
       program.programId,
     );
@@ -37,6 +37,7 @@ const CreateBuyerAccountStep2 = () => {
         })
         .rpc();
       setIsBuyer(true);
+
       console.log("tx init buyer account: ", txInitBuyerAccount);
       navigate("/buyer-account");
     } catch (error) {

@@ -29,7 +29,7 @@ const deployDevnet = async () => {
       .rpc();
     console.log("tx init store", txInitStore);
   } catch (error) {
-    console.log("error: " + error);
+    console.log(error);
   }
 };
 

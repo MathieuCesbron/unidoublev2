@@ -7,7 +7,7 @@ use spl_token::instruction::transfer;
 
 pub mod error;
 
-declare_id!("6Da4gfrun22oqyqUaU2kZrij8dAPpBG12yG7J51rv7ts");
+declare_id!("EZqZTp4nQsgaJ6zA7bot6aq1GqksS2xeTgfGwtXKXp5S");
 
 #[program]
 pub mod unidouble {
@@ -496,7 +496,7 @@ pub struct InitBuyerAccount<'info> {
         init,
         payer = user,
         space = 88,
-        seeds = [user.key().as_ref(), b"buyer".as_ref()],
+        seeds = [user.key().as_ref(), b"unidouble_buyer".as_ref()],
         bump,
     )]
     pub buyer_account: Account<'info, BuyerAccount>,

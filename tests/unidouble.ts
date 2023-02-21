@@ -175,7 +175,7 @@ describe("unidouble", () => {
     let [buyerAccount] = await anchor.web3.PublicKey.findProgramAddress(
       [
         buyer.publicKey.toBuffer(),
-        Buffer.from(anchor.utils.bytes.utf8.encode("buyer")),
+        Buffer.from(anchor.utils.bytes.utf8.encode("unidouble_buyer")),
       ],
       program.programId
     );

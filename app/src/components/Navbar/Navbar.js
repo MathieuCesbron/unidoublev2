@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import {
   getSellerAccount,
   getBuyerAccount,
+  getDecodedBuyerAccount,
 } from "../../utils/solana/sellerAccount";
 import useStore from "../../store";
 import { Button } from "antd";
@@ -21,6 +22,7 @@ const Navbar = () => {
 
   const isBuyer = useStore((state) => state.isBuyer);
   const setIsBuyer = useStore((state) => state.setIsBuyer);
+  const setShdwBucket = useStore((state) => state.setShdwBucket);
 
   const [loading, setLoading] = useState(true);
 
@@ -50,10 +52,12 @@ const Navbar = () => {
         setIsSeller(true);
       }
 
-      const buyerAccount = await getBuyerAccount(publicKey);
-      if (buyerAccount === undefined) {
+      const ba = await getBuyerAccount(publicKey);
+      if (ba === undefined) {
         setIsBuyer(false);
       } else {
+        const { shdw_hash } = getDecodedBuyerAccount(ba);
+        setShdwBucket(shdw_hash);
         setIsBuyer(true);
       }
 
