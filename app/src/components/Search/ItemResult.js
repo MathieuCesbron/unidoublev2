@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { Button, Image, Rate, Modal, InputNumber, Input, Form } from "antd";
+import * as anchor from "@project-serum/anchor";
+import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import USDCLogo from "../../images/usdc-logo.png";
 import {
   getDecodedSellerAccount,
@@ -9,15 +11,30 @@ import {
 } from "../../utils/solana/sellerAccount";
 import { curve } from "../../utils/crypto/crypto";
 import { AES, mode, enc } from "crypto-js";
+import { useWallet } from "@solana/wallet-adapter-react";
+import {
+  programID,
+  program,
+  creatorPubKey,
+  storePubKey,
+  USDC_MINT,
+  connection,
+  network,
+} from "../../utils/solana/program";
+import { BN } from "bn.js";
+import { PublicKey } from "@solana/web3.js";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import "../SellerAccount/Option.css";
 import "./ItemResult.css";
 
 const ItemResult = () => {
+  const { publicKey } = useWallet();
   const { state } = useLocation();
   const navigate = useNavigate();
 
   const [visible, setVisible] = useState(false);
   const [showModalBuy, setShowModalBuy] = useState(false);
+  const [shadowBucketBuyer, setShadowBucketBuyer] = useState("");
 
   const [sellerDiffiePublicKey, setSellerDiffiePublicKey] = useState("");
 
@@ -86,6 +103,50 @@ const ItemResult = () => {
     // );
     // console.log("decyrpt:", text.toString(enc.Utf8));
   }, [addressData]);
+
+  const buyItemHandler = async () => {
+    let uuid = Math.floor(Math.random() * 1000000);
+
+    // We can only use USDC on mainnet.
+    if (network !== WalletAdapterNetwork.Mainnet) {
+      return;
+    }
+
+    const [order] = anchor.web3.PublicKey.findProgramAddressSync(
+      [publicKey.toBuffer(), new anchor.BN(uuid).toArrayLike(Buffer, "le", 8)],
+      programID,
+    );
+
+    // TODO: check that it works, should create usdc token address for store before.
+    try {
+      const buyer_ata = await getAssociatedTokenAddress(USDC_MINT, publicKey);
+      const store_ata = await getAssociatedTokenAddress(
+        USDC_MINT,
+        new PublicKey(storePubKey),
+      );
+
+      const txBuyItem = await program.methods
+        .buyItem(new BN(uuid), amountToBuy, shadowBucketBuyer)
+        .accounts({
+          user: publicKey,
+          sellerAccount: state.itemData.seller_account_public_key,
+          seller: state.itemData.seller_public_key,
+          item: state.itemData.pubkey,
+          storeCreator: creatorPubKey,
+          store: storePubKey,
+          userUsdc: buyer_ata.address,
+          storeUsdc: store_ata.address,
+          tokenProgram: TOKEN_PROGRAM_ID,
+          order: order,
+        })
+        .rpc();
+      await connection.confirmTransaction(txBuyItem);
+      console.log("tx buy item: ", txBuyItem);
+      navigate("/orders");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="option-wrapper">
@@ -157,6 +218,7 @@ const ItemResult = () => {
         centered
         open={showModalBuy}
         onCancel={() => setShowModalBuy(false)}
+        onOk={buyItemHandler}
         okText="Validate transaction on wallet"
       >
         <p>

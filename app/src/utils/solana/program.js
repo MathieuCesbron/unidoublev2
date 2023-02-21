@@ -1,5 +1,5 @@
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import { AnchorProvider, Program } from "@project-serum/anchor";
+import { AnchorProvider, Program, web3 } from "@project-serum/anchor";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import idl from "./idl.json";
 
@@ -33,6 +33,10 @@ const shdwBucketDevnet = "AdSA1249vEWYX7pW9ybP7eb6WeDZvvxRDqbgJz9AdGcf";
 // There is no way to create a bucket on devnet, it is a mainnet bucket used for testing on devnet.
 const shdwBucketBuyerDevnet = "4zGnN2e9jFQofWWs2daNqmdnv8GRG8YPbBWQtVCjKJ3G";
 
+const USDC_MINT = new web3.PublicKey(
+  "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+);
+
 export {
   network,
   connection,
@@ -43,4 +47,5 @@ export {
   creatorPubKey,
   shdwBucketDevnet,
   shdwBucketBuyerDevnet,
+  USDC_MINT,
 };

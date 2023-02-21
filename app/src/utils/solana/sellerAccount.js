@@ -106,18 +106,21 @@ const getItemsByCategory = async (category) => {
 
 const getDecodedItems = (items) => {
   return items.map((item) => {
-    return struct([
-      u32("unique_number"),
-      u8("category"),
-      u32("price"),
-      u16("amount"),
-      publicKeyBorsh("seller_public_key"),
-      publicKeyBorsh("seller_account_public_key"),
-      u32("buyer_count"),
-      u16("rating_count"),
-      f32("rating"),
-      str("shdw_hash_seller"),
-    ]).decode(item.account.data, 8);
+    return {
+      pubkey: item.pubkey,
+      ...struct([
+        u32("unique_number"),
+        u8("category"),
+        u32("price"),
+        u16("amount"),
+        publicKeyBorsh("seller_public_key"),
+        publicKeyBorsh("seller_account_public_key"),
+        u32("buyer_count"),
+        u16("rating_count"),
+        f32("rating"),
+        str("shdw_hash_seller"),
+      ]).decode(item.account.data, 8),
+    };
   });
 };
 
