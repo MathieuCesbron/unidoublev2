@@ -1,0 +1,19 @@
+.sales-private-key {
+  max-width: 550px;
+  margin: auto;
+}
+
+.sales-top-private-key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sales-top-enter {
+  margin-left: 0.5em;
+}
+
+.sales-private-key-btn {
+  display: block;
+  margin: 1em auto;
+}

@@ -6,6 +6,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 import DeleteSellerAccount from "./Delete/DeleteSellerAccount";
 import ListItem from "./List/ListItem";
 import MyItems from "./MyItems/MyItems";
+import Sales from "./Sales/Sales";
 import "./SellerAccount.css";
 
 const SellerAccount = () => {
@@ -20,7 +21,7 @@ const SellerAccount = () => {
   };
 
   const salesHandler = () => {
-    console.log("sales");
+    setMode("sales");
   };
 
   const myItemsHandler = () => {
@@ -31,6 +32,8 @@ const SellerAccount = () => {
     switch (mode) {
       case "newItem":
         return <ListItem setMode={setMode} />;
+      case "sales":
+        return <Sales setMode={setMode} />;
       case "myItems":
         return <MyItems setMode={setMode} />;
       case "delete":
