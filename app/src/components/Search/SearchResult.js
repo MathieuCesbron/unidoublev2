@@ -12,6 +12,7 @@ import "../SellerAccount/Option.css";
 const SearchResult = () => {
   const category = useStore((state) => state.category);
 
+  const [loading, setLoading] = useState(true);
   const [decodedItems, setDecodedItems] = useState([]);
 
   useEffect(() => {
@@ -19,6 +20,7 @@ const SearchResult = () => {
       const items = await getItemsByCategory(category);
       const di = getDecodedItems(items);
       setDecodedItems(di);
+      setLoading(false);
     })();
   }, [category]);
 
@@ -27,7 +29,7 @@ const SearchResult = () => {
       <div className="option-top">
         <h2>Category {category.label}</h2>
       </div>
-      {decodedItems.length !== 0 ? (
+      {!loading && decodedItems.length !== 0 ? (
         decodedItems.map((data) => (
           <Item itemData={data} key={data.unique_number} mode={"search"} />
         ))
