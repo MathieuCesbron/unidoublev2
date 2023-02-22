@@ -219,7 +219,7 @@ const ListItem = (props) => {
             ></input>
           </div>
         </div>
-        <hr className="list-separator" />
+        {/* <hr className="list-separator" />
         <div className="list-form-field">
           <label className="list-form-label">Private key</label>
           <input
@@ -231,7 +231,7 @@ const ListItem = (props) => {
             minLength="62"
             maxLength="63"
           ></input>
-        </div>
+        </div> */}
         <Button
           disabled={loading}
           type="primary"

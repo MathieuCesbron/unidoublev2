@@ -16,6 +16,7 @@
 .list-form-price-amount {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1em;
 }
 
 .list-form-label-price,
