@@ -23,6 +23,8 @@ const Navbar = () => {
   const isBuyer = useStore((state) => state.isBuyer);
   const setIsBuyer = useStore((state) => state.setIsBuyer);
   const setShdwBucket = useStore((state) => state.setShdwBucket);
+  const setIsAuthenticated = useStore((state) => state.setIsAuthenticated);
+  const setDiffiePrivateKey = useStore((state) => state.setDiffiePrivateKey);
 
   const [loading, setLoading] = useState(true);
 
@@ -45,6 +47,10 @@ const Navbar = () => {
     }
 
     (async () => {
+      // reset previous user
+      setIsAuthenticated(false);
+      setDiffiePrivateKey("");
+
       const sellerAccount = await getSellerAccount(publicKey);
       if (sellerAccount === undefined) {
         setIsSeller(false);

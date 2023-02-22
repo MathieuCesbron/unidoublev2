@@ -1,18 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { Button, Input } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { MdOutlineVpnKey } from "react-icons/md";
+import useStore from "../../../store";
 import "./Sales.css";
 import "../Option.css";
+import {
+  getDecodedSellerAccount,
+  getSellerAccount,
+} from "../../../utils/solana/account";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { curve } from "../../../utils/crypto/crypto";
 
 const Sales = (props) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [privateKey, setPrivateKey] = useState("");
+  const { publicKey } = useWallet();
+
+  const isAuthenticated = useStore((state) => state.isAuthenticated);
+  const setIsAuthenticated = useStore((state) => state.setIsAuthenticated);
+  const setDiffiePrivateKey = useStore((state) => state.setDiffiePrivateKey);
+
+  const [privateKeyInput, setPrivateKeyInput] = useState("");
+  const [diffiePublicKey, setDiffiePublicKey] = useState("");
+
+  const shdwBucket = useStore((state) => state.shdwBucket);
+
+  useEffect(() => {
+    (async () => {
+      const sa = await getSellerAccount(publicKey);
+      const dsa = getDecodedSellerAccount(sa);
+      setDiffiePublicKey(dsa.diffie_public_key);
+    })();
+  });
 
   const checkPrivateKey = () => {
-    console.log("checked");
-    setIsAuthenticated(true);
+    const keyPair = curve.keyFromPrivate(privateKeyInput);
+
+    if (keyPair.getPublic().encode("hex") === diffiePublicKey) {
+      setIsAuthenticated(true);
+      setDiffiePrivateKey(privateKeyInput);
+    }
   };
 
   return (
@@ -32,7 +59,7 @@ const Sales = (props) => {
           <div className="sales-top-private-key">
             <MdOutlineVpnKey size="2em" />
             <h3 className="sales-top-enter">
-              Enter your private key to access your sales
+              Enter your private key to access sales
             </h3>
           </div>
           <Input.Password
@@ -43,8 +70,8 @@ const Sales = (props) => {
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
             }
-            value={privateKey}
-            onChange={(e) => setPrivateKey(e.target.value)}
+            value={privateKeyInput}
+            onChange={(e) => setPrivateKeyInput(e.target.value)}
           />
           <Button
             type="primary"

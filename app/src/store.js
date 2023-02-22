@@ -12,6 +12,14 @@ const useStore = create((set) => ({
   isSeller: undefined,
   setIsSeller: (isSeller) => set((state) => ({ isSeller })),
 
+  isAuthenticated: false,
+  setIsAuthenticated: (isAuthenticated) =>
+    set((state) => ({ isAuthenticated })),
+
+  diffiePrivateKey: "",
+  setDiffiePrivateKey: (diffiePrivateKey) =>
+    set((state) => ({ diffiePrivateKey })),
+
   shdwBucket: network === WalletAdapterNetwork.Devnet ? shdwBucketDevnet : "",
   setShdwBucket: (shdwBucket) => set((state) => ({ shdwBucket })),
 }));
