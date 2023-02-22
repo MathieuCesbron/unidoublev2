@@ -1,4 +1,3 @@
-import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
 import useStore from "../../store";
 import {
@@ -7,6 +6,7 @@ import {
 } from "../../utils/solana/account";
 import Item from "../Item/Item";
 import { TbMoodEmpty } from "react-icons/tb";
+import { Pagination } from "antd";
 import "../SellerAccount/Option.css";
 
 const SearchResult = () => {
@@ -14,6 +14,12 @@ const SearchResult = () => {
 
   const [loading, setLoading] = useState(true);
   const [decodedItems, setDecodedItems] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  const lastItemIndex = currentPage * itemsPerPage;
+  const firstItemIndex = lastItemIndex - itemsPerPage;
+  const currentItems = decodedItems.slice(firstItemIndex, lastItemIndex);
 
   useEffect(() => {
     (async () => {
@@ -29,10 +35,23 @@ const SearchResult = () => {
       <div className="option-top">
         <h2>Category {category.label}</h2>
       </div>
-      {!loading && decodedItems.length !== 0 ? (
-        decodedItems.map((data) => (
-          <Item itemData={data} key={data.unique_number} mode={"search"} />
-        ))
+      {!loading && currentItems.length !== 0 ? (
+        <>
+          {currentItems.map((data) => (
+            <Item itemData={data} key={data.unique_number} mode={"search"} />
+          ))}
+          <Pagination
+            style={{ textAlign: "center" }}
+            hideOnSinglePage
+            current={currentPage}
+            pageSize={itemsPerPage}
+            total={decodedItems.length}
+            onChange={(value) => {
+              setCurrentPage(value);
+              window.scrollTo(0, 0);
+            }}
+          />
+        </>
       ) : (
         <div className="option-empty-wrapper">
           <TbMoodEmpty size={"5em"} />

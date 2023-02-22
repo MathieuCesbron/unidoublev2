@@ -9,6 +9,7 @@ import {
 } from "../../../utils/solana/account";
 import Item from "../../Item/Item";
 import { TbMoodEmpty } from "react-icons/tb";
+import { Pagination } from "antd";
 import "../Option.css";
 import "./MyItems.css";
 
@@ -24,9 +25,9 @@ const MyItems = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const myItemsPerPage = 5;
-  const lastPostIndex = currentPage * myItemsPerPage;
-  const firstPostIndex = lastPostIndex - myItemsPerPage;
-  const currentMyItems = decodedMyItems.slice(firstPostIndex, lastPostIndex);
+  const lastItemIndex = currentPage * myItemsPerPage;
+  const firstItemIndex = lastItemIndex - myItemsPerPage;
+  const currentMyItems = decodedMyItems.slice(firstItemIndex, lastItemIndex);
 
   useEffect(() => {
     (async () => {
@@ -60,27 +61,39 @@ const MyItems = (props) => {
         />
         <h2 className="option-title">My Items</h2>
       </div>
-      {!loading && (
-        <div className="my-items-wrapper">
-          {currentMyItems.length !== 0 ? (
-            currentMyItems.map((data) => (
-              <Item
-                itemData={data}
-                salesCount={salesCount}
-                salesVolume={salesVolume}
-                setDecodedItems={setDecodedMyItems}
-                sellerAccountPublicKey={sellerAccountPublicKey}
-                key={data.unique_number}
-              />
-            ))
-          ) : (
-            <div className="option-empty-wrapper">
-              <TbMoodEmpty size={"5em"} />
-              <p className="option-empty">You have no items listed yet...</p>
+      {!loading &&
+        (currentMyItems.length !== 0 ? (
+          <>
+            <div className="my-items-wrapper">
+              {currentMyItems.map((data) => (
+                <Item
+                  itemData={data}
+                  salesCount={salesCount}
+                  salesVolume={salesVolume}
+                  setDecodedItems={setDecodedMyItems}
+                  sellerAccountPublicKey={sellerAccountPublicKey}
+                  key={data.unique_number}
+                />
+              ))}
             </div>
-          )}
-        </div>
-      )}
+            <Pagination
+              style={{ textAlign: "center" }}
+              hideOnSinglePage
+              current={currentPage}
+              pageSize={myItemsPerPage}
+              total={decodedMyItems.length}
+              onChange={(value) => {
+                setCurrentPage(value);
+                window.scrollTo(0, 0);
+              }}
+            />
+          </>
+        ) : (
+          <div className="option-empty-wrapper">
+            <TbMoodEmpty size={"5em"} />
+            <p className="option-empty">You have no items listed yet...</p>
+          </div>
+        ))}
     </div>
   );
 };
