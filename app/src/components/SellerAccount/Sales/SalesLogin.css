@@ -17,3 +17,8 @@
   display: block;
   margin: 1em auto;
 }
+
+.sales-private-key-error {
+  text-align: center;
+  color: red;
+}
