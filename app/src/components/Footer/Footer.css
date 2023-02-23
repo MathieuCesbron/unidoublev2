@@ -1,0 +1,24 @@
+.footer-wrapper {
+  background-color: #a5abbd5e;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3em;
+}
+
+.footer-link {
+  color: black;
+  text-decoration: none;
+  padding: 0.5em 1em;
+}
+
+.footer-link:focus,
+.footer-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

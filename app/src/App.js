@@ -8,25 +8,34 @@ import SellerAccount from "./components/SellerAccount/SellerAccount";
 import CreateSellerAccount from "./components/CreateAccount/CreateSellerAccount";
 import CreateBuyerAccount from "./components/CreateAccount/CreateBuyerAccount";
 import ItemResult from "./components/Search/ItemResult";
+import Footer from "./components/Footer/Footer";
 import "./App.css";
+import Terms from "./components/Terms/Terms";
 
 const App = () => {
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/create-account" element={<CreateAccount />} />
-        <Route
-          path="/create-seller-account"
-          element={<CreateSellerAccount />}
-        />
-        <Route path="/create-buyer-account" element={<CreateBuyerAccount />} />
-        <Route path="/seller-account" element={<SellerAccount />} />
-        <Route path="/buyer-account" element={<BuyerAccount />} />
-        <Route path="/search" element={<SearchResult />} />
-        <Route path="/item/:unique_number" element={<ItemResult />} />
-      </Routes>
+      <div className="content-wrapper">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/create-account" element={<CreateAccount />} />
+          <Route
+            path="/create-seller-account"
+            element={<CreateSellerAccount />}
+          />
+          <Route
+            path="/create-buyer-account"
+            element={<CreateBuyerAccount />}
+          />
+          <Route path="/seller-account" element={<SellerAccount />} />
+          <Route path="/buyer-account" element={<BuyerAccount />} />
+          <Route path="/search" element={<SearchResult />} />
+          <Route path="/item/:unique_number" element={<ItemResult />} />
+          <Route path="terms-of-use" element={<Terms />} />
+        </Routes>
+      </div>
+      <Footer />
     </>
   );
 };
