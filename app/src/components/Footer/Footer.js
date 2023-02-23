@@ -8,7 +8,7 @@ const Footer = () => {
     <div className="footer-wrapper">
       <a
         className="footer-link"
-        href="https://github.com/MathieuCesbron"
+        href="https://github.com/MathieuCesbron/unidoublev2/blob/master/app/public/pdfs/whitepaper.pdf"
         target="_blank"
       >
         Whitepaper
