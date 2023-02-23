@@ -1,0 +1,8 @@
+.home-logo {
+  padding: 0.5em 1em;
+}
+
+.home-logo:focus,
+.home-logo:hover {
+  cursor: pointer;
+}
