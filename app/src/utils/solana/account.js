@@ -132,6 +132,23 @@ const getDecodedItems = (items) => {
   });
 };
 
+const getOrdersForSeller = async (publicKey) => {
+  const filters = {
+    filters: [
+      { dataSize: 800 },
+      {
+        memcmp: {
+          offset: 8 + 8 + 32,
+          bytes: publicKey,
+          length: 32,
+        },
+      },
+    ],
+  };
+
+  return await connection.getProgramAccounts(programID, filters);
+};
+
 export {
   getBuyerAccount,
   getSellerAccount,
@@ -140,4 +157,5 @@ export {
   getMyItems,
   getDecodedItems,
   getItemsByCategory,
+  getOrdersForSeller,
 };

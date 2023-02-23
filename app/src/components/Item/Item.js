@@ -189,14 +189,7 @@ const Item = ({
             <p className="item-stats">
               {itemData.amount} available / {itemData.buyer_count} buyer
             </p>
-            <p className="item-score">
-              SCORE:&nbsp;
-              {itemData.rating *
-                itemData.rating_count *
-                itemData.buyer_count *
-                salesCount *
-                salesVolume}
-            </p>
+            <p className="item-score">{`SCORE: ${itemData.score}`}</p>
           </div>
           {mode === "search" ? (
             <Button

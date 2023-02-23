@@ -613,7 +613,7 @@ pub struct BuyItem<'info> {
     #[account(
         init,
         payer = user,
-        space = 1000,
+        space = 800,
         seeds = [user.key().as_ref(), uuid.to_le_bytes().as_ref()],
         bump,
     )]
@@ -864,8 +864,9 @@ pub struct Item {
 #[account]
 pub struct Order {
     pub uuid: u64,                       // +8
-    pub buyer_public_key: Pubkey,        // +64
-    pub item_account_public_key: Pubkey, // +64
+    pub buyer_public_key: Pubkey,        // +32
+    pub seller_public_key: Pubkey,       // +32
+    pub item_account_public_key: Pubkey, // +32
 
     pub price_bought: u32,
     pub amount_bought: u16,
