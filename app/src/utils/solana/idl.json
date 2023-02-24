@@ -263,7 +263,7 @@
       "args": [
         {
           "name": "uuid",
-          "type": "u64"
+          "type": "u32"
         },
         {
           "name": "amount",
@@ -620,6 +620,10 @@
             "type": "f32"
           },
           {
+            "name": "score",
+            "type": "f32"
+          },
+          {
             "name": "shdwHashSeller",
             "type": "string"
           }
@@ -633,10 +637,14 @@
         "fields": [
           {
             "name": "uuid",
-            "type": "u64"
+            "type": "u32"
           },
           {
             "name": "buyerPublicKey",
+            "type": "publicKey"
+          },
+          {
+            "name": "sellerPublicKey",
             "type": "publicKey"
           },
           {
@@ -798,6 +806,6 @@
     }
   ],
   "metadata": {
-    "address": "EZqZTp4nQsgaJ6zA7bot6aq1GqksS2xeTgfGwtXKXp5S"
+    "address": "DB3kCrqqtZrtCMHLmUauXsM6B9TTjSY2ajgGaoF4CnaL"
   }
 }

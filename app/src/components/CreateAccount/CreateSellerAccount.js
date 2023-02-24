@@ -6,11 +6,19 @@ import CreateSellerAccountStep2 from "./CreateSellerAccountStep2";
 import CreateSellerAccountStep3 from "./CreateSellerAccountStep3";
 import { ProgressBar, Step } from "react-step-progress-bar";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { ShdwDrive } from "@shadow-drive/sdk";
+import { privateConnection } from "../../utils/solana/program";
+import useStore from "../../store";
 import "./CreateTypeAccount.css";
 
 const CreateSellerAccount = () => {
+  const wallet = useWallet();
   const { publicKey } = useWallet();
+
   const [step, setStep] = useState(0);
+  const [skipStep1, setSkipStep1] = useState(false);
+
+  const setShdwBucket = useStore((state) => state.setShdwBucket);
 
   const sellerDiffieKeyPair = useMemo(() => curve.genKeyPair(), []);
   const sellerDiffiePubKey = useMemo(
@@ -23,6 +31,14 @@ const CreateSellerAccount = () => {
   );
 
   useEffect(() => {
+    (async () => {
+      const drive = await new ShdwDrive(privateConnection, wallet).init();
+      const accts = await drive.getStorageAccounts("v2");
+      if (accts.length === 1) {
+        setShdwBucket(accts[0].publicKey.toString());
+        setSkipStep1(true);
+      }
+    })();
     setStep(0);
   }, [publicKey]);
 
@@ -31,6 +47,7 @@ const CreateSellerAccount = () => {
       case 0:
         return <CreateSellerAccountSummary setStep={setStep} />;
       case 1:
+        if (skipStep1) setStep(2);
         return <CreateSellerAccountStep1 setStep={setStep} />;
       case 2:
         return (

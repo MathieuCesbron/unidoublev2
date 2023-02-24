@@ -23,7 +23,7 @@ import {
   privateConnection,
 } from "../../utils/solana/program";
 import { BN } from "bn.js";
-import { PublicKey } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { ShdwDrive } from "@shadow-drive/sdk";
 import useStore from "../../store";
@@ -131,10 +131,11 @@ const ItemResult = () => {
       ]);
       orderJSONBlob.name = `order_${uuid}.json`;
 
-      const uploadOrderFile = await drive.uploadFile(
-        new PublicKey(shdwBucket),
-        orderJSONBlob,
-      );
+      // const uploadOrderFile = await drive.uploadFile(
+      //   new PublicKey(shdwBucket),
+      //   orderJSONBlob,
+      // );
+      // console.log(uploadOrderFile);
     } catch (error) {
       console.log(error);
     }
@@ -149,10 +150,16 @@ const ItemResult = () => {
       const store_ata = await getAssociatedTokenAddress(
         USDC_MINT,
         new PublicKey(storePubKey),
+        true,
       );
 
+      // const oula = new anchor.BN(uuid);
+      const oula = new anchor.BN(10).toArrayLike(Buffer, "le", 8);
+      const oula2 = new anchor.BN(1).toArrayLike(Buffer, "le", 2);
+      console.log(oula);
+      // const test = new BN(10);
       const txBuyItem = await program.methods
-        .buyItem(new BN(uuid), amountToBuy, shdwBucket)
+        .buyItem(oula, oula2, shdwBucket)
         .accounts({
           user: publicKey,
           sellerAccount: state.itemData.seller_account_public_key,
@@ -160,8 +167,8 @@ const ItemResult = () => {
           item: state.itemData.pubkey,
           storeCreator: creatorPubKey,
           store: storePubKey,
-          userUsdc: buyer_ata.address,
-          storeUsdc: store_ata.address,
+          userUsdc: buyer_ata,
+          storeUsdc: store_ata,
           tokenProgram: TOKEN_PROGRAM_ID,
           order: order,
         })

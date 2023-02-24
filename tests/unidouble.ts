@@ -244,7 +244,7 @@ describe("unidouble", () => {
     let uuid = Math.floor(Math.random() * 1000000);
     let [order] = await anchor.web3.PublicKey.findProgramAddress(
       // We use the 8 argument because a u64 is 8x a u8.
-      [buyer.publicKey.toBuffer(), new anchor.BN(uuid).toBuffer("le", 8)],
+      [buyer.publicKey.toBuffer(), new anchor.BN(uuid).toBuffer("le", 4)],
       program.programId
     );
     console.log(`order address: ${order.toString()}`);
@@ -252,7 +252,7 @@ describe("unidouble", () => {
     // buy item
     try {
       const txBuyItem = await program.methods
-        .buyItem(new BN(uuid), amountToBuy, buyerShdwHash)
+        .buyItem(uuid, amountToBuy, buyerShdwHash)
         .accounts({
           user: buyer.publicKey,
           sellerAccount: sellerAccount,
@@ -324,7 +324,7 @@ describe("unidouble", () => {
     uuid = Math.floor(Math.random() * 1000000);
     [order] = await anchor.web3.PublicKey.findProgramAddress(
       // We use the 8 argument because a u64 is 8x a u8.
-      [buyer.publicKey.toBuffer(), new anchor.BN(uuid).toBuffer("le", 8)],
+      [buyer.publicKey.toBuffer(), new anchor.BN(uuid).toBuffer("le", 4)],
       program.programId
     );
     console.log(`order address: ${order.toString()}`);
@@ -334,7 +334,7 @@ describe("unidouble", () => {
       // find order address
 
       const txBuyItem = await program.methods
-        .buyItem(new BN(uuid), amountToBuy, buyerShdwHash)
+        .buyItem(uuid, amountToBuy, buyerShdwHash)
         .accounts({
           user: buyer.publicKey,
           sellerAccount: sellerAccount,

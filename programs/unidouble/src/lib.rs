@@ -7,7 +7,7 @@ use spl_token::instruction::transfer;
 
 pub mod error;
 
-declare_id!("EZqZTp4nQsgaJ6zA7bot6aq1GqksS2xeTgfGwtXKXp5S");
+declare_id!("DB3kCrqqtZrtCMHLmUauXsM6B9TTjSY2ajgGaoF4CnaL");
 
 #[program]
 pub mod unidouble {
@@ -120,7 +120,7 @@ pub mod unidouble {
 
     pub fn buy_item(
         ctx: Context<BuyItem>,
-        uuid: u64,
+        uuid: u32,
         amount: u16,
         shdw_hashes_delivery: String,
     ) -> Result<()> {
@@ -565,7 +565,7 @@ pub struct UpdateItem<'info> {
 }
 
 #[derive(Accounts)]
-#[instruction(uuid:u64)]
+#[instruction(uuid:u32)]
 pub struct BuyItem<'info> {
     #[account(mut)]
     pub user: Signer<'info>,
@@ -863,7 +863,7 @@ pub struct Item {
 
 #[account]
 pub struct Order {
-    pub uuid: u64,                       // +8
+    pub uuid: u32,                       // +4
     pub buyer_public_key: Pubkey,        // +32
     pub seller_public_key: Pubkey,       // +32
     pub item_account_public_key: Pubkey, // +32
