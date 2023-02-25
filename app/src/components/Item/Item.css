@@ -1,19 +1,23 @@
 .item-wrapper {
   display: flex;
-  border: grey solid;
+  justify-content: right;
+  border: grey solid 1px;
   border-radius: 8px;
   margin-bottom: 1em;
+  height: 250px;
 }
 
 .item-image {
-  border-right: grey solid 1px;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
 }
 
 .item-body {
   padding: 0.5em 0.5em 0.5em 1em;
-  width: 100%;
+  /* width of 800px (option-wrapper) - 250px (image) */
+  /* After testing, the best width is 520px, not sure why */
+  width: 520px;
+  border-left: grey solid 1px;
 }
 
 /* top */
@@ -100,14 +104,14 @@
   .item-wrapper {
     flex-direction: column;
     align-items: center;
+    height: auto;
   }
   .item-image {
-    border: none;
-    border-radius: 0;
-    border-bottom: grey solid;
-    margin-bottom: 1em;
+    display: none;
   }
   .item-body {
+    border: none;
     width: 93%;
+    padding: 0.8em 0;
   }
 }

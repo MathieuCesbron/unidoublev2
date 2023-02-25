@@ -16,14 +16,7 @@ import { Button, Tag } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Item.css";
 
-const Item = ({
-  itemData,
-  mode,
-  salesCount,
-  salesVolume,
-  setDecodedItems,
-  sellerAccountPublicKey,
-}) => {
+const Item = ({ itemData, mode, setDecodedItems, sellerAccountPublicKey }) => {
   const wallet = useWallet();
   const { publicKey } = useWallet();
   const navigate = useNavigate();
