@@ -113,7 +113,7 @@ const getItemsByCategory = async (category) => {
 
 const getDecodedItems = (items) => {
   return items.map((item) => {
-    return {
+    const decoded = {
       pubkey: item.pubkey.toString(),
       ...struct([
         u32("unique_number"),
@@ -128,6 +128,13 @@ const getDecodedItems = (items) => {
         f32("score"),
         str("shdw_hash_seller"),
       ]).decode(item.account.data, 8),
+    };
+
+    // Convert the public key to string for simplicity.
+    return {
+      ...decoded,
+      seller_public_key: decoded.seller_public_key.toString(),
+      seller_account_public_key: decoded.seller_account_public_key.toString(),
     };
   });
 };

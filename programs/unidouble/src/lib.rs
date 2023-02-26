@@ -154,7 +154,7 @@ pub mod unidouble {
             ctx.accounts.store_usdc.key,
             ctx.accounts.user.key,
             &[ctx.accounts.user.key],
-            amount as u64 * item.price as u64,
+            amount as u64 * item.price as u64 * u64::pow(10, 4),
         )?;
 
         invoke(
@@ -222,7 +222,7 @@ pub mod unidouble {
             ctx.accounts.user_usdc.key,
             &ctx.accounts.store.key(),
             &[],
-            amount_to_buyer as u64,
+            amount_to_buyer as u64 * u64::pow(10, 4),
         )?;
 
         invoke_signed(
@@ -246,7 +246,7 @@ pub mod unidouble {
             ctx.accounts.creator_usdc.key,
             &ctx.accounts.store.key(),
             &[],
-            amount_to_store_creator as u64,
+            amount_to_store_creator as u64 * u64::pow(10, 4),
         )?;
 
         invoke_signed(
@@ -321,7 +321,7 @@ pub mod unidouble {
             ctx.accounts.seller_usdc.key,
             &ctx.accounts.store.key(),
             &[],
-            amount_to_buyer as u64,
+            amount_to_buyer as u64 * u64::pow(10, 4),
         )?;
 
         invoke_signed(
@@ -345,7 +345,7 @@ pub mod unidouble {
             ctx.accounts.creator_usdc.key,
             &ctx.accounts.store.key(),
             &[],
-            amount_to_store_creator as u64,
+            amount_to_store_creator as u64 * u64::pow(10, 4),
         )?;
 
         invoke_signed(
@@ -412,7 +412,7 @@ pub mod unidouble {
             ctx.accounts.user_usdc.key,
             &ctx.accounts.store.key(),
             &[],
-            amount_to_buyer as u64,
+            amount_to_buyer as u64 * u64::pow(10, 4),
         )?;
 
         invoke_signed(

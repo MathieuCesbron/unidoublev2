@@ -211,13 +211,14 @@ describe("unidouble", () => {
     );
     console.log(`buyer USDC address: ${buyerUSDC.address.toString()}`);
 
+    // mint 1000 USDC to the buyer
     await mintTo(
       provider.connection,
       creator,
       mint,
       buyerUSDC.address,
       creator.publicKey,
-      1000
+      1000 * Math.pow(10, 6)
     );
     buyerUSDC = await getAccount(provider.connection, buyerUSDC.address);
     console.log("buyer USDC balance: ", buyerUSDC.amount);

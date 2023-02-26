@@ -58,7 +58,7 @@ const deployDevnet = async () => {
       provider.connection,
       creatorKeypair,
       USDC_MINT,
-      storeKeypair.publicKey,
+      store,
       true
     );
     console.log("store usdc address: ", store_ata.address.toString());

@@ -3,7 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { Button, Image, Rate, Modal, InputNumber, Input, Form } from "antd";
 import * as anchor from "@project-serum/anchor";
-import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import {
+  getAssociatedTokenAddressSync,
+  TOKEN_PROGRAM_ID,
+} from "@solana/spl-token";
 import USDCLogo from "../../images/usdc-logo.png";
 import {
   getDecodedSellerAccount,
@@ -112,7 +115,7 @@ const ItemResult = () => {
   const buyItemHandler = async () => {
     const uuid = Math.floor(Math.random() * 1000000);
     const [order] = anchor.web3.PublicKey.findProgramAddressSync(
-      [publicKey.toBuffer(), new anchor.BN(uuid).toArrayLike(Buffer, "le", 8)],
+      [publicKey.toBuffer(), new anchor.BN(uuid).toArrayLike(Buffer, "le", 4)],
       programID,
     );
 
@@ -131,11 +134,11 @@ const ItemResult = () => {
       ]);
       orderJSONBlob.name = `order_${uuid}.json`;
 
-      // const uploadOrderFile = await drive.uploadFile(
-      //   new PublicKey(shdwBucket),
-      //   orderJSONBlob,
-      // );
-      // console.log(uploadOrderFile);
+      const uploadOrderFile = await drive.uploadFile(
+        new PublicKey(shdwBucket),
+        orderJSONBlob,
+      );
+      console.log(uploadOrderFile);
     } catch (error) {
       console.log(error);
     }
@@ -146,20 +149,15 @@ const ItemResult = () => {
 
     // TODO: check that it works, should create usdc token address for store before.
     try {
-      const buyer_ata = await getAssociatedTokenAddress(USDC_MINT, publicKey);
-      const store_ata = await getAssociatedTokenAddress(
+      const buyer_ata = getAssociatedTokenAddressSync(USDC_MINT, publicKey);
+      const store_ata = getAssociatedTokenAddressSync(
         USDC_MINT,
         new PublicKey(storePubKey),
         true,
       );
 
-      // const oula = new anchor.BN(uuid);
-      const oula = new anchor.BN(10).toArrayLike(Buffer, "le", 8);
-      const oula2 = new anchor.BN(1).toArrayLike(Buffer, "le", 2);
-      console.log(oula);
-      // const test = new BN(10);
       const txBuyItem = await program.methods
-        .buyItem(oula, oula2, shdwBucket)
+        .buyItem(uuid, amountToBuy, shdwBucket)
         .accounts({
           user: publicKey,
           sellerAccount: state.itemData.seller_account_public_key,
