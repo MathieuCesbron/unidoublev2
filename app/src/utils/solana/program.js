@@ -2,6 +2,7 @@ import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { AnchorProvider, Program, web3 } from "@project-serum/anchor";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import idl from "./idl.json";
+import { getAssociatedTokenAddressSync } from "@solana/spl-token";
 
 const network = process.env.REACT_APP_NETWORK || WalletAdapterNetwork.Devnet;
 
@@ -26,7 +27,15 @@ const storePubKey =
     ? "8EKsxx59euVgAikiWAtUWUM8kKdphFLtUiHyB7oxX6ZD"
     : "8EKsxx59euVgAikiWAtUWUM8kKdphFLtUiHyB7oxX6ZD";
 
+const USDC_MINT = new web3.PublicKey(
+  "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+);
+
 const creatorPubKey = "4zGnN2e9jFQofWWs2daNqmdnv8GRG8YPbBWQtVCjKJ3G";
+const creator_ata = getAssociatedTokenAddressSync(
+  USDC_MINT,
+  new PublicKey(creatorPubKey),
+);
 
 // Bucket owned by public key: 7NowSCVNu6gmQihr1A7MUSves7a5CZY5boGYZQ2vawKT.
 // There is no way to create a bucket on devnet, it is a mainnet bucket used for testing on devnet.
@@ -36,10 +45,6 @@ const shdwBucketDevnet = "AdSA1249vEWYX7pW9ybP7eb6WeDZvvxRDqbgJz9AdGcf";
 // There is no way to create a bucket on devnet, it is a mainnet bucket used for testing on devnet.
 const shdwBucketBuyerDevnet = "8fjitq47635kPGYUGJbFkJqqPqrgjkyeZ7M5TwJEJZkr";
 
-const USDC_MINT = new web3.PublicKey(
-  "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-);
-
 export {
   network,
   connection,
@@ -48,6 +53,7 @@ export {
   program,
   storePubKey,
   creatorPubKey,
+  creator_ata,
   shdwBucketDevnet,
   shdwBucketBuyerDevnet,
   USDC_MINT,

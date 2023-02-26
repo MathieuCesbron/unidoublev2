@@ -72,10 +72,10 @@ const Navbar = () => {
   }, [publicKey]);
 
   const accountMode = () => {
-    if (isSeller === true) {
+    if (isSeller) {
       navigate("seller-account");
-    } else if (isBuyer === true) {
-      navigate("buyer-account");
+    } else if (isBuyer) {
+      navigate("orders");
     } else {
       navigate("/create-account");
     }
@@ -106,7 +106,7 @@ const Navbar = () => {
           className="navbar-link"
           onClick={accountMode}
         >
-          {isBuyer ? "Orders" : "Account"}
+          {!loading && (isBuyer ? "Orders" : "Account")}
         </Button>
         <WalletMultiButton
           style={{

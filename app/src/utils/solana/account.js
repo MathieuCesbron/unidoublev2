@@ -7,6 +7,7 @@ import {
   u16,
   u32,
   f32,
+  bool,
 } from "@project-serum/borsh";
 import { connection, programID } from "./program";
 import { country } from "../config/store";
@@ -130,7 +131,7 @@ const getDecodedItems = (items) => {
       ]).decode(item.account.data, 8),
     };
 
-    // Convert the public key to string for simplicity.
+    // Convert public keys to string for simplicity.
     return {
       ...decoded,
       seller_public_key: decoded.seller_public_key.toString(),
@@ -145,7 +146,7 @@ const getOrdersForSeller = async (publicKey) => {
       { dataSize: 800 },
       {
         memcmp: {
-          offset: 8 + 8 + 32,
+          offset: 8 + 4 + 32,
           bytes: publicKey,
           length: 32,
         },
@@ -154,6 +155,51 @@ const getOrdersForSeller = async (publicKey) => {
   };
 
   return await connection.getProgramAccounts(programID, filters);
+};
+
+const getOrdersForBuyer = async (publicKey) => {
+  const filters = {
+    filters: [
+      { dataSize: 800 },
+      {
+        memcmp: {
+          offset: 8 + 4,
+          bytes: publicKey,
+          length: 32,
+        },
+      },
+    ],
+  };
+
+  return await connection.getProgramAccounts(programID, filters);
+};
+
+const getDecodedOrders = (orders) => {
+  return orders.map((order) => {
+    const decoded = {
+      pubkey: order.pubkey.toString(),
+      ...struct([
+        u32("uuid"),
+        publicKeyBorsh("buyer_public_key"),
+        publicKeyBorsh("seller_public_key"),
+        publicKeyBorsh("item_account_public_key"),
+        u32("price_bought"),
+        u16("amount_bought"),
+        str("shdw_hash_delivery"),
+        bool("is_approved"),
+        bool("is_reviwer"),
+        bool("is_rated"),
+      ]).decode(order.account.data, 8),
+    };
+
+    // Convert public keys to string for simplicity.
+    return {
+      ...decoded,
+      buyer_public_key: decoded.buyer_public_key.toString(),
+      seller_public_key: decoded.seller_public_key.toString(),
+      item_account_public_key: decoded.item_account_public_key.toString(),
+    };
+  });
 };
 
 export {
@@ -165,4 +211,6 @@ export {
   getDecodedItems,
   getItemsByCategory,
   getOrdersForSeller,
+  getOrdersForBuyer,
+  getDecodedOrders,
 };

@@ -35,29 +35,30 @@ const SearchResult = () => {
       <div className="option-top">
         <h2>Category {category.label}</h2>
       </div>
-      {!loading && currentItems.length !== 0 ? (
-        <>
-          {currentItems.map((data) => (
-            <Item itemData={data} key={data.unique_number} mode={"search"} />
-          ))}
-          <Pagination
-            style={{ textAlign: "center" }}
-            hideOnSinglePage
-            current={currentPage}
-            pageSize={itemsPerPage}
-            total={decodedItems.length}
-            onChange={(value) => {
-              setCurrentPage(value);
-              window.scrollTo(0, 0);
-            }}
-          />
-        </>
-      ) : (
-        <div className="option-empty-wrapper">
-          <TbMoodEmpty size={"5em"} />
-          <p className="option-empty">No items listed here yet...</p>
-        </div>
-      )}
+      {!loading &&
+        (currentItems.length !== 0 ? (
+          <>
+            {currentItems.map((data) => (
+              <Item itemData={data} key={data.unique_number} mode={"search"} />
+            ))}
+            <Pagination
+              style={{ textAlign: "center" }}
+              hideOnSinglePage
+              current={currentPage}
+              pageSize={itemsPerPage}
+              total={decodedItems.length}
+              onChange={(value) => {
+                setCurrentPage(value);
+                window.scrollTo(0, 0);
+              }}
+            />
+          </>
+        ) : (
+          <div className="option-empty-wrapper">
+            <TbMoodEmpty size={"5em"} />
+            <p className="option-empty">No items listed here yet...</p>
+          </div>
+        ))}
     </div>
   );
 };
