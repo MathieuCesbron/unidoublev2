@@ -171,7 +171,7 @@ const ItemResult = () => {
           order: order,
         })
         .rpc();
-      await connection.confirmTransaction(txBuyItem);
+      await connection.confirmTransaction(txBuyItem, "confirmed");
       console.log("tx buy item: ", txBuyItem);
       navigate("/orders");
     } catch (error) {
