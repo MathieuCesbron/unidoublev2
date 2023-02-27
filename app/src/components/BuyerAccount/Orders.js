@@ -1,5 +1,6 @@
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
+import { TbMoodTongue } from "react-icons/tb";
 import {
   getOrdersForBuyer,
   getDecodedOrders,
@@ -41,7 +42,10 @@ const Orders = () => {
             ))}
           </>
         ) : (
-          <div> find nothing</div>
+          <div className="option-empty-wrapper">
+            <TbMoodTongue size={"5em"} />
+            <p className="option-empty">You have no pending orders.</p>
+          </div>
         ))}
     </div>
   );

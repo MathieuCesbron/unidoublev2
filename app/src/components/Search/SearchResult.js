@@ -33,7 +33,7 @@ const SearchResult = () => {
   return (
     <div className="option-wrapper">
       <div className="option-top">
-        <h2>Category {category.label}</h2>
+        <h2 className="option-title">Category {category.label}</h2>
       </div>
       {!loading &&
         (currentItems.length !== 0 ? (

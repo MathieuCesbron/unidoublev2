@@ -13,7 +13,7 @@ import "../Option.css";
 const SalesItem = () => {
   const { publicKey } = useWallet();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
   const [decodedMyItems, setDecodedMyItems] = useState([]);
@@ -44,34 +44,35 @@ const SalesItem = () => {
 
   return (
     <div>
-      {!loading && currentMyItems.length !== 0 ? (
-        <>
-          {currentMyItems.map((data) => (
-            <Item
-              itemData={data}
-              setDecodedItems={setDecodedMyItems}
-              key={data.unique_number}
-              mode="sales"
+      {!loading &&
+        (currentMyItems.length !== 0 ? (
+          <>
+            {currentMyItems.map((data) => (
+              <Item
+                itemData={data}
+                setDecodedItems={setDecodedMyItems}
+                key={data.unique_number}
+                mode="sales"
+              />
+            ))}
+            <Pagination
+              style={{ textAlign: "center" }}
+              hideOnSinglePage
+              current={currentPage}
+              pageSize={myItemsPerPage}
+              total={decodedMyItems.length}
+              onChange={(value) => {
+                setCurrentPage(value);
+                window.scrollTo(0, 0);
+              }}
             />
-          ))}
-          <Pagination
-            style={{ textAlign: "center" }}
-            hideOnSinglePage
-            current={currentPage}
-            pageSize={myItemsPerPage}
-            total={decodedMyItems.length}
-            onChange={(value) => {
-              setCurrentPage(value);
-              window.scrollTo(0, 0);
-            }}
-          />
-        </>
-      ) : (
-        <div className="option-empty-wrapper">
-          <TbMoodEmpty size={"5em"} />
-          <p className="option-empty">You have no items listed yet...</p>
-        </div>
-      )}
+          </>
+        ) : (
+          <div className="option-empty-wrapper">
+            <TbMoodEmpty size={"5em"} />
+            <p className="option-empty">You have no items listed yet...</p>
+          </div>
+        ))}
     </div>
   );
 };
