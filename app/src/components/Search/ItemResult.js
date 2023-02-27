@@ -43,6 +43,7 @@ const ItemResult = () => {
   const [showModalBuy, setShowModalBuy] = useState(false);
 
   const shdwBucket = useStore((state) => state.shdwBucket);
+  const isBuyer = useStore((state) => state.isBuyer);
 
   const [sellerDiffiePublicKey, setSellerDiffiePublicKey] = useState("");
 
@@ -234,6 +235,7 @@ const ItemResult = () => {
           </div>
           <Button
             type="primary"
+            disabled={!isBuyer}
             size="large"
             onClick={() => setShowModalBuy(true)}
           >
