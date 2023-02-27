@@ -1,7 +1,7 @@
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import USDCLogo from "../../images/usdc-logo.png";
-import { Button, Image } from "antd";
+import { Button, Image, Steps } from "antd";
 import {
   creator_ata,
   program,
@@ -19,21 +19,21 @@ const Order = ({ orderData, setDecodedOrders }) => {
   const [loading, setLoading] = useState(true);
   const [itemInfo, setItemInfo] = useState({});
 
-  const orderState = (() => {
+  const orderDescription = (() => {
     if (!orderData.is_approved) {
-      return "Waiting for seller approval";
+      return "You can cancel as long as the seller did not approved it. A 1% fee is taken.";
     } else if (!orderData.is_shipped) {
-      return "waiting for shipping";
+      return "The order is approved ! The seller will ship the item soon.";
     } else if (!orderData.is_reviewed) {
-      return "waiting for reviweing";
+      return "The item is shipped ! Don't forget to come back here for the review and get the 1% cashback.";
     } else {
-      return "done";
+      return 3;
     }
   })();
 
-  const orderDescription = (() => {
+  const orderStep = (() => {
     if (!orderData.is_approved) {
-      return "you can cancel the order as long as the seller did not approved it. A 1% fee is taken.";
+      return 0;
     } else if (!orderData.is_shipped) {
       return 1;
     } else if (!orderData.is_reviewed) {
@@ -42,8 +42,6 @@ const Order = ({ orderData, setDecodedOrders }) => {
       return 3;
     }
   })();
-
-  // const [shadowHashSeller, setShadowHashSeller] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -136,8 +134,24 @@ const Order = ({ orderData, setDecodedOrders }) => {
           <p>{orderData.amount_bought} unit bought</p>
         </div>
         <div className="order-bottom">
-          <p className="order-state">{orderState}</p>
           <p className="order-description">{orderDescription}</p>
+          <Steps
+            size="small"
+            responsive={false}
+            className="order-step"
+            current={orderStep}
+            items={[
+              {
+                title: "Approved",
+              },
+              {
+                title: "Shipped",
+              },
+              {
+                title: "Reviewed",
+              },
+            ]}
+          />
         </div>
       </div>
     </div>
