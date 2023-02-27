@@ -422,11 +422,10 @@ describe("unidouble", () => {
     }
 
     const rating = 3;
-    const shdw_hash_review = "8fi9nEJC5rkJYoT2eceCqECJA8nv5BzrbeDaRVX7Zsgf";
     // buyer reviews the item
     try {
       const txReviewItem = await program.methods
-        .reviewItem(rating, shdw_hash_review)
+        .reviewItem(rating)
         .accounts({
           user: buyer.publicKey,
           item: item,

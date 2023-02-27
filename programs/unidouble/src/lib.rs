@@ -122,11 +122,11 @@ pub mod unidouble {
         ctx: Context<BuyItem>,
         uuid: u32,
         amount: u16,
-        shdw_hashes_delivery: String,
+        shdw_hash_buyer: String,
     ) -> Result<()> {
         require!(amount > 0 && amount <= 50000, ErrorCode::InvalidAmount);
         require!(
-            shdw_hashes_delivery.chars().count() == 44,
+            shdw_hash_buyer.chars().count() == 44,
             ErrorCode::InvalidShdwHash
         );
 
@@ -172,11 +172,13 @@ pub mod unidouble {
         order.uuid = uuid;
         order.buyer_public_key = ctx.accounts.user.key();
         order.item_account_public_key = item.key();
+        order.seller_account_public_key = ctx.accounts.seller_account.key();
 
         order.price_bought = item.price;
         order.amount_bought = amount;
 
-        order.shdw_hash_delivery = shdw_hashes_delivery;
+        order.shdw_hash_buyer = shdw_hash_buyer;
+        order.shdw_hash_seller = ctx.accounts.seller_account.shdw_hash.clone();
 
         Ok(())
     }
@@ -363,7 +365,7 @@ pub mod unidouble {
             ]],
         )?;
 
-        order.is_reviewer = true;
+        order.is_shipped = true;
 
         let item = &mut ctx.accounts.item;
         item.buyer_count += 1;
@@ -379,20 +381,12 @@ pub mod unidouble {
     }
 
     // The buyer gets 1% cashback when he reviews.
-    pub fn review_item(
-        ctx: Context<ReviewItem>,
-        rating: u8,
-        shdw_hash_review: String,
-    ) -> Result<()> {
+    pub fn review_item(ctx: Context<ReviewItem>, rating: u8) -> Result<()> {
         let order = &mut ctx.accounts.order;
-        require!(!order.is_rated, ErrorCode::OrderAlreadyRated);
+        require!(!order.is_reviewed, ErrorCode::OrderAlreadyRated);
         require!(
             rating == 1 || rating == 2 || rating == 3 || rating == 4 || rating == 5,
             ErrorCode::InvalidRating
-        );
-        require!(
-            shdw_hash_review.chars().count() == 44,
-            ErrorCode::InvalidShdwHash
         );
 
         require!(
@@ -430,8 +424,7 @@ pub mod unidouble {
             ]],
         )?;
 
-        order.shdw_hash_review = shdw_hash_review;
-        order.is_rated = true;
+        order.is_reviewed = true;
 
         let item = &mut ctx.accounts.item;
         item.rating = (item.rating * item.rating_count as f32 + rating as f32)
@@ -863,18 +856,19 @@ pub struct Item {
 
 #[account]
 pub struct Order {
-    pub uuid: u32,                       // +4
-    pub buyer_public_key: Pubkey,        // +32
-    pub seller_public_key: Pubkey,       // +32
-    pub item_account_public_key: Pubkey, // +32
+    pub uuid: u32,                         // +4
+    pub buyer_public_key: Pubkey,          // +32
+    pub seller_public_key: Pubkey,         // +32
+    pub seller_account_public_key: Pubkey, // +32
+    pub item_account_public_key: Pubkey,   // +32
 
     pub price_bought: u32,
     pub amount_bought: u16,
-    pub shdw_hash_delivery: String,
 
     pub is_approved: bool,
-    pub is_reviewer: bool,
-    pub is_rated: bool,
+    pub is_shipped: bool,
+    pub is_reviewed: bool,
 
-    pub shdw_hash_review: String,
+    pub shdw_hash_seller: String,
+    pub shdw_hash_buyer: String,
 }
