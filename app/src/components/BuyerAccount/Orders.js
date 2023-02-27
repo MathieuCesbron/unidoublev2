@@ -33,7 +33,11 @@ const Orders = () => {
         (decodedOrders.length !== 0 ? (
           <>
             {decodedOrders.map((data) => (
-              <Order key={data.uuid} orderData={data} />
+              <Order
+                key={data.order_number}
+                orderData={data}
+                setDecodedOrders={setDecodedOrders}
+              />
             ))}
           </>
         ) : (

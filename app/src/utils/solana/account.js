@@ -146,7 +146,7 @@ const getOrdersForSeller = async (publicKey) => {
       { dataSize: 800 },
       {
         memcmp: {
-          offset: 8 + 4 + 32,
+          offset: 8 + 4 + 4 + 32,
           bytes: publicKey,
           length: 32,
         },
@@ -163,7 +163,7 @@ const getOrdersForBuyer = async (publicKey) => {
       { dataSize: 800 },
       {
         memcmp: {
-          offset: 8 + 4,
+          offset: 8 + 4 + 4,
           bytes: publicKey,
           length: 32,
         },
@@ -179,16 +179,19 @@ const getDecodedOrders = (orders) => {
     const decoded = {
       pubkey: order.pubkey.toString(),
       ...struct([
-        u32("uuid"),
+        u32("order_number"),
+        u32("item_number"),
         publicKeyBorsh("buyer_public_key"),
         publicKeyBorsh("seller_public_key"),
+        publicKeyBorsh("seller_account_public_key"),
         publicKeyBorsh("item_account_public_key"),
         u32("price_bought"),
         u16("amount_bought"),
-        str("shdw_hash_delivery"),
         bool("is_approved"),
-        bool("is_reviwer"),
-        bool("is_rated"),
+        bool("is_shipped"),
+        bool("is_reviewed"),
+        str("shdw_hash_seller"),
+        str("shdw_hash_buyer"),
       ]).decode(order.account.data, 8),
     };
 
@@ -197,6 +200,7 @@ const getDecodedOrders = (orders) => {
       ...decoded,
       buyer_public_key: decoded.buyer_public_key.toString(),
       seller_public_key: decoded.seller_public_key.toString(),
+      seller_account_public_key: decoded.seller_account_public_key.toString(),
       item_account_public_key: decoded.item_account_public_key.toString(),
     };
   });

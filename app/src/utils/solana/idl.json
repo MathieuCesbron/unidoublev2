@@ -262,7 +262,7 @@
       ],
       "args": [
         {
-          "name": "uuid",
+          "name": "orderNumber",
           "type": "u32"
         },
         {
@@ -270,7 +270,7 @@
           "type": "u16"
         },
         {
-          "name": "shdwHashesDelivery",
+          "name": "shdwHashBuyer",
           "type": "string"
         }
       ]
@@ -446,10 +446,6 @@
         {
           "name": "rating",
           "type": "u8"
-        },
-        {
-          "name": "shdwHashReview",
-          "type": "string"
         }
       ]
     },
@@ -636,7 +632,11 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "uuid",
+            "name": "orderNumber",
+            "type": "u32"
+          },
+          {
+            "name": "itemNumber",
             "type": "u32"
           },
           {
@@ -645,6 +645,10 @@
           },
           {
             "name": "sellerPublicKey",
+            "type": "publicKey"
+          },
+          {
+            "name": "sellerAccountPublicKey",
             "type": "publicKey"
           },
           {
@@ -660,23 +664,23 @@
             "type": "u16"
           },
           {
-            "name": "shdwHashDelivery",
-            "type": "string"
-          },
-          {
             "name": "isApproved",
             "type": "bool"
           },
           {
-            "name": "isReviewer",
+            "name": "isShipped",
             "type": "bool"
           },
           {
-            "name": "isRated",
+            "name": "isReviewed",
             "type": "bool"
           },
           {
-            "name": "shdwHashReview",
+            "name": "shdwHashSeller",
+            "type": "string"
+          },
+          {
+            "name": "shdwHashBuyer",
             "type": "string"
           }
         ]

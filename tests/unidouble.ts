@@ -242,10 +242,13 @@ describe("unidouble", () => {
     );
     console.log(`store USDC address: ${storeUSDC.address.toString()}`);
 
-    let uuid = Math.floor(Math.random() * 1000000);
+    let order_number = Math.floor(Math.random() * 1000000);
     let [order] = await anchor.web3.PublicKey.findProgramAddress(
       // We use the 8 argument because a u64 is 8x a u8.
-      [buyer.publicKey.toBuffer(), new anchor.BN(uuid).toBuffer("le", 4)],
+      [
+        buyer.publicKey.toBuffer(),
+        new anchor.BN(order_number).toBuffer("le", 4),
+      ],
       program.programId
     );
     console.log(`order address: ${order.toString()}`);
@@ -253,7 +256,7 @@ describe("unidouble", () => {
     // buy item
     try {
       const txBuyItem = await program.methods
-        .buyItem(uuid, amountToBuy, buyerShdwHash)
+        .buyItem(order_number, amountToBuy, buyerShdwHash)
         .accounts({
           user: buyer.publicKey,
           sellerAccount: sellerAccount,
@@ -322,10 +325,13 @@ describe("unidouble", () => {
       console.log(error);
     }
 
-    uuid = Math.floor(Math.random() * 1000000);
+    order_number = Math.floor(Math.random() * 1000000);
     [order] = await anchor.web3.PublicKey.findProgramAddress(
-      // We use the 8 argument because a u64 is 8x a u8.
-      [buyer.publicKey.toBuffer(), new anchor.BN(uuid).toBuffer("le", 4)],
+      // We use the 8 argument because a u32 is 4x a u8.
+      [
+        buyer.publicKey.toBuffer(),
+        new anchor.BN(order_number).toBuffer("le", 4),
+      ],
       program.programId
     );
     console.log(`order address: ${order.toString()}`);
@@ -335,7 +341,7 @@ describe("unidouble", () => {
       // find order address
 
       const txBuyItem = await program.methods
-        .buyItem(uuid, amountToBuy, buyerShdwHash)
+        .buyItem(order_number, amountToBuy, buyerShdwHash)
         .accounts({
           user: buyer.publicKey,
           sellerAccount: sellerAccount,

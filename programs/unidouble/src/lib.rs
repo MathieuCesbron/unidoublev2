@@ -120,7 +120,7 @@ pub mod unidouble {
 
     pub fn buy_item(
         ctx: Context<BuyItem>,
-        uuid: u32,
+        order_number: u32,
         amount: u16,
         shdw_hash_buyer: String,
     ) -> Result<()> {
@@ -169,8 +169,10 @@ pub mod unidouble {
 
         let order = &mut ctx.accounts.order;
 
-        order.uuid = uuid;
+        order.order_number = order_number;
+        order.item_number = item.unique_number;
         order.buyer_public_key = ctx.accounts.user.key();
+        order.seller_public_key = ctx.accounts.seller.key();
         order.item_account_public_key = item.key();
         order.seller_account_public_key = ctx.accounts.seller_account.key();
 
@@ -558,7 +560,7 @@ pub struct UpdateItem<'info> {
 }
 
 #[derive(Accounts)]
-#[instruction(uuid:u32)]
+#[instruction(order_number:u32)]
 pub struct BuyItem<'info> {
     #[account(mut)]
     pub user: Signer<'info>,
@@ -607,7 +609,7 @@ pub struct BuyItem<'info> {
         init,
         payer = user,
         space = 800,
-        seeds = [user.key().as_ref(), uuid.to_le_bytes().as_ref()],
+        seeds = [user.key().as_ref(), order_number.to_le_bytes().as_ref()],
         bump,
     )]
     pub order: Account<'info, Order>,
@@ -856,7 +858,8 @@ pub struct Item {
 
 #[account]
 pub struct Order {
-    pub uuid: u32,                         // +4
+    pub order_number: u32,                 // +4
+    pub item_number: u32,                  // +4
     pub buyer_public_key: Pubkey,          // +32
     pub seller_public_key: Pubkey,         // +32
     pub seller_account_public_key: Pubkey, // +32

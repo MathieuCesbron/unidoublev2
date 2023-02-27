@@ -1,3 +1,72 @@
 .order-wrapper {
-  border: black solid;
+  display: flex;
+  justify-content: right;
+  border: grey solid 1px;
+  border-radius: 8px;
+  margin-bottom: 1em;
+  height: 250px;
+}
+
+.order-body {
+  padding: 0.5em 0.5em 0.5em 1em;
+
+  border-left: grey solid 1px;
+  /* width of 800px (option-wrapper) - 250px (image) */
+  /* After testing, the best width is 523px, not sure why */
+  width: 523px;
+}
+
+/* top */
+
+.order-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 30%;
+  overflow: hidden;
+}
+
+.order-title {
+  margin: 0 1em 0 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+/* middle */
+
+.order-mid {
+  height: 30%;
+}
+
+.order-price {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.order-usdc-logo {
+  width: 30px;
+  /* margin-right: 1em; */
+}
+
+.order-usdc {
+  font-size: 2rem;
+  margin: 0;
+}
+
+/* bottom */
+
+.order-bottom {
+  height: 40%;
+}
+
+.order-state {
+  font-weight: bold;
+}
+
+.order-description {
+  color: grey;
 }

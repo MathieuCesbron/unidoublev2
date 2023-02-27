@@ -25,8 +25,7 @@ import {
   network,
   privateConnection,
 } from "../../utils/solana/program";
-import { BN } from "bn.js";
-import { Keypair, PublicKey } from "@solana/web3.js";
+import { PublicKey } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { ShdwDrive } from "@shadow-drive/sdk";
 import useStore from "../../store";
@@ -113,9 +112,12 @@ const ItemResult = () => {
   }, [addressData]);
 
   const buyItemHandler = async () => {
-    const uuid = Math.floor(Math.random() * 1000000);
+    const order_number = Math.floor(Math.random() * 1000000);
     const [order] = anchor.web3.PublicKey.findProgramAddressSync(
-      [publicKey.toBuffer(), new anchor.BN(uuid).toArrayLike(Buffer, "le", 4)],
+      [
+        publicKey.toBuffer(),
+        new anchor.BN(order_number).toArrayLike(Buffer, "le", 4),
+      ],
       programID,
     );
 
@@ -124,7 +126,7 @@ const ItemResult = () => {
 
       const orderJSONBlob = new Blob([
         JSON.stringify({
-          number: uuid,
+          number: order_number,
           address: encryptedAddress,
           salt: salt,
           iv: iv,
@@ -132,7 +134,7 @@ const ItemResult = () => {
           order_pubkey: order.toString(),
         }),
       ]);
-      orderJSONBlob.name = `order_${uuid}.json`;
+      orderJSONBlob.name = `order_${order_number}.json`;
 
       const uploadOrderFile = await drive.uploadFile(
         new PublicKey(shdwBucket),
@@ -157,7 +159,7 @@ const ItemResult = () => {
       );
 
       const txBuyItem = await program.methods
-        .buyItem(uuid, amountToBuy, shdwBucket)
+        .buyItem(order_number, amountToBuy, shdwBucket)
         .accounts({
           user: publicKey,
           sellerAccount: state.itemData.seller_account_public_key,
