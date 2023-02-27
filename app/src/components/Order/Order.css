@@ -39,6 +39,7 @@
 
 .order-mid {
   display: flex;
+  align-items: center;
   height: 20%;
 }
 
@@ -57,6 +58,11 @@
 .order-usdc {
   font-size: 2rem;
   margin: 0;
+}
+
+.order-address-btn {
+  margin-left: auto;
+  background: #5783db;
 }
 
 /* bottom */

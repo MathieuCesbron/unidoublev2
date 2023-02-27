@@ -24,6 +24,7 @@ import {
   connection,
   network,
   privateConnection,
+  store_ata,
 } from "../../utils/solana/program";
 import { PublicKey } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
@@ -128,6 +129,7 @@ const ItemResult = () => {
         JSON.stringify({
           number: order_number,
           address: encryptedAddress,
+          buyer_diffie_public_key: buyerDiffiePubKey,
           salt: salt,
           iv: iv,
           item_pubkey: state.itemData.pubkey,
@@ -149,14 +151,8 @@ const ItemResult = () => {
       return;
     }
 
-    // TODO: check that it works, should create usdc token address for store before.
     try {
       const buyer_ata = getAssociatedTokenAddressSync(USDC_MINT, publicKey);
-      const store_ata = getAssociatedTokenAddressSync(
-        USDC_MINT,
-        new PublicKey(storePubKey),
-        true,
-      );
 
       const txBuyItem = await program.methods
         .buyItem(order_number, amountToBuy, shdwBucket)

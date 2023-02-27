@@ -37,19 +37,17 @@ const Item = ({ itemData, mode, setDecodedItems, sellerAccountPublicKey }) => {
   };
 
   useEffect(() => {
-    (async () => {
-      fetch(
-        `https://shdw-drive.genesysgo.net/${itemData.shdw_hash_seller}/${itemData.unique_number}.json`,
-      )
-        .then((res) => res.json())
-        .then((resData) => {
-          setItemInfo(resData);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    })();
+    fetch(
+      `https://shdw-drive.genesysgo.net/${itemData.shdw_hash_seller}/${itemData.unique_number}.json`,
+    )
+      .then((res) => res.json())
+      .then((resData) => {
+        setItemInfo(resData);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   const handleDeleteItem = async () => {

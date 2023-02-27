@@ -278,6 +278,7 @@ pub mod unidouble {
     // when too much time has passed and the seller still has not shipped the
     // order (after 1 week for example).
     pub fn approve_order(ctx: Context<AcceptOrder>) -> Result<()> {
+        // TODO: throw error on already approved order
         let order = &mut ctx.accounts.order;
         order.is_approved = true;
 

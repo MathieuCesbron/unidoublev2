@@ -38,7 +38,7 @@ const SalesItem = () => {
         (currentOrders.length !== 0 ? (
           <>
             {currentOrders.map((data) => (
-              <Order key={data.order_number} orderData={data} />
+              <Order key={data.order_number} orderData={data} mode="sales" />
             ))}
             <Pagination
               style={{ textAlign: "center" }}

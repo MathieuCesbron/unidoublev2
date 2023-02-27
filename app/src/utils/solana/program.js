@@ -22,13 +22,19 @@ const provider = new AnchorProvider(connection, window.solana, "confirmed");
 
 const program = new Program(idl, programID, provider);
 
+const USDC_MINT = new web3.PublicKey(
+  "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+);
+
 const storePubKey =
   network === WalletAdapterNetwork.Devnet
     ? "8EKsxx59euVgAikiWAtUWUM8kKdphFLtUiHyB7oxX6ZD"
     : "8EKsxx59euVgAikiWAtUWUM8kKdphFLtUiHyB7oxX6ZD";
 
-const USDC_MINT = new web3.PublicKey(
-  "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+const store_ata = getAssociatedTokenAddressSync(
+  USDC_MINT,
+  new PublicKey(storePubKey),
+  true,
 );
 
 const creatorPubKey = "4zGnN2e9jFQofWWs2daNqmdnv8GRG8YPbBWQtVCjKJ3G";
@@ -52,6 +58,7 @@ export {
   programID,
   program,
   storePubKey,
+  store_ata,
   creatorPubKey,
   creator_ata,
   shdwBucketDevnet,
