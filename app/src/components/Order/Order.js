@@ -14,7 +14,6 @@ import "./Order.css";
 
 const Order = ({ orderData, setDecodedOrders }) => {
   const { publicKey } = useWallet();
-  console.log(orderData);
 
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(true);

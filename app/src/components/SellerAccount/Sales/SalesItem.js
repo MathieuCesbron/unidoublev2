@@ -3,11 +3,10 @@ import { Pagination } from "antd";
 import { useEffect, useState } from "react";
 import { TbMoodEmpty } from "react-icons/tb";
 import {
-  getMyItems,
-  getDecodedItems,
   getOrdersForSeller,
+  getDecodedOrders,
 } from "../../../utils/solana/account";
-import Item from "../../Item/Item";
+import Order from "../../Order/Order";
 import "../Option.css";
 
 const SalesItem = () => {
@@ -16,28 +15,19 @@ const SalesItem = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [decodedMyItems, setDecodedMyItems] = useState([]);
+  const [decodedOrders, setDecodedOrders] = useState([]);
 
-  const myItemsPerPage = 5;
-  const lastItemIndex = currentPage * myItemsPerPage;
-  const firstItemIndex = lastItemIndex - myItemsPerPage;
-  const currentMyItems = decodedMyItems.slice(firstItemIndex, lastItemIndex);
+  const myOrdersPerPage = 5;
+  const lastItemIndex = currentPage * myOrdersPerPage;
+  const firstItemIndex = lastItemIndex - myOrdersPerPage;
+  const currentOrders = decodedOrders.slice(firstItemIndex, lastItemIndex);
 
   useEffect(() => {
-    // TODO: replace myItems with sales.
     (async () => {
-      const mi = await getMyItems(publicKey);
-      const dmi = getDecodedItems(mi);
-      setDecodedMyItems(
-        dmi.map((elem, index) => ({
-          ...elem,
-          pubkey: mi[index].pubkey,
-        })),
-      );
+      const o = await getOrdersForSeller(publicKey);
+      const dor = getDecodedOrders(o);
 
-      const orders = await getOrdersForSeller(publicKey);
-      console.log(orders);
-
+      setDecodedOrders(dor);
       setLoading(false);
     })();
   }, []);
@@ -45,22 +35,17 @@ const SalesItem = () => {
   return (
     <div>
       {!loading &&
-        (currentMyItems.length !== 0 ? (
+        (currentOrders.length !== 0 ? (
           <>
-            {currentMyItems.map((data) => (
-              <Item
-                itemData={data}
-                setDecodedItems={setDecodedMyItems}
-                key={data.unique_number}
-                mode="sales"
-              />
+            {currentOrders.map((data) => (
+              <Order key={data.order_number} orderData={data} />
             ))}
             <Pagination
               style={{ textAlign: "center" }}
               hideOnSinglePage
               current={currentPage}
-              pageSize={myItemsPerPage}
-              total={decodedMyItems.length}
+              pageSize={myOrdersPerPage}
+              total={decodedOrders.length}
               onChange={(value) => {
                 setCurrentPage(value);
                 window.scrollTo(0, 0);
