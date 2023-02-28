@@ -146,7 +146,20 @@ const Item = ({ itemData, mode, setDecodedItems, sellerAccountPublicKey }) => {
       <div className="item-body">
         <div className="item-top">
           <div>
-            <h3 className="item-title">{itemInfo.title}</h3>
+            <h3
+              className="item-title"
+              onClick={() =>
+                navigate(`/item/${itemData.unique_number}`, {
+                  state: {
+                    itemInfo: itemInfo,
+                    itemData: itemData,
+                    seller_public_key: itemData.seller_public_key.toString(),
+                  },
+                })
+              }
+            >
+              {itemInfo.title}
+            </h3>
             <p className="item-category">
               {categories.find((c) => c.value === itemData.category).label}
             </p>
