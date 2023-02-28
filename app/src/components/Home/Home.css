@@ -10,12 +10,13 @@
 
 .home-seller-account {
   width: 400px;
-  margin: 2em 8em 0 auto;
+  margin: 0 8em 0 auto;
 }
 
-.home-orders {
+.home-orders,
+.home-create-account {
   width: 400px;
-  margin: 2em 7em 0 auto;
+  margin: 0 7em 0 auto;
 }
 
 .home-search-buy,
