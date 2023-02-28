@@ -1,0 +1,41 @@
+.home-wrapper {
+  display: flex;
+  padding-top: 2em;
+}
+
+.home-connect-wallet {
+  margin: 0 4em 0 auto;
+  width: 500px;
+}
+
+.home-seller-account {
+  width: 400px;
+  margin: 2em 8em 0 auto;
+}
+
+.home-orders {
+  width: 400px;
+  margin: 2em 7em 0 auto;
+}
+
+.home-search-buy,
+.home-search-items {
+  display: block;
+  height: 380px;
+  margin: 0 0 0 auto;
+}
+
+.home-small-screen {
+  display: none;
+}
+
+@media (max-width: 1000px) {
+  .home-big-screen {
+    display: none;
+  }
+  .home-small-screen {
+    display: inline;
+    height: 300px;
+    margin: auto;
+  }
+}
