@@ -197,7 +197,7 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
             MARK AS SHIPPED
           </Button>
         );
-      case 2:
+      default:
         return (
           <Tag
             color={"blue"}
