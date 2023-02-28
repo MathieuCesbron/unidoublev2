@@ -866,13 +866,13 @@ pub struct Order {
     pub seller_account_public_key: Pubkey, // +32
     pub item_account_public_key: Pubkey,   // +32
 
-    pub price_bought: u32,
-    pub amount_bought: u16,
+    pub price_bought: u32,  // +4
+    pub amount_bought: u16, // +2
 
-    pub is_approved: bool,
-    pub is_shipped: bool,
-    pub is_reviewed: bool,
+    pub is_approved: bool, // +1
+    pub is_shipped: bool,  // +1
+    pub is_reviewed: bool, // +1
 
-    pub shdw_hash_seller: String,
-    pub shdw_hash_buyer: String,
+    pub shdw_hash_seller: String, // +48
+    pub shdw_hash_buyer: String,  // +48
 }

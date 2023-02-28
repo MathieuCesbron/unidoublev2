@@ -15,8 +15,8 @@
 .item-body {
   padding: 0.5em 0.5em 0.5em 1em;
   /* width of 800px (option-wrapper) - 250px (image) */
-  /* After testing, the best width is 520px, not sure why */
-  width: 520px;
+  /* After testing, the best width is 523px, not sure why */
+  width: 523px;
   border-left: grey solid 1px;
 }
 

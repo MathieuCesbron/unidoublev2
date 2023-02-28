@@ -1,7 +1,7 @@
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import useStore from "../../../store";
 import SalesLogin from "./SalesLogin";
-import SalesItem from "./SalesItem";
+import OrdersSales from "./OrdersSales";
 import "../Option.css";
 
 const Sales = (props) => {
@@ -17,7 +17,7 @@ const Sales = (props) => {
         />
         <h2 className="option-title">Sales</h2>
       </div>
-      {isAuthenticated ? <SalesItem /> : <SalesLogin />}
+      {isAuthenticated ? <OrdersSales /> : <SalesLogin />}
     </div>
   );
 };

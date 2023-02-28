@@ -1,9 +1,10 @@
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import USDCLogo from "../../images/usdc-logo.png";
-import { Button, Image, Modal, Steps, Tag } from "antd";
+import { Button, Image, Modal, Rate, Steps, Tag } from "antd";
 import {
   creator_ata,
+  privateConnection,
   program,
   storePubKey,
   store_ata,
@@ -11,17 +12,23 @@ import {
 } from "../../utils/solana/program";
 import { getAssociatedTokenAddressSync } from "@solana/spl-token";
 import { useEffect, useState } from "react";
-import "./Order.css";
 import { AES, enc, mode as modeCrypto } from "crypto-js";
 import { curve } from "../../utils/crypto/crypto";
+import { ShdwDrive } from "@shadow-drive/sdk";
+import ModalReview from "../BuyerAccount/ModalReview";
+import "./Order.css";
 
 const Order = ({ orderData, setDecodedOrders, mode }) => {
+  const wallet = useWallet();
   const { publicKey } = useWallet();
 
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(true);
   const [itemInfo, setItemInfo] = useState({});
   const [showModalAddress, setShowModalAddress] = useState(false);
+
+  const [showModalReview, setShowModalReview] = useState(false);
+  const [reviewRate, setReviewRate] = useState(0);
 
   const orderStepInit = () => {
     if (!orderData.is_approved) {
@@ -77,27 +84,28 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
     )
       .then((res) => res.json())
       .then((resData) => {
-        console.log(resData);
+        console.log(resData.buyer_diffie_public_key);
         // const basepoint = curve.keyFromPublic(Buffer.from(props.buyerDiffiePublicKeys[i], "hex")).getPublic()
-        const basepoint = curve.keyFromPublic(
-          Buffer.from(orderData.buyer_diffie_public_key),
-        );
-        // TODO: get the buyer diffie public key from shadow drive then I can get the shared secret.
-        const sharedSecret = "";
-        const text = AES.decrypt(
-          {
-            ciphertext: enc.Hex.parse(resData.address),
-            iv: enc.Hex.parse(resData.iv),
-            salt: enc.Hex.parse(resData.salt),
-          },
-          sharedSecret,
-          { mode: modeCrypto.CTR },
-        );
-        console.log("decrypt: ", text.toString(enc.Utf8));
+        // const basepoint = curve.keyFromPublic(
+        //   Buffer.from(orderData.buyer_diffie_public_key),
+        // );
+        // // TODO: get the buyer diffie public key from shadow drive then I can get the shared secret.
+        // const sharedSecret = "";
+        // const text = AES.decrypt(
+        //   {
+        //     ciphertext: enc.Hex.parse(resData.address),
+        //     iv: enc.Hex.parse(resData.iv),
+        //     salt: enc.Hex.parse(resData.salt),
+        //   },
+        //   sharedSecret,
+        //   { mode: modeCrypto.CTR },
+        // );
+        // console.log("decrypt: ", text.toString(enc.Utf8));
       });
   }, []);
 
   const approveOrderHandler = async () => {
+    // console.log(itemInfo);
     try {
       const txApproveOrder = await program.methods
         .approveOrder()
@@ -202,6 +210,60 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
     }
   };
 
+  const TopRightSpace = () => {
+    if (mode === "sales") {
+      return <ButtonSales />;
+    }
+
+    if (orderStep === 2) {
+      return (
+        <>
+          <Button
+            type="primary"
+            size="large"
+            onClick={() => setShowModalReview(true)}
+          >
+            REVIEW
+          </Button>
+          {showModalReview && (
+            <ModalReview
+              setShowModalReview={setShowModalReview}
+              title={itemInfo.title}
+              orderNumber={orderData.order_number}
+              setOrderStep={setOrderStep}
+              accounts={{
+                item: orderData.item_account_public_key,
+                sellerAccount: orderData.seller_account_public_key,
+                order: orderData.pubkey,
+              }}
+            ></ModalReview>
+          )}
+        </>
+      );
+    } else if (orderStep === 3) {
+      return (
+        <Tag
+          color={"blue"}
+          style={{ margin: 0, fontSize: "1rem", padding: "0.3em 0.6em" }}
+          size="large"
+        >
+          Done
+        </Tag>
+      );
+    }
+
+    return (
+      <Button
+        disabled={orderStep !== 0}
+        danger
+        size="large"
+        onClick={cancelOrderHandler}
+      >
+        CANCEL
+      </Button>
+    );
+  };
+
   return (
     <div className="order-wrapper">
       {!loading && (
@@ -234,18 +296,7 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
       <div className="order-body">
         <div className="order-top">
           <h3 className="order-title">{itemInfo.title}</h3>
-          {mode === "sales" ? (
-            <ButtonSales />
-          ) : (
-            <Button
-              disabled={orderStep !== 0}
-              danger
-              size="large"
-              onClick={cancelOrderHandler}
-            >
-              CANCEL
-            </Button>
-          )}
+          <TopRightSpace />
         </div>
         <div className="order-mid">
           <div className="order-price">
