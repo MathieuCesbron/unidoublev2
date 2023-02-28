@@ -304,8 +304,7 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
             <p className="order-usdc">{orderData.price_bought / 100}</p>
           </div>
           <p>
-            {orderData.amount_bought} unit{" "}
-            {mode === "sales" ? "sold" : "bought"}
+            {orderData.amount_bought} {mode === "sales" ? "sold" : "bought"}
           </p>
           {mode === "sales" && orderStep < 1 && (
             <Button

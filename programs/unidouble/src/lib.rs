@@ -147,6 +147,7 @@ pub mod unidouble {
         );
 
         let item = &mut ctx.accounts.item;
+        item.amount = item.amount - amount;
 
         let transfer_to_store = transfer(
             ctx.accounts.token_program.key,
@@ -267,6 +268,9 @@ pub mod unidouble {
                 &[ctx.accounts.store.bump],
             ]],
         )?;
+
+        let item = &mut ctx.accounts.item;
+        item.amount = item.amount + order.amount_bought;
 
         Ok(())
     }

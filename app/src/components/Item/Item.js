@@ -178,9 +178,12 @@ const Item = ({ itemData, mode, setDecodedItems, sellerAccountPublicKey }) => {
         <div className="item-bottom">
           <div>
             <p className="item-stats">
-              {itemData.amount} available / {itemData.buyer_count} buyer
+              {itemData.amount} available / {itemData.buyer_count}{" "}
+              {itemData.buyer_count > 1 ? "buyers" : "buyer"}
             </p>
-            <p className="item-score">{`SCORE: ${itemData.score}`}</p>
+            <p className="item-score">{`Score: ${itemData.score.toFixed(
+              2,
+            )}`}</p>
           </div>
           {mode === "search" ? (
             <Button
