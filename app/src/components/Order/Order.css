@@ -35,6 +35,12 @@
   word-break: break-word;
 }
 
+.order-title:hover,
+.order-title:focus {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 /* middle */
 
 .order-mid {

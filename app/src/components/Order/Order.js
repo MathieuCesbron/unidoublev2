@@ -3,6 +3,7 @@ import { PublicKey } from "@solana/web3.js";
 import USDCLogo from "../../images/usdc-logo.png";
 import { Button, Image, Modal, Rate, Steps, Tag } from "antd";
 import {
+  connection,
   creator_ata,
   privateConnection,
   program,
@@ -16,15 +17,19 @@ import { AES, enc, mode as modeCrypto } from "crypto-js";
 import { curve } from "../../utils/crypto/crypto";
 import { ShdwDrive } from "@shadow-drive/sdk";
 import ModalReview from "../BuyerAccount/ModalReview";
+import { useNavigate } from "react-router-dom";
+import { getDecodedItem } from "../../utils/solana/account";
 import "./Order.css";
 
 const Order = ({ orderData, setDecodedOrders, mode }) => {
   const wallet = useWallet();
   const { publicKey } = useWallet();
+  const navigate = useNavigate();
 
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(true);
   const [itemInfo, setItemInfo] = useState({});
+  const [decodedItem, setDecodedItem] = useState({});
   const [showModalAddress, setShowModalAddress] = useState(false);
 
   const [showModalReview, setShowModalReview] = useState(false);
@@ -69,6 +74,18 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
     }
   })();
 
+  // useEffect that gets item data. It is necessary to navigate to the item
+  // when the user click on the order title.
+  useEffect(() => {
+    (async () => {
+      const item = await connection.getAccountInfo(
+        new PublicKey(orderData.item_account_public_key),
+      );
+      const decodedItem = getDecodedItem(item);
+      setDecodedItem(decodedItem);
+    })();
+  }, []);
+
   useEffect(() => {
     fetch(
       `https://shdw-drive.genesysgo.net/${orderData.shdw_hash_seller}/${orderData.item_number}.json`,
@@ -84,7 +101,7 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
     )
       .then((res) => res.json())
       .then((resData) => {
-        console.log(resData.buyer_diffie_public_key);
+        // console.log(resData.buyer_diffie_public_key);
         // const basepoint = curve.keyFromPublic(Buffer.from(props.buyerDiffiePublicKeys[i], "hex")).getPublic()
         // const basepoint = curve.keyFromPublic(
         //   Buffer.from(orderData.buyer_diffie_public_key),
@@ -295,7 +312,21 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
       )}
       <div className="order-body">
         <div className="order-top">
-          <h3 className="order-title">{itemInfo.title}</h3>
+          <h3
+            className="order-title"
+            onClick={() => {
+              if (decodedItem !== {})
+                navigate(`/item/${orderData.item_number}`, {
+                  state: {
+                    itemInfo: itemInfo,
+                    itemData: decodedItem,
+                    seller_public_key: orderData.seller_public_key.toString(),
+                  },
+                });
+            }}
+          >
+            {itemInfo.title}
+          </h3>
           <TopRightSpace />
         </div>
         <div className="order-mid">

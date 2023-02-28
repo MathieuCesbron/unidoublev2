@@ -112,23 +112,36 @@ const getItemsByCategory = async (category) => {
   return await connection.getProgramAccounts(programID, filters);
 };
 
+const itemStruct = struct([
+  u32("unique_number"),
+  u8("category"),
+  u32("price"),
+  u16("amount"),
+  publicKeyBorsh("seller_public_key"),
+  publicKeyBorsh("seller_account_public_key"),
+  u32("buyer_count"),
+  u16("rating_count"),
+  f32("rating"),
+  f32("score"),
+  str("shdw_hash_seller"),
+]);
+
+const getDecodedItem = (item) => {
+  const decoded = itemStruct.decode(item.data, 8);
+
+  // Convert public keys to string for simplicity.
+  return {
+    ...decoded,
+    seller_public_key: decoded.seller_public_key.toString(),
+    seller_account_public_key: decoded.seller_account_public_key.toString(),
+  };
+};
+
 const getDecodedItems = (items) => {
   return items.map((item) => {
     const decoded = {
       pubkey: item.pubkey.toString(),
-      ...struct([
-        u32("unique_number"),
-        u8("category"),
-        u32("price"),
-        u16("amount"),
-        publicKeyBorsh("seller_public_key"),
-        publicKeyBorsh("seller_account_public_key"),
-        u32("buyer_count"),
-        u16("rating_count"),
-        f32("rating"),
-        f32("score"),
-        str("shdw_hash_seller"),
-      ]).decode(item.account.data, 8),
+      ...itemStruct.decode(item.account.data, 8),
     };
 
     // Convert public keys to string for simplicity.
@@ -151,6 +164,12 @@ const getOrdersForSeller = async (publicKey) => {
           length: 32,
         },
       },
+      // {
+      //   memcmp: {
+      //     offset: 8 + 4 + 4 + 32 + 32 + 32 + 32 + 4 + 2 + 1 + 1,
+      //     bytes: bs58.encode(Buffer.from("false")),
+      //   },
+      // },
     ],
   };
 
@@ -212,6 +231,7 @@ export {
   getDecodedBuyerAccount,
   getDecodedSellerAccount,
   getMyItems,
+  getDecodedItem,
   getDecodedItems,
   getItemsByCategory,
   getOrdersForSeller,
