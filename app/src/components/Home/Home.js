@@ -26,12 +26,18 @@ const Home = () => {
           <img
             className="home-search-items home-big-screen"
             src={HomeSearchItems}
+            alt="home-search-items"
           />
           <img
             className="home-seller-account home-big-screen"
             src={HomeSellerAccount}
+            alt="home-seller-account"
           />
-          <img className="home-small-screen" src={HomeSmallScreenSeller} />
+          <img
+            className="home-small-screen"
+            src={HomeSmallScreenSeller}
+            alt="home-small-screen"
+          />
         </>
       )}
       {isBuyer && (
@@ -39,9 +45,18 @@ const Home = () => {
           <img
             className="home-search-buy home-big-screen"
             src={HomeSearchBuy}
+            alt="home-search-buy"
           />
-          <img className="home-orders home-big-screen" src={HomeOrders} />
-          <img className="home-small-screen" src={HomeSmallScreenBuyer} />
+          <img
+            className="home-orders home-big-screen"
+            src={HomeOrders}
+            alt="home-orders"
+          />
+          <img
+            className="home-small-screen"
+            src={HomeSmallScreenBuyer}
+            alt="home-small-screen"
+          />
         </>
       )}
       {isNotConnectedWithoutAccount && (
@@ -49,10 +64,17 @@ const Home = () => {
           <img
             className="home-search-items home-big-screen"
             src={HomeSearchItems}
+            alt="home-search-items"
           />
           <img
             className="home-connect-wallet home-big-screen"
             src={HomeConnectWallet}
+            alt="home-connect-wallet"
+          />
+          <img
+            className="home-small-screen"
+            src={HomeSmallScreenBuyer}
+            alt="home-small-screen"
           />
         </>
       )}
@@ -61,10 +83,17 @@ const Home = () => {
           <img
             className="home-search-items home-big-screen"
             src={HomeSearchItems}
+            alt="home-search-items"
           />
           <img
             className="home-create-account home-big-screen"
             src={HomeCreateAccount}
+            alt="home-create-account"
+          />
+          <img
+            className="home-small-screen"
+            src={HomeSmallScreenBuyer}
+            alt="home-small-screen"
           />
         </>
       )}
