@@ -11,7 +11,6 @@ import Item from "../../Item/Item";
 import { TbMoodEmpty } from "react-icons/tb";
 import { Pagination } from "antd";
 import "../Option.css";
-import "./MyItems.css";
 
 const MyItems = (props) => {
   const { publicKey } = useWallet();
