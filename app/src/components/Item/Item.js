@@ -166,8 +166,7 @@ const Item = ({ itemData, mode, setDecodedItems, sellerAccountPublicKey }) => {
           </div>
           {mode === "search" ? (
             <Tag color="blue" style={{ margin: "0" }}>
-              {/* TODO: put actual ranking here */}
-              #1
+              #{itemData.rank}
             </Tag>
           ) : (
             <Button type="primary" onClick={ItemUpdateHandler} size="large">
@@ -209,7 +208,6 @@ const Item = ({ itemData, mode, setDecodedItems, sellerAccountPublicKey }) => {
             </Button>
           ) : (
             <Button
-              type="primary"
               danger
               size="large"
               style={{ alignSelf: "flex-end" }}

@@ -33,12 +33,8 @@ const MyItems = (props) => {
     (async () => {
       const mi = await getMyItems(publicKey);
       const dmi = getDecodedItems(mi);
-      setDecodedMyItems(
-        dmi.map((elem, index) => ({
-          ...elem,
-          pubkey: mi[index].pubkey,
-        })),
-      );
+      const smi = dmi.sort((a, b) => b.score - a.score);
+      setDecodedMyItems(smi);
 
       const sa = await getSellerAccount(publicKey);
       setSellerAccountPublicKey(sa.pubkey);

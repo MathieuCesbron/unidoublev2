@@ -25,7 +25,9 @@ const SearchResult = () => {
     (async () => {
       const items = await getItemsByCategory(category);
       const di = getDecodedItems(items);
-      setDecodedItems(di);
+      let si = di.sort((a, b) => b.score - a.score);
+      si = si.map((item, index) => ({ ...item, rank: index + 1 }));
+      setDecodedItems(si);
       setLoading(false);
     })();
   }, [category]);
