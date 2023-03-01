@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
-import { Button, Image, Rate, Modal, InputNumber, Input, Form } from "antd";
+import {
+  Button,
+  Image,
+  Rate,
+  Modal,
+  InputNumber,
+  Input,
+  Form,
+  Tooltip,
+} from "antd";
 import * as anchor from "@project-serum/anchor";
 import {
   getAssociatedTokenAddressSync,
@@ -214,12 +223,19 @@ const ItemResult = () => {
             <img className="item-usdc-logo" src={USDCLogo} alt="usdc-logo" />
             <p className="item-usdc">{state.itemData.price / 100}</p>
           </div>
-          <Rate
-            disabled
-            allowHalf
-            defaultValue={state.itemData.rating}
-            style={{ fontSize: 28, margin: "0", maxWidth: "100%" }}
-          />
+          <Tooltip
+            color={"grey"}
+            title={Math.round(state.itemData.rating * 100) / 100}
+          >
+            <div>
+              <Rate
+                disabled
+                allowHalf
+                defaultValue={state.itemData.rating}
+                style={{ fontSize: 28, margin: "0", maxWidth: "100%" }}
+              />
+            </div>
+          </Tooltip>
           <div className="item-result-stats">
             <p className="item-result-amount">
               {state.itemData.amount} available

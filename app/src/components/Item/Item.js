@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image } from "antd";
+import { Image, Tooltip } from "antd";
 import USDCLogo from "../../images/usdc-logo.png";
 import { Rate, Modal, Checkbox } from "antd";
 import {
@@ -179,13 +179,19 @@ const Item = ({ itemData, mode, setDecodedItems, sellerAccountPublicKey }) => {
             <img className="item-usdc-logo" src={USDCLogo} alt="usdc-logo" />
             <p className="item-usdc">{itemData.price / 100}</p>
           </div>
-          <Rate
-            disabled
-            allowHalf
-            defaultValue={itemData.rating}
-            style={{ fontSize: 28 }}
-            className="item-rate"
-          />
+          <Tooltip
+            color={"grey"}
+            title={Math.round(itemData.rating * 100) / 100}
+          >
+            <div className="item-rate">
+              <Rate
+                disabled
+                allowHalf
+                defaultValue={itemData.rating}
+                style={{ fontSize: 28 }}
+              />
+            </div>
+          </Tooltip>
         </div>
         <div className="item-bottom">
           <div>
@@ -193,9 +199,9 @@ const Item = ({ itemData, mode, setDecodedItems, sellerAccountPublicKey }) => {
               {itemData.amount} available / {itemData.buyer_count}{" "}
               {itemData.buyer_count > 1 ? "buyers" : "buyer"}
             </p>
-            <p className="item-score">{`Score: ${itemData.score.toFixed(
-              2,
-            )}`}</p>
+            <p className="item-score">{`Score: ${
+              Math.round(itemData.score * 100) / 100
+            }`}</p>
           </div>
           {mode === "search" ? (
             <Button
