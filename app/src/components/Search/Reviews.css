@@ -1,0 +1,20 @@
+.reviews-title {
+  margin-top: 2.5em;
+}
+
+.reviews-line {
+  height: 1px;
+  background-color: lightgray;
+  border: none;
+}
+
+.reviews-empty {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0;
+}
+
+.reviews-empty-text {
+  margin: 0;
+}

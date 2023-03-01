@@ -193,6 +193,29 @@ const getOrdersForBuyer = async (publicKey) => {
   return await connection.getProgramAccounts(programID, filters);
 };
 
+const getReviewedOrdersForItem = async (itemNumber) => {
+  const filters = {
+    filters: [
+      { dataSize: 800 },
+      {
+        memcmp: {
+          offset: 8 + 4,
+          bytes: bs58.encode(Buffer.from([itemNumber])),
+          length: 4,
+        },
+      },
+      {
+        memcmp: {
+          offset: 8 + 4 + 4 + 32 + 32 + 32 + 32 + 4 + 2 + 1 + 1,
+          bytes: bs58.encode(Buffer.from([true])),
+        },
+      },
+    ],
+  };
+
+  return await connection.getProgramAccounts(programID, filters);
+};
+
 const getDecodedOrders = (orders) => {
   return orders.map((order) => {
     const decoded = {
@@ -236,5 +259,7 @@ export {
   getItemsByCategory,
   getOrdersForSeller,
   getOrdersForBuyer,
+  getReviewedOrdersForItem,
   getDecodedOrders,
 };
+//

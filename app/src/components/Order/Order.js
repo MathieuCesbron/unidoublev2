@@ -33,7 +33,6 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
   const [showModalAddress, setShowModalAddress] = useState(false);
 
   const [showModalReview, setShowModalReview] = useState(false);
-  const [reviewRate, setReviewRate] = useState(0);
 
   const orderStepInit = () => {
     if (!orderData.is_approved) {
@@ -82,7 +81,10 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
         new PublicKey(orderData.item_account_public_key),
       );
       const decodedItem = getDecodedItem(item);
-      setDecodedItem(decodedItem);
+      setDecodedItem({
+        ...decodedItem,
+        pubkey: orderData.item_account_public_key,
+      });
     })();
   }, []);
 
@@ -337,7 +339,7 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
           <p>
             {orderData.amount_bought} {mode === "sales" ? "sold" : "bought"}
           </p>
-          {mode === "sales" && orderStep < 1 && (
+          {mode === "sales" && orderStep < 2 && (
             <Button
               type="primary"
               className="order-address-btn"

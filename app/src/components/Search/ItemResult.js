@@ -30,6 +30,7 @@ import { PublicKey } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { ShdwDrive } from "@shadow-drive/sdk";
 import useStore from "../../store";
+import Reviews from "./Reviews";
 import "../SellerAccount/Option.css";
 import "./ItemResult.css";
 
@@ -170,7 +171,7 @@ const ItemResult = () => {
           order: order,
         })
         .rpc();
-      await connection.confirmTransaction(txBuyItem, "confirmed");
+      await connection.confirmTransaction(txBuyItem, "max");
       console.log("tx buy item: ", txBuyItem);
       navigate("/orders");
     } catch (error) {
@@ -244,6 +245,7 @@ const ItemResult = () => {
         </div>
       </div>
       <p className="item-result-description">{state.itemInfo.description}</p>
+      <Reviews itemNumber={state.itemData.unique_number} />
       <Modal
         title={`Buy ${state.itemInfo.title}`}
         centered
