@@ -71,6 +71,26 @@
   background: #5783db;
 }
 
+.order-amount {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.order-address {
+  margin: auto;
+  border: solid lightgrey 1px;
+  border-radius: 15px;
+  padding: 1em 2em;
+  width: fit-content;
+  background-color: rgba(211, 211, 211, 0.099);
+}
+
+.order-address-field {
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 0;
+}
+
 /* bottom */
 
 .order-bottom {

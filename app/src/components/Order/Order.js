@@ -1,11 +1,10 @@
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import USDCLogo from "../../images/usdc-logo.png";
-import { Button, Image, Modal, Rate, Steps, Tag } from "antd";
+import { Button, Image, Modal, Steps, Tag } from "antd";
 import {
   connection,
   creator_ata,
-  privateConnection,
   program,
   storePubKey,
   store_ata,
@@ -15,10 +14,10 @@ import { getAssociatedTokenAddressSync } from "@solana/spl-token";
 import { useEffect, useState } from "react";
 import { AES, enc, mode as modeCrypto } from "crypto-js";
 import { curve } from "../../utils/crypto/crypto";
-import { ShdwDrive } from "@shadow-drive/sdk";
 import ModalReview from "../BuyerAccount/ModalReview";
 import { useNavigate } from "react-router-dom";
 import { getDecodedItem } from "../../utils/solana/account";
+import useStore from "../../store";
 import "./Order.css";
 
 const Order = ({ orderData, setDecodedOrders, mode }) => {
@@ -31,8 +30,12 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
   const [itemInfo, setItemInfo] = useState({});
   const [decodedItem, setDecodedItem] = useState({});
   const [showModalAddress, setShowModalAddress] = useState(false);
-
   const [showModalReview, setShowModalReview] = useState(false);
+
+  const [deliveryAddress, setDeliveryAddress] = useState({});
+  const [deliveryAddressLoading, setDeliveryAddressLoading] = useState(true);
+
+  const diffiePrivateKey = useStore((state) => state.diffiePrivateKey);
 
   const orderStepInit = () => {
     if (!orderData.is_approved) {
@@ -98,33 +101,38 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
         setLoading(false);
       });
 
+    if (mode !== "sales") {
+      return;
+    }
+
     fetch(
       `https://shdw-drive.genesysgo.net/${orderData.shdw_hash_buyer}/order_${orderData.order_number}.json`,
     )
       .then((res) => res.json())
       .then((resData) => {
-        // console.log(resData.buyer_diffie_public_key);
-        // const basepoint = curve.keyFromPublic(Buffer.from(props.buyerDiffiePublicKeys[i], "hex")).getPublic()
-        // const basepoint = curve.keyFromPublic(
-        //   Buffer.from(orderData.buyer_diffie_public_key),
-        // );
-        // // TODO: get the buyer diffie public key from shadow drive then I can get the shared secret.
-        // const sharedSecret = "";
-        // const text = AES.decrypt(
-        //   {
-        //     ciphertext: enc.Hex.parse(resData.address),
-        //     iv: enc.Hex.parse(resData.iv),
-        //     salt: enc.Hex.parse(resData.salt),
-        //   },
-        //   sharedSecret,
-        //   { mode: modeCrypto.CTR },
-        // );
-        // console.log("decrypt: ", text.toString(enc.Utf8));
+        const basepoint = curve
+          .keyFromPublic(Buffer.from(resData.buyer_diffie_public_key, "hex"))
+          .getPublic();
+        const keyPair = curve.keyFromPrivate(diffiePrivateKey);
+        const sharedSecret = keyPair.derive(basepoint).toString("hex");
+
+        const text = AES.decrypt(
+          {
+            ciphertext: enc.Hex.parse(resData.address),
+            iv: enc.Hex.parse(resData.iv),
+            salt: enc.Hex.parse(resData.salt),
+          },
+          sharedSecret,
+          { mode: modeCrypto.CTR },
+        );
+        const deliveryAddressJSON = JSON.parse(text.toString(enc.Utf8));
+
+        setDeliveryAddress(deliveryAddressJSON);
+        setDeliveryAddressLoading(false);
       });
   }, []);
 
   const approveOrderHandler = async () => {
-    // console.log(itemInfo);
     try {
       const txApproveOrder = await program.methods
         .approveOrder()
@@ -344,6 +352,7 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
               type="primary"
               className="order-address-btn"
               size="large"
+              disabled={deliveryAddressLoading}
               onClick={() => setShowModalAddress(true)}
             >
               DELIVERY ADDRESS
@@ -353,14 +362,23 @@ const Order = ({ orderData, setDecodedOrders, mode }) => {
             title={itemInfo.title}
             onOk={() => setShowModalAddress(false)}
             closable={false}
+            onCancel={() => setShowModalAddress(false)}
             cancelButtonProps={{ style: { display: "none" } }}
             centered
             open={showModalAddress}
           >
-            <p>
-              Send {orderData.amount_bought}{" "}
-              {orderData.amount_bought === 1 ? "item" : "items"} to:
-            </p>
+            {orderStep === 1 && (
+              <p className="order-amount">
+                Send {orderData.amount_bought}{" "}
+                {orderData.amount_bought === 1 ? "item" : "items"} to:
+              </p>
+            )}
+            <div className="order-address">
+              <p className="order-address-field">{deliveryAddress.address}</p>
+              <p className="order-address-field">{deliveryAddress.city}</p>
+              <p className="order-address-field">{deliveryAddress.state}</p>
+              <p className="order-address-field">{deliveryAddress.zip}</p>
+            </div>
           </Modal>
         </div>
         <div className="order-bottom">
