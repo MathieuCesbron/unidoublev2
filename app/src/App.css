@@ -10,3 +10,9 @@ body {
 .content-wrapper {
   padding-bottom: 2.5em;
 }
+
+.app-spin {
+  position: absolute;
+  bottom: 3.8em;
+  right: 1.6em;
+}

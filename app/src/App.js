@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
@@ -9,10 +10,14 @@ import CreateSellerAccount from "./components/CreateAccount/CreateSellerAccount"
 import CreateBuyerAccount from "./components/CreateAccount/CreateBuyerAccount";
 import ItemResult from "./components/Search/ItemResult";
 import Footer from "./components/Footer/Footer";
-import "./App.css";
 import Terms from "./components/Terms/Terms";
+import { Spin } from "antd";
+import useStore from "./store";
+import "./App.css";
 
 const App = () => {
+  const spinning = useStore((state) => state.spinning);
+
   return (
     <>
       <div className="content-wrapper">
@@ -35,6 +40,13 @@ const App = () => {
           <Route path="terms-of-use" element={<Terms />} />
         </Routes>
       </div>
+      <Spin
+        className="app-spin"
+        // only show the spin after 100ms
+        delay="100"
+        size="large"
+        spinning={spinning}
+      />
       <Footer />
     </>
   );
