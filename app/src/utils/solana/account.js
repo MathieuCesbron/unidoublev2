@@ -82,7 +82,7 @@ const getDecodedSellerAccount = (sellerAccount) => {
 const getMyItems = async (publicKey) => {
   const filters = {
     filters: [
-      { dataSize: 1000 },
+      { dataSize: 145 },
       {
         memcmp: {
           offset: 8 + 4 + 1 + 4 + 2,
@@ -98,7 +98,7 @@ const getMyItems = async (publicKey) => {
 const getItemsByCategory = async (category) => {
   const filters = {
     filters: [
-      { dataSize: 1000 },
+      { dataSize: 145 },
       {
         memcmp: {
           offset: 8 + 4,
@@ -156,7 +156,7 @@ const getDecodedItems = (items) => {
 const getOrdersForSeller = async (publicKey) => {
   const filters = {
     filters: [
-      { dataSize: 800 },
+      { dataSize: 249 },
       {
         memcmp: {
           offset: 8 + 4 + 4 + 32,
@@ -179,7 +179,7 @@ const getOrdersForSeller = async (publicKey) => {
 const getOrdersForBuyer = async (publicKey) => {
   const filters = {
     filters: [
-      { dataSize: 800 },
+      { dataSize: 249 },
       {
         memcmp: {
           offset: 8 + 4 + 4,
@@ -196,7 +196,7 @@ const getOrdersForBuyer = async (publicKey) => {
 const getReviewedOrdersForItem = async (itemNumber) => {
   const filters = {
     filters: [
-      { dataSize: 800 },
+      { dataSize: 249 },
       {
         memcmp: {
           offset: 8 + 4,

@@ -535,7 +535,7 @@ pub struct ListItem<'info> {
     #[account(
         init,
         payer = user,
-        space = 1000,
+        space = 145,
         seeds = [user.key.as_ref(), unique_number.to_le_bytes().as_ref()],
         bump,
     )]
@@ -613,7 +613,7 @@ pub struct BuyItem<'info> {
     #[account(
         init,
         payer = user,
-        space = 800,
+        space = 249,
         seeds = [user.key().as_ref(), order_number.to_le_bytes().as_ref()],
         bump,
     )]
