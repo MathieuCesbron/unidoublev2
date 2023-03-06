@@ -12,7 +12,11 @@ const SelectCategory = () => {
   const setCategory = useStore((state) => state.setCategory);
 
   useEffect(() => {
-    if (category.value !== -1) navigate("/search");
+    if (category.value === -1) {
+      navigate("/");
+    } else {
+      navigate("search");
+    }
   }, [category]);
 
   return (
