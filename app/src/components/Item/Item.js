@@ -236,7 +236,7 @@ const Item = ({ itemData, mode, setDecodedItems, sellerAccountPublicKey }) => {
         }}
         okText="DELETE"
       >
-        <p>You will get 0.00785 SOL back.</p>
+        <p>You will get 0.0019 SOL back.</p>
         <Checkbox onChange={checkboxHandler}>
           I want to delete this article
         </Checkbox>

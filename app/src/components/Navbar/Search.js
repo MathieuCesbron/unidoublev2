@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SelectCategory from "./SelectCategory";
 import { ImSearch } from "react-icons/im";
+import { Tooltip } from "antd";
 import "./Search.css";
 
 const Search = () => {
@@ -22,9 +23,11 @@ const Search = () => {
         value={input}
         onChange={handleChange}
       ></input>
-      <button className="search-icon">
-        <ImSearch size={"1.3em"} />
-      </button>
+      <Tooltip title="not yet implemented">
+        <button className="search-icon">
+          <ImSearch size={"1.3em"} />
+        </button>
+      </Tooltip>
     </div>
   );
 };
