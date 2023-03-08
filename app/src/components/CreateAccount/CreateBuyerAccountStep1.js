@@ -60,7 +60,7 @@ const CreateBuyerAccountStep1 = ({ setStep }) => {
       <h3 className="total-cost">Cost: </h3>
       <p className="cost">
         <img className="token-logo" src={solanaLogo} alt="solana token logo" />
-        0.00364 SOL
+        ~ 0.00364 SOL
         <img className="plus-logo" src={plusLogo} alt="plus logo" />
         <img className="token-logo" src={shadowLogo} alt="shadow token logo" />1
         SHDW Token

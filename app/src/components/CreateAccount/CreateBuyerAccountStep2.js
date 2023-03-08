@@ -39,7 +39,7 @@ const CreateBuyerAccountStep2 = () => {
       setIsBuyer(true);
 
       console.log("tx init buyer account: ", txInitBuyerAccount);
-      navigate("/buyer-account");
+      navigate("/");
     } catch (error) {
       console.log(error);
       setError(error);

@@ -32,7 +32,7 @@ const CreateSellerAccountSummary = ({ setStep }) => {
       <h3 className="total-cost">Total cost: </h3>
       <p className="cost">
         <img className="token-logo" src={solanaLogo} alt="solana token logo" />
-        0.00187 SOL
+        ~ 0.00514 SOL
         <img className="plus-logo" src={plusLogo} alt="plus logo" />
         <img className="token-logo" src={shadowLogo} alt="shadow token logo" />1
         SHDW Token
