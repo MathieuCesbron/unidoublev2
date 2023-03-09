@@ -55,7 +55,7 @@ const SalesItem = () => {
         ) : (
           <div className="option-empty-wrapper">
             <TbMoodEmpty size={"5em"} />
-            <p className="option-empty">You have no items listed yet...</p>
+            <p className="option-empty">You have made no sales yet.</p>
           </div>
         ))}
     </div>
