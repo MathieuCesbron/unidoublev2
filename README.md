@@ -1,6 +1,7 @@
 # Unidouble
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/8fa93e48-7508-4bd8-8d93-a33db97c9aee/deploy-status)](https://app.netlify.com/sites/gregarious-sprinkles-e80835/deploys)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 The objective of Unidouble is to be a better version of Ebay.
 
