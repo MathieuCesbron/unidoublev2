@@ -68,6 +68,7 @@ const ListItem = (props) => {
     const unique_number = Math.floor(Math.random() * max_u32);
 
     const itemJSONBlob = new Blob(
+      // TODO: should add the solana item account address for elastic search.
       [
         JSON.stringify({
           title: itemFormData.title,
